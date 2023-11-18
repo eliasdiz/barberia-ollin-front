@@ -1,17 +1,8 @@
 import { Carousel } from "@material-tailwind/react";
  
- function CarouselDefault() {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-      };
+ function CarouselOne() {
   return (
-    <Carousel className=" w-3/5 rounded-lg" {...settings}>
+    <Carousel className=" w-3/5 rounded-lg">
       <img
         src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=1600"
         alt="image 1"
@@ -31,4 +22,4 @@ import { Carousel } from "@material-tailwind/react";
   );
 }
 
-export default CarouselDefault
+export default CarouselOne
