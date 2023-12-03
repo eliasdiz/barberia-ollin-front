@@ -2,19 +2,54 @@ import { Carousel } from "@material-tailwind/react";
  
  function CarouselOne() {
   return (
-    <Carousel className=" w-3/5 rounded-lg">
+    <Carousel className=" w-3/5 rounded-lg" autoplay loop>
       <img
         src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=1600"
         alt="image 1"
         className="h-full w-full object-cover"
       />
       <img
-        src="https://images.pexels.com/photos/667986/pexels-photo-667986.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        src="https://i.postimg.cc/13rqRb9D/IMG-20231129-WA0043.jpg"
         alt="image 2"
         className="h-full w-full object-cover"
       />
       <img
-        src="https://images.pexels.com/photos/7697673/pexels-photo-7697673.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        src="https://i.postimg.cc/Yq148TLT/IMG-20231129-WA0044.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/x15XVHRR/IMG-20231129-WA0045.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/HsGcwTnQ/IMG-20231129-WA0047.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/ydMdyT1V/IMG-20231129-WA0048.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/Bn4jzNxb/IMG-20231129-WA0049.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/g0BrnW1L/IMG-20231129-WA0050.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/vmmcYB2d/IMG-20231129-WA0051.jpg"
+        alt="image 3"
+        className="h-full w-full object-cover"
+      />
+      <img
+        src="https://i.postimg.cc/Zn6q7yn6/IMG-20231129-WA0052.jpg"
         alt="image 3"
         className="h-full w-full object-cover"
       />

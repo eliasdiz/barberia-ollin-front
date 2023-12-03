@@ -1,5 +1,6 @@
 import Carousel from "../components/Carousel";
 import CarouselBarberos from "../components/CarouselBarberos";
+import HeaderMobile from "../components/headerMobile";
 import { useState, useRef, useEffect } from "react";
 
 function App() {
@@ -69,13 +70,15 @@ function App() {
 
     return (
         <>
-        <header className="h-[60vh] flex justify-center mt-10 px-20 xsm:hidden">
-            <div className="flex justify-center items-center w-1/4 bg-white mr-5 rounded-lg">
-            <h1 className="font-bold text-2xl">Logo Barberia Ollin</h1>
+        <div className="max-w-screen-2xl mx-auto">
+        <header className="h-[50vh] flex justify-center mt-10 px-10 xsm:hidden xxsm:hidden">
+            <div className="flex justify-center items-center w-1/4 bg-black mr-5 rounded-lg">
+            <img src="https://i.postimg.cc/ryYmjMph/logo-barberia-png.png" alt="logo" className="px-5"></img>
             </div>
             <Carousel />
         </header>
-        <div className="flex justify-evenly items-center pb-10">
+        <HeaderMobile />
+        <div className="flex justify-evenly items-center pb-10 xsm:hidden xxsm:hidden">
             <div className="flex-col text-white w-3/6">
             <h1 className="font-bold text-3xl mt-4">Sobre Barberia Ollin</h1>
             <p className="mt-4">
@@ -109,13 +112,14 @@ function App() {
                 onClick={toggleTable}
             >
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAWxJREFUSEvFVYttQjEMvJukZZKWSVomKZ2kbFKYpGzi6p7syC8vH5CKGgkFgePz+S4O8eDFB+fHFMDMXgG8ANCuzxXA2fcLSX3vri6AmT0D+PKkoxwC3JPUvllNADP7AHD0aB08AViqdWAxeQLwDkCFLDEkP2uEDUCV/Ng6FEkc7C0Vs4lfAfiBH08g2sP+JiAx+nYmh3yuBlCQgkX3UNM1M9NvJEfMryR3cbYEmpn6KVFXARlkApBNUdhngBC22/cRgApJ+pUcGUDVi4V6KNds1g0AocWZ5H5pZxJK4ormrufpANhY0TVJJilt/lMAb9PKCBkgHHSzPRsuC6MUF94l8mwwzkQulyX7eJa0snF0oRglM8g+bl60EZiZhQuLg1YucoEEEqOia9dG74O9/lpp2LryIZSCh8OuulzN+BaAWOQJGQ/MxR8aJVKMHqEY191i/ufBqea9qo2K1Wutwmo20qdv8j02bcU+HOAXvmrVGU8PvfYAAAAASUVORK5CYII=" />
-                <p className="cursor-pointer">Abierto hoy 10:00 AM - 08:00 PM</p>
+                <p className="cursor-pointer">Abierto hoy 08:30 AM - 08:00 PM</p>
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAK5JREFUSEvtk9ENgzAMRO82KZvQUTpJu0lhElZhE1cnpRKkSWwqIbVS+EFCznv2mRAnPzyZjy5wE+4R/XhEZnYHMJNcS62a2QXASHKqjVJdcoI/AAh+zSUJ/pQAwK0maQnU3QJA750kg68kh8MT6EAC7SQJ9O68CVetew8KEk2jWFx4SFCYRJ9C8LAgk6CVeb4LN6LtAcVV+2W/WrJ7TQMFhyYI8D5KusBN7f8jegHXUToZ2Xag4AAAAABJRU5ErkJggg==" />
             </div>
             {showTable && tableContent}
             </div>
         </div>
         <CarouselBarberos />
+        </div>
         </>
     );
     }
