@@ -1,8 +1,8 @@
 import { Carousel } from "@material-tailwind/react";
- 
- function CarouselOne() {
+
+function CarouselOne() {
   return (
-    <Carousel className=" w-3/5 rounded-lg" autoplay loop>
+    <Carousel className=" w-[30rem] h-full rounded-lg" loop>
       <img
         src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=1600"
         alt="image 1"
@@ -11,7 +11,7 @@ import { Carousel } from "@material-tailwind/react";
       <img
         src="https://i.postimg.cc/13rqRb9D/IMG-20231129-WA0043.jpg"
         alt="image 2"
-        className="h-full w-full object-cover"
+        className="w-full h-full object-cover"
       />
       <img
         src="https://i.postimg.cc/Yq148TLT/IMG-20231129-WA0044.jpg"
