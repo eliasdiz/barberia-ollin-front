@@ -11,7 +11,7 @@ function Footer() {
             variant="small"
             className="mb-4 text-center font-normal text-white md:mb-0"
           >
-            &copy; {currentYear} <a>Barberia Ollin</a>. Todos los Derechos Reservados.
+            &copy; {currentYear} <a>Barberia Ollin</a>.Todos los Derechos Reservados.
           </Typography>
           <div className="flex gap-4 text-white sm:justify-center">
             <Typography as="a" href="https://www.facebook.com/profile.php?id=100063043911265" target="_blank" className="opacity-80 transition-opacity hover:opacity-100">
