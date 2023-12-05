@@ -71,8 +71,8 @@ function App() {
     return (
         <>
         <div className="max-w-screen-2xl mx-auto">
-        <header className="h-[50vh] flex justify-center mt-10 px-10 xsm:hidden xxsm:hidden">
-            <div className="flex justify-center items-center w-1/4 bg-black mr-5 rounded-lg">
+        <header className="border border-red-700 h-[60vh] flex justify-evenly mt-10 px-10 xsm:hidden xxsm:hidden">
+            <div className="flex justify-center items-center w-2/6 bg-black mr-5 rounded-lg">
             <img src="https://i.postimg.cc/ryYmjMph/logo-barberia-png.png" alt="logo" className="px-5"></img>
             </div>
             <Carousel />

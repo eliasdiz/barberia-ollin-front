@@ -1,5 +1,5 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
- 
+
 function CarouselBarberos() {
   return (
     <div className='flex justify-center mt-7 xsm:mt-2'>
