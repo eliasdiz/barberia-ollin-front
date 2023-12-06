@@ -71,8 +71,8 @@ function App() {
     return (
         <>
         <div className="max-w-screen-2xl mx-auto">
-        <header className="border border-red-700 h-[60vh] flex justify-evenly mt-10 px-10 xsm:hidden xxsm:hidden">
-            <div className="flex justify-center items-center w-2/6 bg-black mr-5 rounded-lg">
+        <header className="h-[55vh] flex justify-evenly mt-10 xsm:hidden xxsm:hidden">
+            <div className="flex justify-center items-center bg-black rounded-lg">
             <img src="https://i.postimg.cc/ryYmjMph/logo-barberia-png.png" alt="logo" className="px-5"></img>
             </div>
             <Carousel />
@@ -89,10 +89,7 @@ function App() {
                 consectetur, adipisicing elit. Quod recusandae quos, perspiciatis
                 inventore voluptas sapiente libero facilis. Nihil unde, voluptatibus
                 vitae maiores cum accusantium sint fugit nam deleniti natus
-                molestias?Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Quod recusandae quos, perspiciatis inventore voluptas sapiente
-                libero facilis. Nihil unde, voluptatibus vitae maiores cum
-                accusantium sint fugit nam deleniti natus molestias?
+                molestias?
             </p>
             </div>
             <div className="text-white mt-5">
