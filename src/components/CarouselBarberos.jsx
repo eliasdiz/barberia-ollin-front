@@ -8,7 +8,7 @@ function CarouselBarberos() {
         <img
           src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt="image 1"
-          className="h-[85vh] w-full object-cover"
+          className="h-[80vh] w-full object-cover"
         />
         <div className="absolute inset-0 grid h-full w-full items-center bg-black/40">
           <div className="w-3/4 pl-12 md:w-2/4 md:pl-20 lg:pl-32">

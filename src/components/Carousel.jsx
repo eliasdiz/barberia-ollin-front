@@ -20,37 +20,37 @@ function CarouselOne() {
       />
       <img
         src="https://i.postimg.cc/x15XVHRR/IMG-20231129-WA0045.jpg"
-        alt="image 3"
+        alt="image 4"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/HsGcwTnQ/IMG-20231129-WA0047.jpg"
-        alt="image 3"
+        alt="image 5"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/ydMdyT1V/IMG-20231129-WA0048.jpg"
-        alt="image 3"
+        alt="image 6"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/Bn4jzNxb/IMG-20231129-WA0049.jpg"
-        alt="image 3"
+        alt="image 7"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/g0BrnW1L/IMG-20231129-WA0050.jpg"
-        alt="image 3"
+        alt="image 8"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/vmmcYB2d/IMG-20231129-WA0051.jpg"
-        alt="image 3"
+        alt="image 9"
         className="h-full w-full object-cover"
       />
       <img
         src="https://i.postimg.cc/Zn6q7yn6/IMG-20231129-WA0052.jpg"
-        alt="image 3"
+        alt="image 10"
         className="h-full w-full object-cover"
       />
     </Carousel>

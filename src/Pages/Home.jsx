@@ -1,3 +1,4 @@
+import AddressAndHouts from "../components/AddressAndHouts";
 import Carousel from "../components/Carousel";
 import CarouselBarberos from "../components/CarouselBarberos";
 import HeaderMobile from "../components/headerMobile";
@@ -117,6 +118,7 @@ function App() {
         </div>
         <CarouselBarberos />
         </div>
+        <AddressAndHouts/>
         </>
     );
     }
