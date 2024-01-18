@@ -2,7 +2,7 @@ import { Carousel, Typography, Button } from "@material-tailwind/react";
 
 function CarouselBarberos() {
   return (
-    <div className='flex justify-center mt-7 xsm:mt-2'>
+    <div className='flex justify-center mt-7 xsm:mt-5'>
         <Carousel className="rounded-xl h-[85vh] w-4/5 xsm:h-[80vh] xxsm:h-[80vh]" autoplay loop>
       <div className="">
         <img
