@@ -32,7 +32,7 @@ function AddressAndHours() {
 
             
             {
-              horaActual > abierto && horaActual < cerrado ? 
+              horaActual >= abierto && horaActual <= cerrado ? 
               <>
                 <FaClock color='green' />
                 <Typography variant='h6' className='capitalize'>abierto</Typography>
