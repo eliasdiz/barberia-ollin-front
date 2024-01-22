@@ -3,6 +3,8 @@ import Carousel from "../components/Carousel";
 import CarouselBarberos from "../components/CarouselBarberos";
 import HeaderMobile from "../components/headerMobile";
 import { useState, useRef, useEffect } from "react";
+import { Button,Timeline } from "keep-react";
+import { ArrowRight } from "phosphor-react";
 
 function App() {
   const [showTable, setShowTable] = useState(false);
@@ -112,14 +114,15 @@ function App() {
               <p className="cursor-pointer">Abierto hoy 08:30 AM - 08:00 PM</p>
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAK5JREFUSEvtk9ENgzAMRO82KZvQUTpJu0lhElZhE1cnpRKkSWwqIbVS+EFCznv2mRAnPzyZjy5wE+4R/XhEZnYHMJNcS62a2QXASHKqjVJdcoI/AAh+zSUJ/pQAwK0maQnU3QJA750kg68kh8MT6EAC7SQJ9O68CVetew8KEk2jWFx4SFCYRJ9C8LAgk6CVeb4LN6LtAcVV+2W/WrJ7TQMFhyYI8D5KusBN7f8jegHXUToZ2Xag4AAAAABJRU5ErkJggg==" />
             </div>
+
             {showTable && tableContent}
           </div>
         </div>
         <CarouselBarberos />
-      </div>
-      <AddressAndHours />
-    </>
-  );
-}
+        </div>
+        <AddressAndHours />
+        </>
+    );
+    }
 
 export default App;
