@@ -1,10 +1,12 @@
 import { Carousel, Typography, Button } from "@material-tailwind/react";
+import { Link as Anchor } from "react-router-dom"
+
 
 function CarouselBarberos() {
   return (
     <div className='flex justify-center mt-7 xsm:mt-5'>
-        <Carousel className="rounded-xl h-[85vh] w-4/5 xsm:h-[80vh] xxsm:h-[80vh]" autoplay loop>
-      <div className="">
+        <Carousel className="rounded-xl h-[80vh] w-4/5 xsm:h-[80vh] xxsm:h-[80vh]" autoplay loop>
+      <div>
         <img
           src="https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt="image 1"
@@ -30,9 +32,11 @@ function CarouselBarberos() {
               and renews a weary spirit.
             </Typography>
             <div className="flex gap-2">
+            <Anchor to='/reservas'>
               <Button size="lg" color="white">
                 Reservar
               </Button>
+            </Anchor>
             </div>
           </div>
         </div>
@@ -63,9 +67,11 @@ function CarouselBarberos() {
               and renews a weary spirit.
             </Typography>
             <div className="flex gap-2">
+            <Anchor to='/reservas'>
               <Button size="lg" color="white">
                 Reservar
               </Button>
+            </Anchor>
             </div>
           </div>
         </div>
@@ -96,9 +102,11 @@ function CarouselBarberos() {
               and renews a weary spirit.
             </Typography>
             <div className="flex gap-2">
+            <Anchor to='/reservas'>
               <Button size="lg" color="white">
                 Reservar
               </Button>
+            </Anchor>
             </div>
           </div>
         </div>
