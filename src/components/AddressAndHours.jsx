@@ -9,7 +9,7 @@ function AddressAndHours() {
   const horaActual = new Date().getHours()
   const abierto = 8.5
   const cerrado = 20
-  console.log(horaActual)
+  // console.log(horaActual)
 
   return (
     <div id='divHorarios' className='flex justify-center text-white mt-10 md:hidden' >
@@ -29,8 +29,6 @@ function AddressAndHours() {
           className="flex-col justify-center items-center mt-10"
         >
           <div className='w-full flex justify-center items-center gap-2'>
-
-            
             {
               horaActual >= abierto && horaActual <= cerrado ? 
               <>
