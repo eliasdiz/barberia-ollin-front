@@ -3,8 +3,9 @@ import Carousel from "../components/Carousel";
 import CarouselBarberos from "../components/CarouselBarberos";
 import HeaderMobile from "../components/headerMobile";
 import { useState, useRef, useEffect } from "react";
-import { Button,Timeline } from "keep-react";
-import { ArrowRight } from "phosphor-react";
+import { FaClock } from "react-icons/fa";
+import { Typography } from '@material-tailwind/react';
+
 
 function App() {
   const [showTable, setShowTable] = useState(false);
@@ -66,6 +67,10 @@ function App() {
     </div>
   );
 
+  const horaActual = new Date().getHours()
+  const abierto = 8.5
+  const cerrado = 20
+
   return (
     <>
       <div className="max-w-screen-2xl mx-auto">
@@ -108,10 +113,20 @@ function App() {
             ></iframe>
             <div
               className="flex justify-between mt-5 items-center cursor-pointer"
-              onClick={toggleTable}
-            >
-              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAWxJREFUSEvFVYttQjEMvJukZZKWSVomKZ2kbFKYpGzi6p7syC8vH5CKGgkFgePz+S4O8eDFB+fHFMDMXgG8ANCuzxXA2fcLSX3vri6AmT0D+PKkoxwC3JPUvllNADP7AHD0aB08AViqdWAxeQLwDkCFLDEkP2uEDUCV/Ng6FEkc7C0Vs4lfAfiBH08g2sP+JiAx+nYmh3yuBlCQgkX3UNM1M9NvJEfMryR3cbYEmpn6KVFXARlkApBNUdhngBC22/cRgApJ+pUcGUDVi4V6KNds1g0AocWZ5H5pZxJK4ormrufpANhY0TVJJilt/lMAb9PKCBkgHHSzPRsuC6MUF94l8mwwzkQulyX7eJa0snF0oRglM8g+bl60EZiZhQuLg1YucoEEEqOia9dG74O9/lpp2LryIZSCh8OuulzN+BaAWOQJGQ/MxR8aJVKMHqEY191i/ufBqea9qo2K1Wutwmo20qdv8j02bcU+HOAXvmrVGU8PvfYAAAAASUVORK5CYII=" />
-              <p className="cursor-pointer">Abierto hoy 08:30 AM - 08:00 PM</p>
+              onClick={toggleTable} >
+              {
+              horaActual >= abierto && horaActual <= cerrado ? 
+              <>
+                <FaClock color='green' />
+                <Typography variant='h6' className='capitalize'>abierto</Typography>
+              </>
+              :
+              <>
+                <FaClock color='red' />
+                <Typography variant='h6' className='capitalize'>cerrado</Typography>
+              </>
+            }
+              <p className="cursor-pointer"> hoy 08:30 AM - 08:00 PM</p>
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAK5JREFUSEvtk9ENgzAMRO82KZvQUTpJu0lhElZhE1cnpRKkSWwqIbVS+EFCznv2mRAnPzyZjy5wE+4R/XhEZnYHMJNcS62a2QXASHKqjVJdcoI/AAh+zSUJ/pQAwK0maQnU3QJA750kg68kh8MT6EAC7SQJ9O68CVetew8KEk2jWFx4SFCYRJ9C8LAgk6CVeb4LN6LtAcVV+2W/WrJ7TQMFhyYI8D5KusBN7f8jegHXUToZ2Xag4AAAAABJRU5ErkJggg==" />
             </div>
 
