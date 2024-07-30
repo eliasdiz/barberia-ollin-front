@@ -53,7 +53,7 @@ export default function PanelUsuarios() {
                 <CardHeader floated={false} shadow={false} className="rounded-none">
                     <div className="mb-8 flex items-center justify-between gap-8">
                     <div>
-                        <Typography variant="h5" color="blue-gray" className='uppercase'>
+                        <Typography variant="h5" color="blue-gray" className='uppercase font-semibold'>
                             lista de usuarios
                         </Typography>
                     </div>
