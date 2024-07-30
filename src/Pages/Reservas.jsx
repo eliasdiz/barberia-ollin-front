@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderReservas from "../components/headerReservas";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -6,10 +6,11 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 
+
 function Reservas() {
   const steps = ["Servicios", "Fecha y Hora", "Información", "Detalles"];
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -23,7 +24,9 @@ function Reservas() {
     setActiveStep(0);
   };
 
+
   return (
+  
     <>
       <HeaderReservas />
       <div className=" mt-6 max-w-screen-xl mx-auto">

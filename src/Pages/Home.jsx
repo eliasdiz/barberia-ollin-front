@@ -1,7 +1,7 @@
 import AddressAndHours from "../components/AddressAndHours";
 import Carousel from "../components/Carousel";
 import CarouselBarberos from "../components/CarouselBarberos";
-import HeaderMobile from "../components/headerMobile";
+import HeaderMobile from "../components/HeaderMobile";
 import { useState, useRef, useEffect } from "react";
 import { FaClock } from "react-icons/fa";
 import { Typography } from '@material-tailwind/react';
