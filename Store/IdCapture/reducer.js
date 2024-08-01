@@ -1,6 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
 import actions from "./actions";
-import { red } from "@mui/material/colors";
 
 const { idCapture } = actions
 
