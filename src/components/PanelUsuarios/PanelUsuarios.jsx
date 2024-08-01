@@ -2,8 +2,9 @@ import { Card, CardHeader, Typography, Tabs, TabsHeader, Tab, Input,} from '@mat
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaRegTrashAlt } from "react-icons/fa";
-import { FaRegEye,FaMagnifyingGlass } from "react-icons/fa6";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiCancel } from "react-icons/gi";
+import CardUsuario from '../CardUsuario/CardUsuario';
 
 
 
@@ -51,12 +52,10 @@ export default function PanelUsuarios() {
         <div className='w-full flex justify-center md:w-[60%] p-1'>
             <Card className="h-full w-full overflow-scroll ">
                 <CardHeader floated={false} shadow={false} className="rounded-none">
-                    <div className="mb-8 flex items-center justify-between gap-8">
-                    <div>
+                    <div className='w-full text-center p-2 '>
                         <Typography variant="h5" color="blue-gray" className='uppercase font-semibold'>
-                            lista de usuarios
+                            usuarios
                         </Typography>
-                    </div>
                     </div>
                     <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                         <Tabs value="all" className="w-full md:w-max" >
@@ -153,7 +152,7 @@ export default function PanelUsuarios() {
 
                                     <td className='p-2 border-b border-blue-gray-50 '>
                                         <div className='flex gap-2'>
-                                            <FaRegEye className='w-5 h-5 text-cyan-500' />
+                                            <CardUsuario/>
                                             <FaRegTrashAlt className='w-5 h-5 text-red-400' />
                                         </div>
                                     </td>
