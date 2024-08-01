@@ -5,15 +5,18 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiCancel } from "react-icons/gi";
 import CardUsuario from '../CardUsuario/CardUsuario';
+import { useDispatch, useSelector } from 'react-redux';
+import { urlLocal } from '../../urlHost';
+import actionsIdCapture from '../../../Store/IdCapture/actions'
 
 
+const { idCapture } = actionsIdCapture
 
 
 export default function PanelUsuarios() {
 
-    const url = 'http://localhost:8080/'
+    const dispatch = useDispatch()
     const [ usuarios, setUsuarios ] = useState([])
-    const [ idUsuario, setIdUsuario ] = useState('')
     const [ valueParametro, setValuePrametro ] = useState('')
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
@@ -26,28 +29,21 @@ export default function PanelUsuarios() {
         setParametro(valueParametro)
     }
 
-    const handleCheck = async(e) => {
-        let check = e.target.checked
-        let data = {
-            barbero: check
-        }
-        try {
-            await axios.put(`${url}users/usuarios/rol/${idUsuario}`,data)
-        } catch (error) {
-            console.log(error)
-        }
+    const handleEditar = (id) => {
+        dispatch(idCapture({ id: id}))
     }
 
 
     useEffect(
         () => {
-            axios.get(`${url}users/usuarios/?parametro=${parametro}&nombres=${nombres}`)
+            axios.get(`${urlLocal}users/usuarios/?parametro=${parametro}&nombres=${nombres}`)
                 .then( res => setUsuarios(res.data.usuarios))
                 .catch( error => console.log(error))
         },
         [parametro,nombres]
     )
     
+
     return (
         <div className='w-full flex justify-center md:w-[60%] p-1'>
             <Card className="h-full w-full overflow-scroll ">
@@ -152,7 +148,12 @@ export default function PanelUsuarios() {
 
                                     <td className='p-2 border-b border-blue-gray-50 '>
                                         <div className='flex gap-2'>
-                                            <CardUsuario/>
+                                            <span
+                                                onClick={() => handleEditar(item._id)}
+                                            >
+                                                <CardUsuario/>
+                                            </span>
+
                                             <FaRegTrashAlt className='w-5 h-5 text-red-400' />
                                         </div>
                                     </td>
