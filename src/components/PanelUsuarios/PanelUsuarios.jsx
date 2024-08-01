@@ -1,13 +1,14 @@
-import { Card, CardHeader, Typography, Tabs, TabsHeader, Tab, Input,} from '@material-tailwind/react'
+import { Card, CardHeader, Typography, Tabs, TabsHeader, Tab, Input, Button,} from '@material-tailwind/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiCancel } from "react-icons/gi";
 import CardUsuario from '../CardUsuario/CardUsuario';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { urlLocal } from '../../urlHost';
 import actionsIdCapture from '../../../Store/IdCapture/actions'
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const { idCapture } = actionsIdCapture
@@ -22,8 +23,7 @@ export default function PanelUsuarios() {
     const [ nombres, setNombres ] = useState('')
 
     const categorias = [{label: "barberos",value: "barberos",},{label: "clientes",value: "clientes",}];
-
-    const tableHead = [ '#','nombre ','telefono','acc'] 
+    const tableHead = [ 'nombre ','telefono','acc'] 
 
     const handleParametro = () => {
         setParametro(valueParametro)
@@ -33,10 +33,64 @@ export default function PanelUsuarios() {
         dispatch(idCapture({ id: id}))
     }
 
+    const handleEliminar = (id) => {
+        let usuario = usuarios?.find(item => item._id === id)
+        usuario &&
+        toast((t) => (
+            <div className='flex flex-col items-center gap-2 capitalize text-black'>
+                <Typography variant='lead' className='text-center'>eliminar {usuario?.nombres}?</Typography>
 
+                <div className='flex items-center gap-3'>
+                    <Button 
+                        className='bg-green-600'
+                        size='sm'
+                        onClick={() => {
+                            let promesa = axios.delete(`${urlLocal}usuarios/${id}`)
+                            toast.dismiss(t.id)
+                            toast.promise(
+                                promesa,
+                                {
+                                    loading: 'eliminando usuario',
+                                    success: (res) => {
+                                        return <>{res.data.message}</>
+                                    },
+                                    error: (error) => {
+                                        console.log(error)
+                                        return <>{error.response.data.message}</>
+                                    }
+                                },{
+                                    duration: 1200,
+                                    style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
+                                    }
+                                }
+                            )
+                        }}
+                    >
+                        si
+                    </Button>
+
+                    <Button 
+                        className='bg-red-700'
+                        size='sm'
+                        onClick={() => toast.dismiss(t.id)}
+                    >
+                        no
+                    </Button>
+
+                </div>
+            </div>
+        ),{
+            duration: Infinity,
+            style: {
+                borderRadius: '10px',
+                background: '#94a3b8',
+            }
+        })
+    }
+    
     useEffect(
         () => {
-            axios.get(`${urlLocal}users/usuarios/?parametro=${parametro}&nombres=${nombres}`)
+            axios.get(`${urlLocal}usuarios/?parametro=${parametro}&nombres=${nombres}`)
                 .then( res => setUsuarios(res.data.usuarios))
                 .catch( error => console.log(error))
         },
@@ -45,7 +99,7 @@ export default function PanelUsuarios() {
     
 
     return (
-        <div className='w-full flex justify-center md:w-[60%] p-1'>
+        <div className='w-full flex justify-center md:w-[60%] p-2'>
             <Card className="h-full w-full overflow-scroll ">
                 <CardHeader floated={false} shadow={false} className="rounded-none">
                     <div className='w-full text-center p-2 '>
@@ -122,16 +176,6 @@ export default function PanelUsuarios() {
                                             color="cyan"
                                             className="font-medium capitalize"
                                         >
-                                            {i+1}
-                                        </Typography>
-                                    </td>
-
-                                    <td className='p-2 border-b border-blue-gray-50'>
-                                        <Typography
-                                            variant="h6"
-                                            color="cyan"
-                                            className="font-medium capitalize"
-                                        >
                                             {item.nombres} {item.apellidos}
                                         </Typography>
                                     </td>
@@ -148,13 +192,13 @@ export default function PanelUsuarios() {
 
                                     <td className='p-2 border-b border-blue-gray-50 '>
                                         <div className='flex gap-2'>
-                                            <span
-                                                onClick={() => handleEditar(item._id)}
-                                            >
+                                            <span onClick={() => handleEditar(item._id)}>
                                                 <CardUsuario/>
                                             </span>
 
-                                            <FaRegTrashAlt className='w-5 h-5 text-red-400' />
+                                            <span onClick={() => handleEliminar(item._id)}>
+                                                <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
+                                            </span>
                                         </div>
                                     </td>
 
@@ -163,6 +207,7 @@ export default function PanelUsuarios() {
                         }
                     </tbody>
                 </table>
+            <Toaster />
             </Card>
         </div>
     )

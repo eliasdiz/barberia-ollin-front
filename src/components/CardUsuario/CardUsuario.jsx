@@ -22,7 +22,7 @@ export default function CardUsuario() {
 
     useEffect(
         () => {
-            axios.get(`${urlLocal}users/usuarios/?parametro=&nombres=`)
+            axios.get(`${urlLocal}usuarios/?parametro=&nombres=`)
                 .then( res => setUsuarios(res.data.usuarios))
                 .catch( error => console.log(error))
         },
@@ -40,15 +40,15 @@ export default function CardUsuario() {
                 {
                     id ? 
                         <>
-                            <Card className="w-full p-6 grid gap-6 md:max-w-md bg-blue-gray-300 text-black border border-gray-300">
+                            <Card className="p-3 gap-6 md:max-w-md bg-blue-gray-300 text-black rounded-md border border-gray-200">
                                 <div  className='w-full flex justify-end cursor-pointer'>
                                     <MdClose className='w-6 h-6 ' onClick={handleOpen} />
                                 </div>
 
-                                <div className="flex flex-col md:flex-row items-center gap-5 relative">
+                                <div className="flex flex-col md:flex-row items-center gap-5 ">
                                     <img src={fotoPerfil} alt='foto perfil' className="w-16 h-16 rounded-full border-2 border-gray-300" />
 
-                                    <div className="grid gap-1 flex-1 bg-gray-100 p-4 rounded-lg shadow-sm">
+                                    <div className="flex flex-col gap-2 bg-gray-100 p-3 rounded-lg shadow-sm">
                                         <Typography variant="h5" className="text-2xl font-bold capitalize text-gray-800">
                                             {usuario?.nombres} {usuario?.apellidos}
                                         </Typography>
