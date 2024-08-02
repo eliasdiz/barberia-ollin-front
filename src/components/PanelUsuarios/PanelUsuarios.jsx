@@ -37,6 +37,7 @@ export default function PanelUsuarios() {
     }
 
     const handleEliminar = (id) => {
+
         let usuario = usuarios?.find(item => item._id === id)
         usuario &&
         toast((t) => (
@@ -91,6 +92,54 @@ export default function PanelUsuarios() {
         })
     }
 
+    //             <div className='flex items-center gap-3'>
+    //                 <Button 
+    //                     className='bg-green-600'
+    //                     size='sm'
+    //                     onClick={() => {
+    //                         let promesa = axios.delete(`${urlLocal}usuarios/${id}`)
+    //                         toast.dismiss(t.id)
+    //                         toast.promise(
+    //                             promesa,
+    //                             {
+    //                                 loading: 'eliminando usuario',
+    //                                 success: (res) => {
+    //                                     return <>{res.data.message}</>
+    //                                 },
+    //                                 error: (error) => {
+    //                                     console.log(error)
+    //                                     return <>{error.response.data.message}</>
+    //                                 }
+    //                             },{
+    //                                 duration: 1200,
+    //                                 style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
+    //                                 }
+    //                             }
+    //                         )
+    //                     }}
+    //                 >
+    //                     si
+    //                 </Button>
+
+    //                 <Button 
+    //                     className='bg-red-700'
+    //                     size='sm'
+    //                     onClick={() => toast.dismiss(t.id)}
+    //                 >
+    //                     no
+    //                 </Button>
+
+    //             </div>
+    //         </div>
+    //     ),{
+    //         duration: Infinity,
+    //         style: {
+    //             borderRadius: '10px',
+    //             background: '#94a3b8',
+    //         }
+    //     })
+    // }
+    
     useEffect(
         () => {
             dispatch(getTodos({parametro:parametro, nombres: nombres}))
