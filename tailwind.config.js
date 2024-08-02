@@ -10,9 +10,9 @@ module.exports = withMT({
         'card-foreground': '#ffffff', // Color de texto en el modo oscuro
         'muted-foreground': '#888888' // Color de texto atenuado
       },
-      screens:{
+      screens: {
         'xxsm': {'min': '320px', 'max': '488px'},
-        'xsm':{'min': '489px', 'max': '768px'},
+        'xsm': {'min': '489px', 'max': '768px'},
         'md': {'min': '769px', 'max': '4000px'}
       },
     },
