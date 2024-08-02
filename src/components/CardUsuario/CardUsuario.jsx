@@ -1,13 +1,11 @@
 import { Button, Card, Dialog, Switch, Typography } from '@material-tailwind/react';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { HiOutlineMail } from "react-icons/hi";
 import { TbUserEdit } from "react-icons/tb";
 import fotoPerfil from '../../assets/usuario.png'
 import { FaRegEye } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
-import { urlLocal } from '../../urlHost';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 
@@ -15,19 +13,10 @@ export default function CardUsuario() {
 
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(!open)
-    const [ usuarios, setUsuarios ] = useState([])
+    const usuarios = useSelector(store => store.getUsuariosAll.usuarios)
     const id = useSelector(store => store.idCapture.id)
     const usuario = usuarios?.find(item => item._id === id)
 
-
-    useEffect(
-        () => {
-            axios.get(`${urlLocal}usuarios/?parametro=&nombres=`)
-                .then( res => setUsuarios(res.data.usuarios))
-                .catch( error => console.log(error))
-        },
-        []
-    )
 
     return (
         <>

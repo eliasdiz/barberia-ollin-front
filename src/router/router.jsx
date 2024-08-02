@@ -3,7 +3,7 @@ import Layout from '../layouts/Main.jsx';
 import Home from '../Pages/Home.jsx'
 import Reservas from "../Pages/Reservas.jsx";
 import Admin from "../Pages/Admin.jsx";
-
+import AdminLayout from '../layouts/AdminLayout.jsx'
 const router = createBrowserRouter([
     {
         path: '/', element: <Layout />,
@@ -13,7 +13,10 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path: '/admin', element: <Admin />,
+        path: '/admin', element: <AdminLayout />,
+        children: [
+            { path: '/admin', element: <Admin />}
+        ]
     },
 ]);
 

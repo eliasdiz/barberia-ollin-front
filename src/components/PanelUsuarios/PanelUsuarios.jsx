@@ -5,19 +5,22 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GiCancel } from "react-icons/gi";
 import CardUsuario from '../CardUsuario/CardUsuario';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { urlLocal } from '../../urlHost';
 import actionsIdCapture from '../../../Store/IdCapture/actions'
 import toast, { Toaster } from 'react-hot-toast';
+import actionsUsuarios from '../../../Store/Usuarios/actions'
+import { useNavigate } from 'react-router-dom';
 
 
+const { getTodos } = actionsUsuarios
 const { idCapture } = actionsIdCapture
 
 
 export default function PanelUsuarios() {
 
     const dispatch = useDispatch()
-    const [ usuarios, setUsuarios ] = useState([])
+    const usuarios = useSelector(store => store.getUsuariosAll.usuarios)
     const [ valueParametro, setValuePrametro ] = useState('')
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
@@ -34,6 +37,7 @@ export default function PanelUsuarios() {
     }
 
     const handleEliminar = (id) => {
+
         let usuario = usuarios?.find(item => item._id === id)
         usuario &&
         toast((t) => (
@@ -52,14 +56,14 @@ export default function PanelUsuarios() {
                                 {
                                     loading: 'eliminando usuario',
                                     success: (res) => {
+                                        dispatch(getTodos({parametro:parametro, nombres:nombres}))
                                         return <>{res.data.message}</>
                                     },
                                     error: (error) => {
-                                        console.log(error)
                                         return <>{error.response.data.message}</>
                                     }
                                 },{
-                                    duration: 1200,
+                                    success: { duration: 1200} ,
                                     style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
                                     }
                                 }
@@ -87,23 +91,70 @@ export default function PanelUsuarios() {
             }
         })
     }
+
+    //             <div className='flex items-center gap-3'>
+    //                 <Button 
+    //                     className='bg-green-600'
+    //                     size='sm'
+    //                     onClick={() => {
+    //                         let promesa = axios.delete(`${urlLocal}usuarios/${id}`)
+    //                         toast.dismiss(t.id)
+    //                         toast.promise(
+    //                             promesa,
+    //                             {
+    //                                 loading: 'eliminando usuario',
+    //                                 success: (res) => {
+    //                                     return <>{res.data.message}</>
+    //                                 },
+    //                                 error: (error) => {
+    //                                     console.log(error)
+    //                                     return <>{error.response.data.message}</>
+    //                                 }
+    //                             },{
+    //                                 duration: 1200,
+    //                                 style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
+    //                                 }
+    //                             }
+    //                         )
+    //                     }}
+    //                 >
+    //                     si
+    //                 </Button>
+
+    //                 <Button 
+    //                     className='bg-red-700'
+    //                     size='sm'
+    //                     onClick={() => toast.dismiss(t.id)}
+    //                 >
+    //                     no
+    //                 </Button>
+
+    //             </div>
+    //         </div>
+    //     ),{
+    //         duration: Infinity,
+    //         style: {
+    //             borderRadius: '10px',
+    //             background: '#94a3b8',
+    //         }
+    //     })
+    // }
     
     useEffect(
         () => {
-            axios.get(`${urlLocal}usuarios/?parametro=${parametro}&nombres=${nombres}`)
-                .then( res => setUsuarios(res.data.usuarios))
-                .catch( error => console.log(error))
+            dispatch(getTodos({parametro:parametro, nombres: nombres}))
         },
-        [parametro,nombres]
+        [dispatch,parametro,nombres]
     )
     
+    console.log()
 
     return (
-        <div className='w-full flex justify-center md:w-[60%] p-2'>
-            <Card className="h-full w-full overflow-scroll ">
+        <div className='w-full flex justify-center md:w-[60%] p-1 '>
+            <Card className="h-full w-full overflow-scroll">
                 <CardHeader floated={false} shadow={false} className="rounded-none">
                     <div className='w-full text-center p-2 '>
-                        <Typography variant="h5" color="blue-gray" className='uppercase font-semibold'>
+                        <Typography  variant="h5" color="blue-gray" className='uppercase font-serif'>
                             usuarios
                         </Typography>
                     </div>
@@ -138,77 +189,83 @@ export default function PanelUsuarios() {
                                 :
                                 <Input
                                     label="buscar"
-                                    icon={<GiCancel className="h-5 w-5 cursor-pointer" />}
+                                    icon={
+                                            <GiCancel 
+                                                className="h-5 w-5 cursor-pointer" 
+                                                onClick={() => setNombres('')}
+                                            />
+                                        }
                                     onChange={(e) => setNombres(e.target.value)}
-                                    onClick={() => setNombres('')}
                                     value={nombres}
                                 />
                         }
                         </div>
                     </div>
                 </CardHeader>
-                <table className="w-full min-w-max table-auto text-left bg-gray-600">
-                    <thead>
-                        <tr>
+                <div className='overflow-y-auto max-h-[36rem]'>
+                    <table className="w-full min-w-max table-auto text-left bg-gray-600">
+                        <thead>
+                            <tr className='sticky top-0 z-50'>
+                                {
+                                    tableHead.map((item,i) => (
+                                        <th
+                                            key={i}
+                                            className="border-b border-blue-gray-100 bg-blue-gray-50 p-3 text-left"
+                                        >
+                                            <Typography
+                                                variant="h6"
+                                                color="blue-gray"
+                                                className="font-sans leading-none opacity-70 capitalize"
+                                            >{item}</Typography>
+                                        </th>
+                                    ))
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
                             {
-                                tableHead.map((item,i) => (
-                                    <th
-                                        key={i}
-                                        className="border-b border-blue-gray-100 bg-blue-gray-50 p-3 text-left"
-                                    >
-                                        <Typography
-                                            variant="h6"
-                                            color="blue-gray"
-                                            className="font-sans leading-none opacity-70 capitalize"
-                                        >{item}</Typography>
-                                    </th>
+                                usuarios?.map((item,i) => (
+                                    <tr key={i}>
+                                        <td className='p-2 border-b border-blue-gray-50'>
+                                            <Typography
+                                                variant="h6"
+                                                color="cyan"
+                                                className="font-medium capitalize"
+                                            >
+                                                {item.nombres} {item.apellidos}
+                                            </Typography>
+                                        </td>
+
+                                        <td className='p-2 border-b border-blue-gray-50 text-left'>
+                                            <Typography
+                                                variant="h6"
+                                                color="cyan"
+                                                className="font-medium capitalize"
+                                            >
+                                                {item.telefono}
+                                            </Typography>
+                                        </td>
+
+                                        <td className='p-2 border-b border-blue-gray-50 '>
+                                            <div className='flex justify-center gap-2'>
+                                                <span onClick={() => handleEditar(item._id)}>
+                                                    <CardUsuario/>
+                                                </span>
+
+                                                <span onClick={() => handleEliminar(item._id)}>
+                                                    <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                    </tr>
                                 ))
                             }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            usuarios?.map((item,i) => (
-                                <tr key={i}>
-                                    <td className='p-2 border-b border-blue-gray-50'>
-                                        <Typography
-                                            variant="h6"
-                                            color="cyan"
-                                            className="font-medium capitalize"
-                                        >
-                                            {item.nombres} {item.apellidos}
-                                        </Typography>
-                                    </td>
-
-                                    <td className='p-2 border-b border-blue-gray-50 text-left'>
-                                        <Typography
-                                            variant="h6"
-                                            color="cyan"
-                                            className="font-medium capitalize"
-                                        >
-                                            {item.telefono}
-                                        </Typography>
-                                    </td>
-
-                                    <td className='p-2 border-b border-blue-gray-50 '>
-                                        <div className='flex gap-2'>
-                                            <span onClick={() => handleEditar(item._id)}>
-                                                <CardUsuario/>
-                                            </span>
-
-                                            <span onClick={() => handleEliminar(item._id)}>
-                                                <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
-                                            </span>
-                                        </div>
-                                    </td>
-
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            <Toaster />
+                        </tbody>
+                    </table>
+                </div>
             </Card>
+            <Toaster />
         </div>
     )
 }
