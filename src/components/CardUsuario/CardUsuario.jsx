@@ -44,14 +44,14 @@ export default function CardUsuario() {
 
                                         <div className="flex items-center gap-2 text-gray-600">
                                             <HiOutlineDevicePhoneMobile className="w-6 h-6 text-blue-500" />
-                                            <Typography variant="lead">
+                                            <Typography className='text-xl font-semibold'>
                                                 {usuario?.telefono} 
                                             </Typography>
                                         </div>
 
                                         <div className="flex items-center gap-2 text-gray-600">
                                             <HiOutlineMail className="w-6 h-6 text-red-500" />
-                                            <Typography variant="lead">
+                                            <Typography  className='text-lg font-semibold'>
                                                 {usuario?.email} 
                                             </Typography>
                                         </div>

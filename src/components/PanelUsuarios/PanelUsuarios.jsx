@@ -1,4 +1,4 @@
-import { Card, CardHeader, Typography, Tabs, TabsHeader, Tab, Input, Button,} from '@material-tailwind/react'
+import { Typography, Tabs, TabsHeader, Tab, Input, Button,} from '@material-tailwind/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -10,7 +10,6 @@ import { urlLocal } from '../../urlHost';
 import actionsIdCapture from '../../../Store/IdCapture/actions'
 import toast, { Toaster } from 'react-hot-toast';
 import actionsUsuarios from '../../../Store/Usuarios/actions'
-import { useNavigate } from 'react-router-dom';
 
 
 const { getTodos } = actionsUsuarios
@@ -91,54 +90,6 @@ export default function PanelUsuarios() {
             }
         })
     }
-
-    //             <div className='flex items-center gap-3'>
-    //                 <Button 
-    //                     className='bg-green-600'
-    //                     size='sm'
-    //                     onClick={() => {
-    //                         let promesa = axios.delete(`${urlLocal}usuarios/${id}`)
-    //                         toast.dismiss(t.id)
-    //                         toast.promise(
-    //                             promesa,
-    //                             {
-    //                                 loading: 'eliminando usuario',
-    //                                 success: (res) => {
-    //                                     return <>{res.data.message}</>
-    //                                 },
-    //                                 error: (error) => {
-    //                                     console.log(error)
-    //                                     return <>{error.response.data.message}</>
-    //                                 }
-    //                             },{
-    //                                 duration: 1200,
-    //                                 style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
-    //                                 }
-    //                             }
-    //                         )
-    //                     }}
-    //                 >
-    //                     si
-    //                 </Button>
-
-    //                 <Button 
-    //                     className='bg-red-700'
-    //                     size='sm'
-    //                     onClick={() => toast.dismiss(t.id)}
-    //                 >
-    //                     no
-    //                 </Button>
-
-    //             </div>
-    //         </div>
-    //     ),{
-    //         duration: Infinity,
-    //         style: {
-    //             borderRadius: '10px',
-    //             background: '#94a3b8',
-    //         }
-    //     })
-    // }
     
     useEffect(
         () => {
@@ -150,15 +101,16 @@ export default function PanelUsuarios() {
     console.log()
 
     return (
-        <div className='w-full flex justify-center md:w-[60%] p-1 '>
-            <Card className="h-full w-full overflow-scroll">
-                <CardHeader floated={false} shadow={false} className="rounded-none">
-                    <div className='w-full text-center p-2 '>
-                        <Typography  variant="h5" color="blue-gray" className='uppercase font-serif'>
-                            usuarios
-                        </Typography>
-                    </div>
-                    <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+        <div className='w-full h-[87vh] md:w-[60%]'>
+            <div className='flex flex-col items-center bg-white rounded-t-2xl'>
+                <div className='p-2 '>
+                    <Typography  variant="h4" color="blue-gray" className='uppercase font-serif text-center'>
+                        usuarios
+                    </Typography>
+                </div>
+
+                <div className='w-full flex flex-col items-center md:flex-row md:justify-center  '>
+                    <div className='flex justify-center xxsm:w-[95%] xsm:w-[50%] md:w-[40%] p-2 '>
                         <Tabs value="all" className="w-full md:w-max" >
                             <TabsHeader>
                             {
@@ -177,6 +129,9 @@ export default function PanelUsuarios() {
                             
                             </TabsHeader>
                         </Tabs>
+                    </div>
+
+                    <div className="flex flex-col items-center justify-between gap-4 md:flex-row xxsm:w-[95%] xsm:w-[50%] md:w-[40%] ">
                         <div className="w-full md:w-72 p-2 capitalize">
                         {
                             nombres === '' ?
@@ -201,70 +156,71 @@ export default function PanelUsuarios() {
                         }
                         </div>
                     </div>
-                </CardHeader>
-                <div className='overflow-y-auto max-h-[36rem]'>
-                    <table className="w-full min-w-max table-auto text-left bg-gray-600">
-                        <thead>
-                            <tr className='sticky top-0 z-50'>
-                                {
-                                    tableHead.map((item,i) => (
-                                        <th
-                                            key={i}
-                                            className="border-b border-blue-gray-100 bg-blue-gray-50 p-3 text-left"
-                                        >
-                                            <Typography
-                                                variant="h6"
-                                                color="blue-gray"
-                                                className="font-sans leading-none opacity-70 capitalize"
-                                            >{item}</Typography>
-                                        </th>
-                                    ))
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                usuarios?.map((item,i) => (
-                                    <tr key={i}>
-                                        <td className='p-2 border-b border-blue-gray-50'>
-                                            <Typography
-                                                variant="h6"
-                                                color="cyan"
-                                                className="font-medium capitalize"
-                                            >
-                                                {item.nombres} {item.apellidos}
-                                            </Typography>
-                                        </td>
-
-                                        <td className='p-2 border-b border-blue-gray-50 text-left'>
-                                            <Typography
-                                                variant="h6"
-                                                color="cyan"
-                                                className="font-medium capitalize"
-                                            >
-                                                {item.telefono}
-                                            </Typography>
-                                        </td>
-
-                                        <td className='p-2 border-b border-blue-gray-50 '>
-                                            <div className='flex justify-center gap-2'>
-                                                <span onClick={() => handleEditar(item._id)}>
-                                                    <CardUsuario/>
-                                                </span>
-
-                                                <span onClick={() => handleEliminar(item._id)}>
-                                                    <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
-                                                </span>
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
                 </div>
-            </Card>
+
+            </div>
+            <table className="w-full min-w-max table-auto text-left bg-gray-600">
+                <thead>
+                    <tr 
+                        // className='sticky top-0 z-50'
+                    >
+                        {
+                            tableHead.map((item,i) => (
+                                <th
+                                    key={i}
+                                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-3 text-left"
+                                >
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="font-sans leading-none opacity-70 capitalize"
+                                    >{item}</Typography>
+                                </th>
+                            ))
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        usuarios?.map((item,i) => (
+                            <tr key={i}>
+                                <td className='p-2 border-b border-blue-gray-50'>
+                                    <Typography
+                                        variant="h6"
+                                        color="cyan"
+                                        className="font-medium capitalize"
+                                    >
+                                        {item.nombres} {item.apellidos}
+                                    </Typography>
+                                </td>
+
+                                <td className='p-2 border-b border-blue-gray-50 text-left'>
+                                    <Typography
+                                        variant="h6"
+                                        color="cyan"
+                                        className="font-medium capitalize"
+                                    >
+                                        {item.telefono}
+                                    </Typography>
+                                </td>
+
+                                <td className='p-2 border-b border-blue-gray-50 '>
+                                    <div className='flex justify-center gap-2'>
+                                        <span onClick={() => handleEditar(item._id)}>
+                                            <CardUsuario/>
+                                        </span>
+
+                                        <span onClick={() => handleEliminar(item._id)}>
+                                            <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
+                                        </span>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
             <Toaster />
         </div>
     )
