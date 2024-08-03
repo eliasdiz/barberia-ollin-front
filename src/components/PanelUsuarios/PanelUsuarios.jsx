@@ -19,7 +19,7 @@ const { idCapture } = actionsIdCapture
 export default function PanelUsuarios() {
 
     const dispatch = useDispatch()
-    const usuarios = useSelector(store => store.getUsuariosAll.usuarios)
+    const usuarios = useSelector(store => store.getUsuarios.usuarios)
     const [ valueParametro, setValuePrametro ] = useState('')
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
@@ -101,7 +101,7 @@ export default function PanelUsuarios() {
     console.log()
 
     return (
-        <div className='w-full h-[87vh] md:w-[60%]'>
+        <div className='w-full h-[87vh] md:w-[60%] p-1'>
             <div className='flex flex-col items-center bg-white rounded-t-2xl'>
                 <div className='p-2 '>
                     <Typography  variant="h4" color="blue-gray" className='uppercase font-serif text-center'>
@@ -161,9 +161,7 @@ export default function PanelUsuarios() {
             </div>
             <table className="w-full min-w-max table-auto text-left bg-gray-600">
                 <thead>
-                    <tr 
-                        // className='sticky top-0 z-50'
-                    >
+                    <tr>
                         {
                             tableHead.map((item,i) => (
                                 <th

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import {Navbar,Collapse,Typography,Button,IconButton,List,ListItem,Menu,MenuHandler,MenuList,MenuItem,} from "@material-tailwind/react";
-import {ChevronDownIcon,Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
-import {Bars4Icon,GlobeAmericasIcon,NewspaperIcon,PhoneIcon,RectangleGroupIcon,SquaresPlusIcon,SunIcon,TagIcon,UserGroupIcon,} from "@heroicons/react/24/solid";
+import { Navbar,Collapse,Typography,Button,IconButton,List,ListItem} from "@material-tailwind/react";
+import { Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -11,25 +10,35 @@ import { BsFillPeopleFill } from "react-icons/bs";
 export default function NavbarAdmin() {
             
     const [openNav, setOpenNav] = React.useState(false);
+    const navigate = useNavigate()
+    const token = localStorage.getItem('token')
+
+    const handleInicioseion = () => {
+        navigate('/inicio-sesion')
+        setOpenNav(false)
+    }
     
+    const handleInicio = () => {
+        navigate('/')
+        setOpenNav(false)
+    }
+
     function NavList() {
     return (
         <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
-            <Link to={'/'}>
-                <ListItem className=" ">
-                    <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
-                    >
-                        <HiMiniHome className="h-4 w-4" />
-                        inicio
-                    </Typography>
-                </ListItem>
-            </Link>
+            <ListItem onClick={handleInicio}>
+                <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="flex items-center gap-2 font-medium capitalize"
+                >
+                    <HiMiniHome className="h-4 w-4" />
+                    inicio
+                </Typography>
+            </ListItem>
 
             <Link to={'/admin/usuarios'}>
-                <ListItem className=" ">
+                <ListItem>
                     <Typography
                         variant="small"
                         color="blue-gray"
@@ -66,13 +75,25 @@ export default function NavbarAdmin() {
                 <div className="hidden lg:block">
                 <NavList />
                 </div>
+
                 <div className="hidden gap-2 lg:flex">
-                <Button variant="gradient" size="sm" color="blue-gray">
-                    iniciar sesion
-                </Button>
-                <Button variant="gradient" size="sm">
-                    cerrar sesion
-                </Button>
+                    {
+                        !token  ?
+                        <Button 
+                            variant="gradient" 
+                            size="sm" 
+                            color="blue-gray" 
+                            fullWidth
+                            onClick={handleInicioseion}
+                        >
+                            iniciar sesion
+                        </Button>
+                        :
+                        <></>
+                    }
+                    <Button variant="gradient" size="sm">
+                        cerrar sesion
+                    </Button>
                 </div>
                 <IconButton
                 variant="text"
@@ -90,9 +111,20 @@ export default function NavbarAdmin() {
             <Collapse open={openNav}>
                 <NavList />
                 <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-                <Button variant="gradient" size="sm" color="blue-gray" fullWidth>
-                    iniciar sesion
-                </Button>
+                    {
+                        !token  ?
+                        <Button 
+                            variant="gradient" 
+                            size="sm" 
+                            color="blue-gray" 
+                            fullWidth
+                            onClick={handleInicioseion}
+                        >
+                            iniciar sesion
+                        </Button>
+                        :
+                        <></>
+                    }
                 <Button variant="gradient" size="sm" fullWidth>
                     cerrar sesion
                 </Button>

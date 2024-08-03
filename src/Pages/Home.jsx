@@ -5,6 +5,7 @@ import HeaderMobile from "../components/HeaderMobile";
 import { useState, useRef, useEffect } from "react";
 import { FaClock } from "react-icons/fa";
 import { Typography } from '@material-tailwind/react';
+import { useSelector } from "react-redux";
 
 
 function App() {
@@ -70,6 +71,8 @@ function App() {
   const horaActual = new Date().getHours()
   const abierto = 8.5
   const cerrado = 20
+
+
 
   return (
     <>

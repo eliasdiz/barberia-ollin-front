@@ -13,7 +13,7 @@ export default function CardUsuario() {
 
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(!open)
-    const usuarios = useSelector(store => store.getUsuariosAll.usuarios)
+    const usuarios = useSelector(store => store.getUsuarios.usuarios)
     const id = useSelector(store => store.idCapture.id)
     const usuario = usuarios?.find(item => item._id === id)
 
