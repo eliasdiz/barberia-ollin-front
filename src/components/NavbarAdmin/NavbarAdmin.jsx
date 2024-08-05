@@ -1,50 +1,94 @@
 import React, { useEffect } from "react";
-import {Navbar,Collapse,Typography,Button,IconButton,List,ListItem,Menu,MenuHandler,MenuList,MenuItem,} from "@material-tailwind/react";
-import {ChevronDownIcon,Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
-import {Bars4Icon,GlobeAmericasIcon,NewspaperIcon,PhoneIcon,RectangleGroupIcon,SquaresPlusIcon,SunIcon,TagIcon,UserGroupIcon,} from "@heroicons/react/24/solid";
+import { Navbar,Collapse,Typography,Button,IconButton,List,ListItem} from "@material-tailwind/react";
+import { Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
 import { BsFillPeopleFill } from "react-icons/bs";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { urlLocal } from '../../urlHost.js'
 
     
     
 export default function NavbarAdmin() {
             
     const [openNav, setOpenNav] = React.useState(false);
+    const navigate = useNavigate()
+
+    const token = localStorage.getItem('token')
+    const headers = { headers: { Authorization: `Bearer ${token}`}}
+
+
+    const handleInicio = () => {
+        navigate('/')
+        setOpenNav(false)
+    }
+
+    const handleIniciosesion = () => {
+        navigate('/inicio-sesion')
+        setOpenNav(false)
+    }
+
+    const handleCerrarSesion = () => {
+        let promesa = axios.post(`${urlLocal}usuarios/cerrar-sesion`,null,headers)
+        toast.promise(
+            promesa,
+            {
+                loading: 'cerrando sesion',
+                success: (res) => {
+                    localStorage.clear('token')
+                    setOpenNav(false)
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 1500);
+                    return <>{res.data.message}</>
+                },
+                error: (error) => {
+                    return <>{error.response.data.message}</>
+                }
+            },
+            {
+                style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'}
+            }
+        )
+    }
     
-    function NavList() {
-    return (
-        <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
-            <Link to={'/'}>
-                <ListItem className=" ">
+
+    
+
+    const NavList = () => {
+        return (
+            <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+                <ListItem onClick={handleInicio}>
                     <Typography
-                        variant="small"
+                        variant="h5"
                         color="blue-gray"
                         className="flex items-center gap-2 font-medium capitalize"
                     >
-                        <HiMiniHome className="h-4 w-4" />
+                        <HiMiniHome className="h-5 w-5" />
                         inicio
                     </Typography>
                 </ListItem>
-            </Link>
 
-            <Link to={'/admin/usuarios'}>
-                <ListItem className=" ">
-                    <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
-                    >
-                        <BsFillPeopleFill className="h-4 w-4" />
-                        usuarios
-                    </Typography>
-                </ListItem>
-            </Link>
+                <Link to={'/admin/usuarios'}>
+                    <ListItem>
+                        <Typography
+                            variant="h5"
+                            color="blue-gray"
+                            className="flex items-center gap-2 font-medium capitalize"
+                        >
+                            <BsFillPeopleFill className="h-5 w-5" />
+                            usuarios
+                        </Typography>
+                    </ListItem>
+                </Link>
 
-            
-        </List>
-    );
-    }
+                
+            </List>
+        );
+        }
+
+
     useEffect(() => {
         window.addEventListener(
         "resize",
@@ -66,14 +110,33 @@ export default function NavbarAdmin() {
                 <div className="hidden lg:block">
                 <NavList />
                 </div>
-                <div className="hidden gap-2 lg:flex">
-                <Button variant="gradient" size="sm" color="blue-gray">
-                    iniciar sesion
-                </Button>
-                <Button variant="gradient" size="sm">
-                    cerrar sesion
-                </Button>
-                </div>
+
+                {
+                    !token  ?
+                    <div className="hidden gap-2 lg:flex">
+                        <Button 
+                            variant="gradient" 
+                            size="sm" 
+                            color="blue-gray" 
+                            fullWidth
+                            onClick={handleIniciosesion}
+                        >
+                            iniciar sesion
+                        </Button>
+                    </div>
+                    :
+                    <div className="hidden gap-2 lg:flex">
+                        <Button 
+                            variant="gradient" 
+                            size="sm"
+                            onClick={handleCerrarSesion}
+                            fullWidth
+                        >
+                            cerrar sesion
+                        </Button>
+                    </div>
+                }
+        
                 <IconButton
                 variant="text"
                 color="blue-gray"
@@ -89,15 +152,33 @@ export default function NavbarAdmin() {
             </div>
             <Collapse open={openNav}>
                 <NavList />
-                <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-                <Button variant="gradient" size="sm" color="blue-gray" fullWidth>
-                    iniciar sesion
-                </Button>
-                <Button variant="gradient" size="sm" fullWidth>
-                    cerrar sesion
-                </Button>
-                </div>
+                    {
+                        !token  ?
+                        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                            <Button 
+                                variant="gradient" 
+                                size="sm" 
+                                color="blue-gray" 
+                                fullWidth
+                                onClick={handleIniciosesion}
+                            >
+                                iniciar sesion
+                            </Button>
+                        </div>
+                        :
+                        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                            <Button 
+                                variant="gradient" 
+                                size="sm" 
+                                fullWidth
+                                onClick={handleCerrarSesion}
+                            >
+                                cerrar sesion
+                            </Button>
+                        </div>
+                    }
             </Collapse>
+            <Toaster />
         </Navbar>
 );
 }

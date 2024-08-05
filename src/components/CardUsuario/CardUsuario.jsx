@@ -13,7 +13,7 @@ export default function CardUsuario() {
 
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(!open)
-    const usuarios = useSelector(store => store.getUsuariosAll.usuarios)
+    const usuarios = useSelector(store => store.getUsuarios.usuarios)
     const id = useSelector(store => store.idCapture.id)
     const usuario = usuarios?.find(item => item._id === id)
 
@@ -72,7 +72,7 @@ export default function CardUsuario() {
                                     </div>
 
                                     <div className="flex flex-col gap-2">
-                                        <Button variant="outlined" size="sm" className="flex items-center shadow-lg">
+                                        <Button variant="outlined" size="sm" className="flex items-center shadow-lg ">
                                             <TbUserEdit className="w-6 h-6 mr-2" />
                                             Editar
                                         </Button>
