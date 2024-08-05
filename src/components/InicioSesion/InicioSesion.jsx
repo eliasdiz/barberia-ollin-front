@@ -48,7 +48,7 @@ export default function InicioSesion() {
                 } 
             },
             {   
-                style: { textTransform: 'capitalize'},
+                style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'},
                 success: { duration: 1200 },
                 error: {duration: 1200}
             }

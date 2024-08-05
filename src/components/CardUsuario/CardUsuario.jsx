@@ -72,7 +72,7 @@ export default function CardUsuario() {
                                     </div>
 
                                     <div className="flex flex-col gap-2">
-                                        <Button variant="outlined" size="sm" className="flex items-center shadow-lg">
+                                        <Button variant="outlined" size="sm" className="flex items-center shadow-lg ">
                                             <TbUserEdit className="w-6 h-6 mr-2" />
                                             Editar
                                         </Button>
