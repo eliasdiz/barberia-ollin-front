@@ -1,4 +1,4 @@
-import { Typography, Tabs, TabsHeader, Tab, Input, Button,} from '@material-tailwind/react'
+import { Typography, Tabs, TabsHeader, Tab, Input, Button, IconButton,} from '@material-tailwind/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -11,6 +11,7 @@ import actionsIdCapture from '../../../Store/IdCapture/actions'
 import toast, { Toaster } from 'react-hot-toast';
 import actionsUsuarios from '../../../Store/Usuarios/actions'
 import iconoUsuario from '../../assets/lupaX.png'
+import { duration } from '@mui/material';
 
 
 const { getTodos } = actionsUsuarios
@@ -24,6 +25,8 @@ export default function PanelUsuarios() {
     const [ valueParametro, setValuePrametro ] = useState('')
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
+    const idUsuario = useSelector(store => store.idCapture.id)
+    console.log(idUsuario)
 
     const categorias = [{label: "barberos",value: "barberos",},{label: "clientes",value: "clientes",}];
     const tableHead = [ 'nombre ','telefono','acc'] 
@@ -35,6 +38,7 @@ export default function PanelUsuarios() {
     const handleEditar = (id) => {
         dispatch(idCapture({ id: id}))
     }
+
 
     const handleEliminar = (id) => {
         let usuario = usuarios?.find(item => item._id === id)
@@ -61,13 +65,14 @@ export default function PanelUsuarios() {
                                     error: (error) => {
                                         return <>{error.response.data.message}</>
                                     }
-                                },{
-                                    // success: { duration: 1200} ,
-                                    style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'
+                                },
+                                {   
+                                    style: { 
+                                        background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'
                                     }
                                 }
                             )
-                        }}
+                        }} 
                     >
                         si
                     </Button>
@@ -82,15 +87,15 @@ export default function PanelUsuarios() {
 
                 </div>
             </div>
-        )),{
+        ),{
             duration: Infinity,
             style: {
                 borderRadius: '10px',
                 background: '#94a3b8',
             }
-        }
+        })
     }
-    
+
     useEffect(
         () => {
             dispatch(getTodos({parametro:parametro, nombres: nombres}))
@@ -229,7 +234,6 @@ export default function PanelUsuarios() {
                     </div>        
                 }
             </div>
-            <Toaster />
         </div>
     )
 }
