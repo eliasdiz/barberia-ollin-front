@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 export default function AlertaServidor() {
 
-    const [ open, setOpen ] = useState(false)
+    const [ open, setOpen ] = useState(true)
     const usuarios = useSelector(store => store.getUsuarios.usuarios)
     
     useEffect(

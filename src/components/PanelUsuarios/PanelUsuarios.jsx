@@ -39,7 +39,6 @@ export default function PanelUsuarios() {
         dispatch(idCapture({ id: id}))
     }
 
-
     const handleEliminar = (id) => {
         let usuario = usuarios?.find(item => item._id === id)
         usuario &&
@@ -87,13 +86,13 @@ export default function PanelUsuarios() {
 
                 </div>
             </div>
-        ),{
+        )),{
             duration: Infinity,
             style: {
                 borderRadius: '10px',
                 background: '#94a3b8',
             }
-        })
+        }
     }
 
     useEffect(
