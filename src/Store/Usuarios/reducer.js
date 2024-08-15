@@ -5,7 +5,7 @@ const { getTodos,getUsuario } = actions
 
 const initialState = {
     usuarios: [],
-    usuario: {}
+    usuario: []
 }
 
 const reducer = createReducer(

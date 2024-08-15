@@ -6,7 +6,7 @@ import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@material-tailwind/react'
-import usuarioActions from '../../../Store/Usuarios/actions'
+import usuarioActions from '../../Store/Usuarios/actions'
 import { urlLocal } from '../../urlHost'
 
 
@@ -36,10 +36,12 @@ export default function InicioSesion() {
                 loading: 'verificando usuario',
                 success: (res) => {
                     localStorage.setItem('token', res.data.token);
-                    dispatch(getUsuario());
+                    let usuario = res.data.user
                     setTimeout(() => {
-                        navigate('/')   
-                    }, 1500);
+                        dispatch(getUsuario())
+                        if(usuario.barbero) return navigate('/barbero')
+                        if(usuario.admin) return navigate('/admin')
+                    }, 2500);
                     return <>{res.data.message}</>
                 },
                 error: (error) => {

@@ -3,16 +3,19 @@ import { Typography } from 'keep-react'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+
 export default function AlertaServidor() {
 
     const [ open, setOpen ] = useState(true)
-    const usuarios = useSelector(store => store.getUsuarios.usuarios)
+    const usuario = useSelector(store => store.getUsuarios.usuario)
+    
+    console.log(usuario)
     
     useEffect(
         () => {
-            usuarios.length !== 0 ? setOpen(false) : setOpen(true)
+            usuario.length !== 0 ? setOpen(false) : setOpen(true)
         },
-        [usuarios]
+        [usuario]
     )
 
     // console.log(usuarios)

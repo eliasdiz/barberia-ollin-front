@@ -5,6 +5,7 @@ import Reservas from "../Pages/Reservas.jsx";
 import Admin from "../Pages/Admin.jsx";
 import AdminLayout from '../layouts/AdminLayout.jsx'
 import InicioSesion from '../components/InicioSesion/InicioSesion.jsx'
+import Pruebas from "../components/Pruebas/Pruebas.jsx";
 
 
 const router = createBrowserRouter([
@@ -13,13 +14,14 @@ const router = createBrowserRouter([
         children: [
             { path: '/', element: <Home /> },
             { path: '/reservas', element: <Reservas /> },
-            { path: '/inicio-sesion', element: <InicioSesion />}
+            { path: '/inicio-sesion', element: <InicioSesion />},
+            { path: '/prueba', element: <Pruebas />}
         ],
     },
     {
         path: '/admin', element: <AdminLayout />,
         children: [
-            { path: '/admin/usuarios', element: <Admin />}
+            { path: '/admin', element: <Admin />}
         ]
     },
 ]);

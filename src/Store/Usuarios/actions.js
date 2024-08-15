@@ -1,22 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { urlLocal } from "../../src/urlHost";
+import { urlLocal } from "../../urlHost.js";
 
-const token = localStorage.getItem('token')
-const headers = { headers: { Authorization: `Bearer ${token}`}}
 
 const getUsuario = createAsyncThunk(
     'getUsuario',
     async() => {
+        const token = localStorage.getItem('token')
+        const headers = { headers: { Authorization: `Bearer ${token}`}}
         try {
             if(token){
                 let res = await axios.get(`${urlLocal}usuarios/usuario`,headers)
+                console.log(res.data.usuario)
                 return { usuario: res.data.usuario}
             }else{
-                return { usuario: {}}
+                return { usuario: []}
             }
         } catch (error) {
-            return { usuario: {}}
+            return { usuario: []}
         }
     }
 

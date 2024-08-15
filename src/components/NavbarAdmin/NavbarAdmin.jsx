@@ -7,6 +7,10 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
+import actionsUsuarios from '../../Store/Usuarios/actions.js'
+import { useDispatch } from "react-redux";
+
+const { getUsuario } = actionsUsuarios
 
     
     
@@ -14,6 +18,7 @@ export default function NavbarAdmin() {
             
     const [openNav, setOpenNav] = React.useState(false);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const token = localStorage.getItem('token')
     const headers = { headers: { Authorization: `Bearer ${token}`}}
@@ -36,11 +41,12 @@ export default function NavbarAdmin() {
             {
                 loading: 'cerrando sesion',
                 success: (res) => {
-                    localStorage.clear('token')
+                    localStorage.removeItem('token')
                     setOpenNav(false)
                     setTimeout(() => {
+                        dispatch(getUsuario())
                         navigate('/')
-                    }, 1500);
+                    }, 2500);
                     return <>{res.data.message}</>
                 },
                 error: (error) => {
@@ -113,24 +119,28 @@ export default function NavbarAdmin() {
 
                 {
                     !token  ?
-                    <div className="hidden gap-2 lg:flex">
+                    <div 
+                        className="hidden gap-2 lg:flex"
+                    >
                         <Button 
                             variant="gradient" 
                             size="sm" 
                             color="blue-gray" 
                             fullWidth
-                            onClick={handleIniciosesion}
+                            onClick={handleIniciosesion} 
                         >
                             iniciar sesion
                         </Button>
                     </div>
                     :
-                    <div className="hidden gap-2 lg:flex">
+                    <div 
+                        className="hidden gap-2 lg:flex"
+                    >
                         <Button 
                             variant="gradient" 
                             size="sm"
-                            onClick={handleCerrarSesion}
                             fullWidth
+                            onClick={handleCerrarSesion} 
                         >
                             cerrar sesion
                         </Button>
@@ -154,24 +164,28 @@ export default function NavbarAdmin() {
                 <NavList />
                     {
                         !token  ?
-                        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                        <div 
+                            className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
+                        >
                             <Button 
                                 variant="gradient" 
                                 size="sm" 
                                 color="blue-gray" 
                                 fullWidth
-                                onClick={handleIniciosesion}
+                                onClick={handleIniciosesion}    
                             >
                                 iniciar sesion
                             </Button>
                         </div>
                         :
-                        <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
+                        <div 
+                            className="flex w-full flex-nowrap items-center gap-2 lg:hidden"
+                        >
                             <Button 
                                 variant="gradient" 
                                 size="sm" 
                                 fullWidth
-                                onClick={handleCerrarSesion}
+                                onClick={handleCerrarSesion} 
                             >
                                 cerrar sesion
                             </Button>
