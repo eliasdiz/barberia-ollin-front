@@ -7,11 +7,10 @@ import { GiCancel } from "react-icons/gi";
 import CardUsuario from '../CardUsuario/CardUsuario';
 import { useDispatch, useSelector } from 'react-redux';
 import { urlLocal } from '../../urlHost';
-import actionsIdCapture from '../../../Store/IdCapture/actions'
+import actionsIdCapture from '../../Store/Idcapture/actions.js'
 import toast, { Toaster } from 'react-hot-toast';
-import actionsUsuarios from '../../../Store/Usuarios/actions'
+import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import iconoUsuario from '../../assets/lupaX.png'
-import { duration } from '@mui/material';
 
 
 const { getTodos } = actionsUsuarios
@@ -25,7 +24,7 @@ export default function PanelUsuarios() {
     const [ valueParametro, setValuePrametro ] = useState('')
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
-    const idUsuario = useSelector(store => store.idCapture.id)
+    const idUsuario = useSelector(store => store.captureId.id)
     console.log(idUsuario)
 
     const categorias = [{label: "barberos",value: "barberos",},{label: "clientes",value: "clientes",}];

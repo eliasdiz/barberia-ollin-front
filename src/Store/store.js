@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import idCapture from './IdCapture/reducer'
-import getUsuarios from './Usuarios/reducer'
+import captureId from './Idcapture/reducer.js'
+import getUsuarios from './Usuarios/reducer.js'
 
 
 export const store = configureStore({
     reducer:{
-        idCapture: idCapture,
+        captureId: captureId,
         getUsuarios: getUsuarios
     }
 })

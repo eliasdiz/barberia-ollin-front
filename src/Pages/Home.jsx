@@ -5,16 +5,19 @@ import HeaderMobile from "../components/HeaderMobile";
 import { useState, useRef, useEffect } from "react";
 import { FaClock } from "react-icons/fa";
 import { Typography } from '@material-tailwind/react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function App() {
+
   const [showTable, setShowTable] = useState(false);
   const tableRef = useRef();
 
   const toggleTable = () => {
     setShowTable(!showTable);
   };
+
+  // const usuario = useSelector(store => store.getUsuarios.usuario)
 
   useEffect(() => {
     if (showTable && tableRef.current) {
@@ -72,7 +75,8 @@ function App() {
   const abierto = 8.5
   const cerrado = 20
 
-
+  // console.log(useSelector(store => store.getUsuarios.usuario))
+  // console.log(localStorage.getItem('token'))
 
   return (
     <>
