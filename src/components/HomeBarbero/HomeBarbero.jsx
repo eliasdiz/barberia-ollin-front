@@ -18,7 +18,7 @@ export default function HomeBarbero() {
     )
 
     return (
-        <div className='flex flex-col justify-center p-3 capitalize h-[30vh]'>
+        <div className='flex flex-col justify-center p-3 min-h-[69vh] capitalize'>
             <Typography 
                 className='text-white text-center' 
                 variant='h3'
@@ -30,7 +30,9 @@ export default function HomeBarbero() {
                 className='text-white text-center' 
                 variant='h3'
             >
-                {usuario.nombres} {usuario.apellidos}
+                {
+                    usuario.barbero ? `${usuario.nombres} ${usuario.apellidos}` : '' 
+                }  
             </Typography>
             
         </div>

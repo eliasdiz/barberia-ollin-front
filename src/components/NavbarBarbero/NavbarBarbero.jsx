@@ -13,10 +13,8 @@ import { IoCalendarNumberSharp } from "react-icons/io5";
 
 const { getUsuario } = actionsUsuarios
 
-    
-    
-export default function NavbarAdmin() {
-            
+export default function NavbarBarbero() {
+
     const [openNav, setOpenNav] = React.useState(false);
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -26,7 +24,7 @@ export default function NavbarAdmin() {
 
 
     const handleInicio = () => {
-        navigate('/admin')
+        navigate('/barbero')
         setOpenNav(false)
     }
 
@@ -36,12 +34,7 @@ export default function NavbarAdmin() {
     }
 
     const handleAgenda = () => {
-        navigate('/admin')
-        setOpenNav(false)
-    }
-
-    const handleUsuarios = () => {
-        navigate('/admin/usuarios')
+        navigate('/barbero')
         setOpenNav(false)
     }
 
@@ -86,7 +79,7 @@ export default function NavbarAdmin() {
                         inicio
                     </Typography>
                 </ListItem>
-
+                
                 <ListItem onClick={handleAgenda}>
                     <Typography
                         variant="h5"
@@ -98,18 +91,6 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleUsuarios}>
-                    <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
-                    >
-                        <BsFillPeopleFill className="h-5 w-5" />
-                        usuarios
-                    </Typography>
-                </ListItem>
-
-                
             </List>
         );
         }
