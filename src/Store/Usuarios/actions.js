@@ -11,7 +11,7 @@ const getUsuario = createAsyncThunk(
         try {
             if(token){
                 let res = await axios.get(`${urlLocal}usuarios/usuario`,headers)
-                console.log(res.data.usuario)
+                // console.log(res.data.usuario)
                 return { usuario: res.data.usuario}
             }else{
                 return { usuario: []}

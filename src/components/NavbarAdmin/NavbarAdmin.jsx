@@ -34,6 +34,11 @@ export default function NavbarAdmin() {
         setOpenNav(false)
     }
 
+    const handleUsuarios = () => {
+        navigate('/admin/usuarios')
+        setOpenNav(false)
+    }
+
     const handleCerrarSesion = () => {
         let promesa = axios.post(`${urlLocal}usuarios/cerrar-sesion`,null,headers)
         toast.promise(
@@ -76,18 +81,16 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
-                <Link to={'/admin/usuarios'}>
-                    <ListItem>
-                        <Typography
-                            variant="h5"
-                            color="blue-gray"
-                            className="flex items-center gap-2 font-medium capitalize"
-                        >
-                            <BsFillPeopleFill className="h-5 w-5" />
-                            usuarios
-                        </Typography>
-                    </ListItem>
-                </Link>
+                <ListItem onClick={handleUsuarios}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-2 font-medium capitalize"
+                    >
+                        <BsFillPeopleFill className="h-5 w-5" />
+                        usuarios
+                    </Typography>
+                </ListItem>
 
                 
             </List>
