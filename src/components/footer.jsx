@@ -1,17 +1,16 @@
 import { Typography } from "@material-tailwind/react";
 
-const currentYear = new Date().getFullYear();
- 
+
 function Footer() {
   return (
-    <footer className="relative w-full">
+    <footer className="mt-auto w-full">
       <div className="mx-auto w-full max-w-screen-xl">
         <div className="mt-8 flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
           <Typography
             variant="small"
             className="mb-4 text-center font-normal text-white md:mb-0"
           >
-            &copy; {currentYear} <a>Barberia Ollin</a>.Todos los Derechos Reservados.
+            &copy; 2023 <a>Barberia Ollin</a>.Todos los Derechos Reservados.
           </Typography>
           <div className="flex gap-4 text-white sm:justify-center">
             <Typography as="a" href="https://www.facebook.com/profile.php?id=100063043911265" target="_blank" className="opacity-80 transition-opacity hover:opacity-100">

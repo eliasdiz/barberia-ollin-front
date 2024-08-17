@@ -13,7 +13,7 @@ import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import iconoUsuario from '../../assets/lupaX.png'
 
 
-const { getTodos } = actionsUsuarios
+const { getTodos, getUsuario } = actionsUsuarios
 const { idCapture } = actionsIdCapture
 
 
@@ -25,7 +25,7 @@ export default function PanelUsuarios() {
     const [ parametro, setParametro ] = useState('')
     const [ nombres, setNombres ] = useState('')
     const idUsuario = useSelector(store => store.captureId.id)
-    console.log(idUsuario)
+    // console.log(idUsuario)
 
     const categorias = [{label: "barberos",value: "barberos",},{label: "clientes",value: "clientes",}];
     const tableHead = [ 'nombre ','telefono','acc'] 
@@ -96,6 +96,7 @@ export default function PanelUsuarios() {
 
     useEffect(
         () => {
+            dispatch(getUsuario())
             dispatch(getTodos({parametro:parametro, nombres: nombres}))
         },
         [dispatch,parametro,nombres]
@@ -104,7 +105,7 @@ export default function PanelUsuarios() {
 
     return (
         <div className='w-full flex flex-col'>
-            <div className='flex flex-col items-center bg-white rounded-t-2xl'>
+            <div className='flex flex-col items-center bg-blue-gray-600 rounded-t-2xl'>
                 <div className='p-2 '>
                     <Typography  variant="h4" color="blue-gray" className='uppercase font-serif text-center'>
                         usuarios

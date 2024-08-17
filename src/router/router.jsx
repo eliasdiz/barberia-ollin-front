@@ -6,6 +6,9 @@ import Admin from "../Pages/Admin.jsx";
 import AdminLayout from '../layouts/AdminLayout.jsx'
 import InicioSesion from '../components/InicioSesion/InicioSesion.jsx'
 import Pruebas from "../components/Pruebas/Pruebas.jsx";
+import PanelUsuarios from '../components/PanelUsuarios/PanelUsuarios.jsx'
+import BarberoLayout from "../layouts/BarberoLayout.jsx";
+import Barbero from "../Pages/Barbero.jsx";
 
 
 const router = createBrowserRouter([
@@ -21,9 +24,16 @@ const router = createBrowserRouter([
     {
         path: '/admin', element: <AdminLayout />,
         children: [
-            { path: '/admin', element: <Admin />}
+            { path: '/admin', element: <Admin />},
+            { path: '/admin/usuarios', element: <PanelUsuarios />},
         ]
     },
+    {
+        path: '/barbero', element: <BarberoLayout />,
+        children: [
+            { path: '/barbero', element: <Barbero />}
+        ]
+    }
 ]);
 
 export default router;

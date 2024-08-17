@@ -9,7 +9,7 @@ export default function AlertaServidor() {
     const [ open, setOpen ] = useState(true)
     const usuario = useSelector(store => store.getUsuarios.usuario)
     
-    console.log(usuario)
+    // console.log(usuario)
     
     useEffect(
         () => {
