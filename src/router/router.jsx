@@ -9,6 +9,7 @@ import Pruebas from "../components/Pruebas/Pruebas.jsx";
 import PanelUsuarios from '../components/PanelUsuarios/PanelUsuarios.jsx'
 import BarberoLayout from "../layouts/BarberoLayout.jsx";
 import Barbero from "../Pages/Barbero.jsx";
+import FormRegistro from "../components/FormRegistro/FormRegistro.jsx";
 
 
 const router = createBrowserRouter([
@@ -18,7 +19,8 @@ const router = createBrowserRouter([
             { path: '/', element: <Home /> },
             { path: '/reservas', element: <Reservas /> },
             { path: '/inicio-sesion', element: <InicioSesion />},
-            { path: '/prueba', element: <Pruebas />}
+            { path: '/prueba', element: <Pruebas />},
+            { path: '/registro', element: <FormRegistro />}
         ],
     },
     {

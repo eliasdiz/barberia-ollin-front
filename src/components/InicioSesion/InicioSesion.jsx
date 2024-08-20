@@ -25,7 +25,7 @@ export default function InicioSesion() {
     const handleInicioseion = async(e) =>{
         e.preventDefault()
         let data = {
-            email: usuario.current.value,
+            email: usuario.current.value.toLowerCase(),
             password: password.current.value
         }
         // console.log(data)

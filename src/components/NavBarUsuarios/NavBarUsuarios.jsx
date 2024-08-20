@@ -3,13 +3,12 @@ import { Navbar,Collapse,Typography,Button,IconButton,List,ListItem} from "@mate
 import { Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { HiMiniHome } from "react-icons/hi2";
-import { BsFillPeopleFill } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
-import { IoCalendarNumberSharp } from "react-icons/io5";
+import { RiCalendarScheduleFill } from "react-icons/ri";
 
 const { getUsuario } = actionsUsuarios
 
@@ -88,8 +87,8 @@ export default function NavBarUsuarios() {
                         color="blue-gray"
                         className="flex items-center gap-2 font-medium capitalize"
                     >
-                        <IoCalendarNumberSharp className="h-5 w-5"  />
-                        agenda
+                        <RiCalendarScheduleFill className="h-5 w-5" />
+                        reservas
                     </Typography>
                 </ListItem>
 

@@ -10,6 +10,8 @@ import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
+import { RiCalendarScheduleFill } from "react-icons/ri";
+
 
 const { getUsuario } = actionsUsuarios
 
@@ -95,6 +97,17 @@ export default function NavbarAdmin() {
                     >
                         <IoCalendarNumberSharp className="h-5 w-5"  />
                         agenda
+                    </Typography>
+                </ListItem>
+
+                <ListItem onClick={handleAgenda}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-2 font-medium capitalize"
+                    >
+                        <RiCalendarScheduleFill className="h-5 w-5" />
+                        reservas
                     </Typography>
                 </ListItem>
 
