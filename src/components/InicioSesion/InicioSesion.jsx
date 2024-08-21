@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '@material-tailwind/react'
 import usuarioActions from '../../Store/Usuarios/actions'
 import { urlLocal } from '../../urlHost'
+import { FiAtSign } from "react-icons/fi";
+
 
 
 const { getUsuario } = usuarioActions
@@ -70,7 +72,12 @@ export default function InicioSesion() {
                 iniciar sesion
             </div>
             <div>
-                <InputTexto placeHold='email' parentRef={usuario}/>
+                <InputTexto
+                    icono={<FiAtSign 
+                    className='w-7 h.7' />} 
+                    placeHold='email' 
+                    parentRef={usuario}
+                />
                 <InputPassword parentRef={password} />
                 <div className="flex w-full">
                     <Button 
