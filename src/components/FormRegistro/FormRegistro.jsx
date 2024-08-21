@@ -15,7 +15,7 @@ export default function FormRegistro() {
 
     return (
         <div className='flex justify-center p-5'>
-            <form
+            <div
                 className="flex flex-col gap-2 shadow-lg bg-blue-gray-400 px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-xl w-full max-w-md"
                 onClick={hanldeRegistro}
             >
@@ -64,7 +64,7 @@ export default function FormRegistro() {
                         </Button>
                     </div>
                 </div>
-            </form>
+            </div>
             <Toaster />
         </div>
     )
