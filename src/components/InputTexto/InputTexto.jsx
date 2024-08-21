@@ -1,5 +1,4 @@
 import React from 'react'
-import { TbAbc } from "react-icons/tb";
 
 
 export default function InputTexto(props) {
@@ -16,7 +15,7 @@ export default function InputTexto(props) {
                 ref={props.parentRef}
                 type={props.tipo}
                 placeholder={props.placeHold}      
-                className="sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400 capitalize" 
+                className="sm:text-base placeholder-gray-500 pl-10 pr-4 rounded-lg border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400 " 
                 />
             </div>
         </div>

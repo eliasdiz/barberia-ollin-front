@@ -4,8 +4,8 @@ import InputTexto from '../InputTexto/InputTexto'
 import axios from 'axios'
 import { Toaster, toast } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '@material-tailwind/react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button, Typography } from '@material-tailwind/react'
 import usuarioActions from '../../Store/Usuarios/actions'
 import { urlLocal } from '../../urlHost'
 import { FiAtSign } from "react-icons/fi";
@@ -24,8 +24,7 @@ export default function InicioSesion() {
     let navigate = useNavigate()
 
 
-    const handleInicioseion = async(e) =>{
-        e.preventDefault()
+    const handleInicioseion = () =>{
         let data = {
             email: usuario.current.value.toLowerCase(),
             password: password.current.value
@@ -62,9 +61,8 @@ export default function InicioSesion() {
 
     return (
     <div className='flex justify-center p-5'>
-        <form
+        <div
             className="flex flex-col gap-2 shadow-lg bg-blue-gray-400 px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-xl w-full max-w-md"
-            onSubmit={handleInicioseion}
         >
             <div 
                 className='font-bold uppercase text-center p-2'
@@ -86,6 +84,7 @@ export default function InicioSesion() {
                         fullWidth
                         variant='gradient'
                         className="flex items-center justify-center gap-3 text-base "
+                        onClick={handleInicioseion}
                     >
                         entrar
                         <span>
@@ -96,7 +95,16 @@ export default function InicioSesion() {
                     </Button>
                 </div>
             </div>
-        </form>
+            <div className='flex items-center gap-1'>
+                <Link
+                    className='capitalize underline'
+                    to={'/registro'}
+                >
+                    <Typography>click aqui para registrate</Typography>
+                </Link>
+                <Typography variant='h5'>👈</Typography>
+            </div>
+        </div>
         <Toaster />
     </div>
     )

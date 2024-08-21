@@ -105,7 +105,7 @@ export default function PanelUsuarios() {
 
     return (
         <div className='w-full flex flex-col'>
-            <div className='flex flex-col items-center bg-blue-gray-600 rounded-t-2xl'>
+            <div className='flex flex-col items-center bg-white rounded-t-2xl'>
                 <div className='p-2 '>
                     <Typography  variant="h4" color="blue-gray" className='uppercase font-serif text-center'>
                         usuarios
