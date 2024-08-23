@@ -10,6 +10,7 @@ import PanelUsuarios from '../components/PanelUsuarios/PanelUsuarios.jsx'
 import BarberoLayout from "../layouts/BarberoLayout.jsx";
 import Barbero from "../Pages/Barbero.jsx";
 import FormRegistro from "../components/FormRegistro/FormRegistro.jsx";
+import EditarUsuario from "../components/EditarUsuario/EditarUsuario.jsx";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         children: [
             { path: '/admin', element: <Admin />},
             { path: '/admin/usuarios', element: <PanelUsuarios />},
+            { path: '/admin/editar-usuario', element: <EditarUsuario />}
         ]
     },
     {

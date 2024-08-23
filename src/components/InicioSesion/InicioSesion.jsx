@@ -100,7 +100,7 @@ export default function InicioSesion() {
                     className='capitalize underline'
                     to={'/registro'}
                 >
-                    <Typography>click aqui para registrate</Typography>
+                    <Typography>click aqui para registrarte</Typography>
                 </Link>
                 <Typography variant='h5'>👈</Typography>
             </div>

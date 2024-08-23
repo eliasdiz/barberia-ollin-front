@@ -6,17 +6,28 @@ import { TbUserEdit } from "react-icons/tb";
 import fotoPerfil from '../../assets/usuario.png'
 import { FaRegEye } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+// import actionsId from '../../Store/Idcapture/actions'
+
+// const { idCapture } = actionsId
 
 
 export default function CardUsuario() {
 
+    // const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(!open)
     const usuarios = useSelector(store => store.getUsuarios.usuarios)
     const id = useSelector(store => store.captureId.id)
     const usuario = usuarios?.find(item => item._id === id)
 
+
+    const handleEditar = () => {
+        navigate('/admin/editar-usuario')
+        // dispatch(idCapture({ id: id}))
+    }
 
     return (
         <>
@@ -72,7 +83,12 @@ export default function CardUsuario() {
                                     </div>
 
                                     <div className="flex flex-col gap-2">
-                                        <Button variant="outlined" size="sm" className="flex items-center shadow-lg ">
+                                        <Button 
+                                            variant="outlined" 
+                                            size="sm" 
+                                            className="flex items-center shadow-lg "
+                                            onClick={handleEditar}
+                                        >
                                             <TbUserEdit className="w-6 h-6 mr-2" />
                                             Editar
                                         </Button>
