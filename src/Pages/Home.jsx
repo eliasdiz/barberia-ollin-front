@@ -6,12 +6,18 @@ import { useState, useRef, useEffect } from "react";
 import { FaClock } from "react-icons/fa";
 import { Typography } from '@material-tailwind/react';
 import { useDispatch, useSelector } from "react-redux";
+import actionsServicios from '../Store/Servicios/actions.js'
+
+
+const { getServicios } = actionsServicios
 
 
 function App() {
 
   const [showTable, setShowTable] = useState(false);
   const tableRef = useRef();
+
+  const dispatch = useDispatch()
 
   const toggleTable = () => {
     setShowTable(!showTable);
@@ -20,10 +26,11 @@ function App() {
   // const usuario = useSelector(store => store.getUsuarios.usuario)
 
   useEffect(() => {
+    dispatch(getServicios())
     if (showTable && tableRef.current) {
       tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  }, [showTable]);
+  }, [dispatch,showTable]);
 
   const tableContent = (
     <div ref={tableRef}>

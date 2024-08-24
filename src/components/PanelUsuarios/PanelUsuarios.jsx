@@ -11,8 +11,10 @@ import actionsIdCapture from '../../Store/Idcapture/actions.js'
 import toast from 'react-hot-toast';
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import iconoUsuario from '../../assets/lupaX.png'
+import actionsServicios from '../../Store/Servicios/actions.js'
 
 
+const { getServicios } = actionsServicios
 const { getTodos, getUsuario } = actionsUsuarios
 const { idCapture } = actionsIdCapture
 
@@ -96,7 +98,7 @@ export default function PanelUsuarios() {
 
     useEffect(
         () => {
-            dispatch(getUsuario())
+            dispatch(getServicios())
             dispatch(getTodos({parametro:parametro, nombres: nombres}))
         },
         [dispatch,parametro,nombres]

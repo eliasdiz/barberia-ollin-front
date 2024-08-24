@@ -7,18 +7,17 @@ import { useSelector } from 'react-redux'
 export default function AlertaServidor() {
 
     const [ open, setOpen ] = useState(true)
-    const usuario = useSelector(store => store.getUsuarios.usuario)
+    const servicios = useSelector(store => store.servicios.servicios)
     
-    // console.log(usuario)
+    console.log(servicios)
     
     useEffect(
         () => {
-            usuario.length !== 0 ? setOpen(false) : setOpen(true)
+            servicios.length !== 0 ? setOpen(false) : setOpen(true)
         },
-        [usuario]
+        [servicios]
     )
 
-    // console.log(usuarios)
 
     return (
         <>
