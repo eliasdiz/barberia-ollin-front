@@ -21,7 +21,7 @@ export default function EditarUsuario() {
     const [ nombres, setNombres ] = useState('') 
     const [ apellidos, setApellidos ] = useState('') 
     const [ email, setEmail ] = useState('')
-    const [ telefono, setTelefono ] = useState('')
+    const [ telefono, setTelefono ] = useState(0)
     const [ password, setPassword ] = useState('')
     const [ barbero, setBarbero ] = useState(usuario?.barbero)
 
@@ -41,7 +41,7 @@ export default function EditarUsuario() {
             barbero: barbero,
         }
         password === '' ? data : data.password = password
-        // console.log(data)
+        console.log(data)
         let promesa = axios.put(`${urlLocal}usuarios/usuario/${id}`,data,headers)
         toast.promise(
             promesa,
