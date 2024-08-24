@@ -20,7 +20,7 @@ export default function InputPassword(props) {
                     <div  className="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400">
                     <span onClick={mostrarPassword}>
                         {
-                            !unlock ? <MdLockOutline className='w-6 h-6' /> : <MdLockOpen className='w-6 h-6' />
+                            !unlock ? <MdLockOutline className='w-6 h-6 cursor-pointer' /> : <MdLockOpen className='w-6 h-6 cursor-pointer' />
                         }   
                     </span>
                     </div>
