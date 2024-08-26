@@ -32,8 +32,8 @@ export default function NavBarUsuarios() {
         setOpenNav(false)
     }
 
-    const handleAgenda = () => {
-        navigate('/')
+    const handleReserva = () => {
+        navigate('/validacion-email')
         setOpenNav(false)
     }
 
@@ -81,7 +81,7 @@ export default function NavBarUsuarios() {
                     </Typography>
                 </ListItem>
                 
-                <ListItem onClick={handleAgenda}>
+                <ListItem onClick={handleReserva}>
                     <Typography
                         variant="h5"
                         color="blue-gray"

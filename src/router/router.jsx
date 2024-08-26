@@ -11,6 +11,7 @@ import BarberoLayout from "../layouts/BarberoLayout.jsx";
 import Barbero from "../Pages/Barbero.jsx";
 import FormRegistro from "../components/FormRegistro/FormRegistro.jsx";
 import EditarUsuario from "../components/EditarUsuario/EditarUsuario.jsx";
+import ValidacionEmail from "../components/ValidacionEmail/ValidacionEmail.jsx";
 
 
 const router = createBrowserRouter([
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
             { path: '/reservas', element: <Reservas /> },
             { path: '/inicio-sesion', element: <InicioSesion />},
             { path: '/prueba', element: <Pruebas />},
-            { path: '/registro', element: <FormRegistro />}
+            { path: '/registro', element: <FormRegistro />},
+            { path: '/validacion-email', element: <ValidacionEmail />}
         ],
     },
     {

@@ -9,7 +9,8 @@ export default function AlertaServidor() {
     const [ open, setOpen ] = useState(true)
     const servicios = useSelector(store => store.servicios.servicios)
     
-    console.log(servicios)
+
+
     
     useEffect(
         () => {
