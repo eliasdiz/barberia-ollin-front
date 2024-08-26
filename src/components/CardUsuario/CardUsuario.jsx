@@ -1,4 +1,4 @@
-import { Button, Card, Dialog, Switch, Typography } from '@material-tailwind/react';
+import { Avatar, Button, Card, Dialog, Switch, Typography } from '@material-tailwind/react';
 import React, { useState } from 'react'
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { HiOutlineMail } from "react-icons/hi";
@@ -7,10 +7,8 @@ import fotoPerfil from '../../assets/usuario.png'
 import { FaRegEye } from "react-icons/fa6";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-// import actionsId from '../../Store/Idcapture/actions'
+import { Link, useNavigate } from 'react-router-dom';
 
-// const { idCapture } = actionsId
 
 
 export default function CardUsuario() {
@@ -22,50 +20,71 @@ export default function CardUsuario() {
     const usuarios = useSelector(store => store.getUsuarios.usuarios)
     const id = useSelector(store => store.captureId.id)
     const usuario = usuarios?.find(item => item._id === id)
-
+    const [ openEmail, setOpenEmail ] = useState(false)
 
     const handleEditar = () => {
         navigate('/admin/editar-usuario')
-        // dispatch(idCapture({ id: id}))
     }
+
+    const handlOpenEmail = () => setOpenEmail(!openEmail)
 
     return (
         <>
             <button
                 onClick={handleOpen}
             >
-                <FaRegEye className='w-5 h-5 text-cyan-500'  />
+                <FaRegEye className='w-5 h-5 text-green-400'  />
             </button>
-            <Dialog open={open} handler={handleOpen}>
+            <Dialog open={open} handler={handleOpen} className='flex flex-col'>
                 {
                     id ? 
                         <>
-                            <Card className="p-3 gap-6 md:max-w-md bg-blue-gray-300 text-black rounded-md border border-gray-200">
-                                <div  className='w-full flex justify-end cursor-pointer'>
-                                    <MdClose className='w-6 h-6 ' onClick={handleOpen} />
+                            <Card className="w-full p-2 bg-blue-gray-300 text-black rounded-md border border-gray-200">
+                                <div  className='flex justify-end'>
+                                    <MdClose className='w-6 h-6 cursor-pointer' onClick={handleOpen} />
                                 </div>
 
-                                <div className="flex flex-col md:flex-row items-center gap-5 ">
-                                    <img src={fotoPerfil} alt='foto perfil' className="w-16 h-16 rounded-full border-2 border-gray-300" />
-
+                                <div className="flex flex-col gap-2 items-center">
+                                    <Avatar src={fotoPerfil} alt='perfil' />
                                     <div className="flex flex-col gap-2 bg-gray-100 p-3 rounded-lg shadow-sm">
                                         <Typography variant="h5" className="text-2xl font-bold capitalize text-gray-800">
                                             {usuario?.nombres} {usuario?.apellidos}
                                         </Typography>
 
                                         <div className="flex items-center gap-2 text-gray-600">
-                                            <HiOutlineDevicePhoneMobile className="w-6 h-6 text-blue-500" />
+                                            <Link to={`tel:${usuario?.telefono}`}>
+                                                <HiOutlineDevicePhoneMobile className="w-6 h-6 text-blue-500" />
+                                            </Link>
                                             <Typography className='text-xl font-semibold'>
                                                 {usuario?.telefono} 
                                             </Typography>
                                         </div>
-
-                                        <div className="flex items-center gap-2 text-gray-600">
-                                            <HiOutlineMail className="w-6 h-6 text-red-500" />
-                                            <Typography  className='text-lg font-semibold'>
-                                                {usuario?.email} 
-                                            </Typography>
-                                        </div>
+                                        
+                                        {
+                                            usuario?.email.length > 25 ?
+                                            <div className="flex items-center gap-2 text-gray-600 ">
+                                                <Link to={`mailto:${usuario?.email}`}>
+                                                    <HiOutlineMail className="w-6 h-6 text-red-500" />
+                                                </Link>
+                                                <div>
+                                                    <Typography onClick={handlOpenEmail}  className='text-lg font-semibold'>
+                                                        {usuario?.email.slice(0,25)}
+                                                    </Typography>
+                                                    <Typography onClick={handlOpenEmail}  className='text-lg font-semibold'>
+                                                        {usuario?.email.slice(25)}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="flex items-center gap-2 text-gray-600 ">
+                                                <Link to={`mailto:${usuario?.email}`}>
+                                                    <HiOutlineMail className="w-6 h-6 text-red-500" />
+                                                </Link>
+                                                <Typography  className='text-lg font-semibold'>
+                                                    {usuario?.email} 
+                                                </Typography>
+                                            </div>
+                                        }
 
                                         <div className='flex items-center justify-center gap-4'>
                                             <Typography 
@@ -79,6 +98,7 @@ export default function CardUsuario() {
                                                 disabled
                                                 defaultChecked={usuario?.barbero ? true : false}
                                             />
+
                                         </div>
                                     </div>
 

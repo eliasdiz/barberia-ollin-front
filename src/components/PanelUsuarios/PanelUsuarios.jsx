@@ -194,7 +194,7 @@ export default function PanelUsuarios() {
                                             <td className='p-2 border-b border-blue-gray-50'>
                                                 <Typography
                                                     variant="h6"
-                                                    color="cyan"
+                                                    color="white"
                                                     className="font-medium capitalize"
                                                 >
                                                     {item.nombres} {item.apellidos}
@@ -204,7 +204,7 @@ export default function PanelUsuarios() {
                                             <td className='p-2 border-b border-blue-gray-50 text-left'>
                                                 <Typography
                                                     variant="h6"
-                                                    color="cyan"
+                                                    color="white"
                                                     className="font-medium capitalize"
                                                 >
                                                     {item.telefono}
