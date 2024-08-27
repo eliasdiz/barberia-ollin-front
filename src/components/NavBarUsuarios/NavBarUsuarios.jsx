@@ -9,6 +9,7 @@ import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import ValidacionEmail from "../ValidacionEmail/ValidacionEmail.jsx";
 
 const { getUsuario } = actionsUsuarios
 
@@ -81,7 +82,9 @@ export default function NavBarUsuarios() {
                     </Typography>
                 </ListItem>
                 
-                <ListItem onClick={handleReserva}>
+                <ListItem 
+                    onClick={handleReserva}
+                >
                     <Typography
                         variant="h5"
                         color="blue-gray"

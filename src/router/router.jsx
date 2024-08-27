@@ -12,6 +12,7 @@ import Barbero from "../Pages/Barbero.jsx";
 import FormRegistro from "../components/FormRegistro/FormRegistro.jsx";
 import EditarUsuario from "../components/EditarUsuario/EditarUsuario.jsx";
 import ValidacionEmail from "../components/ValidacionEmail/ValidacionEmail.jsx";
+import FormReserva from "../components/FormReserva/FormReserva.jsx";
 
 
 const router = createBrowserRouter([
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
         path: '/', element: <Layout />,
         children: [
             { path: '/', element: <Home /> },
-            { path: '/reservas', element: <Reservas /> },
+            { path: '/reservas', element: <FormReserva /> },
             { path: '/inicio-sesion', element: <InicioSesion />},
             { path: '/prueba', element: <Pruebas />},
             { path: '/registro', element: <FormRegistro />},
