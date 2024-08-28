@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { urlLocal } from '../../urlHost'
 import toast, { Toaster } from 'react-hot-toast'
 import actionsReservas from '../../Store/Reservas/actions.js'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 
 
@@ -20,7 +20,6 @@ export default function ValidacionEmail() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    console.log(useSelector(store => store.reservas.cliente))
 
     const validar = () => {
         const data = {
