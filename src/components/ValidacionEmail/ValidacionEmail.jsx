@@ -51,7 +51,7 @@ export default function ValidacionEmail() {
 
     return (
         <>
-            <div className='flex justify-center'>
+            <div className='flex justify-center mt-1'>
 
                 <div className='w-full flex flex-col items-center md:w-[60%] bg-blue-gray-400 rounded-lg border'>
 
