@@ -20,6 +20,16 @@ export default function CalendarioUsuario() {
 		return {}
 	}
 
+    const handleSeleccionar = (slotInfo) => {
+        console.log(slotInfo.end);
+        // console.log('Inicio:', start);
+        // console.log('Fin:', end);
+
+        // // Puedes usar estas fechas para determinar la hora seleccionada
+        // const selectedHour = start.getHours();
+        // console.log('Hora seleccionada:', selectedHour);
+    }
+
 	const customToolbar = (toolbar) => {
 		const goToBack = () => {
 		toolbar.onNavigate('PREV');
@@ -50,7 +60,7 @@ export default function CalendarioUsuario() {
 		};
 	
 		return (
-			<div className='p-1'>
+			<div className='xsm:flex md:flex justify-between items-center p-1'>
 				<div className='flex justify-center '>
 					<Button className='border' color='gray' size='sm' variant='text' onClick={goToBack}
 					>
@@ -68,7 +78,7 @@ export default function CalendarioUsuario() {
 					</Button>
 				</div>
 				
-				<div className='flex justify-center'>
+				<div className='flex justify-center p-1'>
 					<Typography variant='h6' className='text-gray-700 capitalize'>
 					{labelFecha()}
 					</Typography>
@@ -87,10 +97,11 @@ export default function CalendarioUsuario() {
 	};
 
 
+
     return (
         <div className='w-full xxsm:h-[47vh] xsm:h-[80vh] md:h-[71vh] bg-white p-3 rounded-xl overflow-x-hidden'>
             <Calendar
-                className='rounded-xl p-0 m-0'
+                className='rounded-xl'
                 localizer={localizer}
                 events={[]} 
                 startAccessor="start"
@@ -103,6 +114,9 @@ export default function CalendarioUsuario() {
                 scrollToTime={new Date(2024, 8, 1, 8, 0, 0)} // Desplaza a las 8 AM
                 dayPropGetter={domingos}
                 components={{ toolbar: customToolbar}}
+                onSelectSlot={handleSeleccionar}
+                selectable
+                onRangeChange={handleSeleccionar}
             />
         </div>
     )
