@@ -10,6 +10,8 @@ import { CalendarCheck, CheckFat, Money, Scissors, User, Watch } from "@phosphor
 import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
+import numeral from 'numeral';
+import { format } from '@formkit/tempo';
 
 
 
@@ -27,6 +29,7 @@ export default function FormReserva() {
 	const barberos = useSelector(store => store.getUsuarios.usuarios)
 	const [ barberoID, setBarberoId ] = useState('')
 	const barbero = barberos?.find( item => item._id === barberoID)
+	// console.log(barbero)
 
 	const handleBarbero = (id) => {
 		setBarberoId(id)
@@ -43,7 +46,7 @@ export default function FormReserva() {
 	const servicios = useSelector(store => store.servicios.servicios)
 	const [ servicio, setServicio ] = useState('')
 	const servicioSelecc = servicios?.find( item => item._id === servicio)
-	console.log(servicioSelecc)
+	// console.log(servicioSelecc)
 
 
 	const handleServicio = (id) => {
@@ -61,7 +64,8 @@ export default function FormReserva() {
 
 	// STEP 2 FECHA
     const [ fecha, setFecha ] = useState(null)
-
+	
+	
 	const goToInfo = (fecha) => {
 		fecha !== null ? setStep( step + 1): null
 	}
@@ -71,10 +75,8 @@ export default function FormReserva() {
 	}
 
 	// STEP 3 INFO RESERVA
-
-	// console.log(fecha)
-		
-
+	const fechaObjeto = new Date(fecha)
+	
 
 	useEffect(
 		() => {
@@ -95,15 +97,15 @@ export default function FormReserva() {
 					<button 
 						onClick={handleStepBarbero}
 					>
-						{ barbero !== '' ? <CheckFat size={24} weight="fill" color='green' /> : <GiBeard className='w-9 h-9' /> }
+						{ barbero ? <CheckFat size={24} weight="fill" color='green' /> : <GiBeard className='w-9 h-9' /> }
 						
 					</button>
 
 					<button
 						onClick={handleStepServicio}
-						disabled={barbero === '' ? true : false}
+						disabled={!barbero ? true : false}
 					>
-						{ servicio !== null ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
+						{ servicioSelecc ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
 					</button>
 
 					<button
@@ -178,7 +180,7 @@ export default function FormReserva() {
 				)}
 				
 				{ step === 3 &&(
-					<div className='w-full flex flex-col justify-around items-center  border'>
+					<div className='w-full flex flex-col justify-around items-center p-2'>
 						<Typography 
 							variant='lead'
 							className='text-white capitalize'
@@ -186,30 +188,23 @@ export default function FormReserva() {
 							detalles de la reserva
 						</Typography>
 
-						<div className='w-full border'>
-							<User size={24} weight="regular" color='white' />
-							<Typography>{barbero?.nombres}</Typography>
-						</div>
+						<div className='w-full h-full flex justify-around'>
 
-						<div className='w-full border'>
-							<Scissors size={24} weight="regular" color='white' />
-							<Typography>{servicioSelecc?.servicio}</Typography>
-						</div>
+							<div className='h-full w-[20%] flex flex-col items-center justify-evenly'>
+								<User size={30} weight="regular" color='white' />
+								<Scissors size={30} weight="regular" color='white' />
+								<CalendarCheck size={30} weight="regular" color='white' />
+								<Watch size={30} weight="regular" color='white' />
+								<Money size={30} weight="regular" color='white' />
+							</div>
 
-						<div className='w-full border'>
-							<CalendarCheck size={24} weight="regular" color='white' />
-							<Typography>{fecha}</Typography>
-						</div>
-
-						<div className='w-full border'>
-							<Watch size={24} weight="regular" color='white' />
-							<Typography>{fecha}</Typography>
-						</div>
-
-						<div className='w-full border'>
-							<Money size={24} weight="regular" color='white' />
-							<Typography>{servicioSelecc?.valor}</Typography>
-
+							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
+								<Typography>{barbero?.nombres}</Typography>
+								<Typography>{servicioSelecc?.servicio}</Typography>
+								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
+								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
+								<Typography variant='paragraph'>$ {numeral(servicioSelecc?.valor).format()}</Typography>
+							</div>
 						</div>
 
 						<Button

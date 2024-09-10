@@ -24,6 +24,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         let hora = parseInt(item)
         let fecha = addHour(dia,hora).toISOString()
         setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
+        // setFecha(fecha)
     }
 
     // console.log(fecha)
