@@ -2,26 +2,31 @@ import { Button } from '@material-tailwind/react';
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
+import { addHour, format} from '@formkit/tempo'
 
-export default function CalendarioUsuario() {
+
+
+export default function CalendarioUsuario({fecha, setFecha}) {
 
     const [ dia, setDia ] = useState('')
-    const [ hora, setHora ] = useState(null)
-    const [ fecha, setFecha ] = useState(null)
+    // const [ fecha, setFecha ] = useState(null)
     const horasAm = ['8:00','9:00','10:00','11:00','12:00','13:00']
     const horasPm = ['14:00','15:00','16:00','17:00','18:00','19:00']
 
 
-    const seleccDia = (date) => {
-        setTimeout(() => {
-            setDia(date)
-        }, 1000);
+    const seleccDia = (e) => {
+        let dia = e.toISOString()
+        setDia(dia)
     }
+    
 
     const handleFecha = (item) => {
-        setHora(item)
+        let hora = parseInt(item)
+        let fecha = addHour(dia,hora).toISOString()
+        setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
     }
 
+    // console.log(fecha)
 
     return (
         <>
@@ -31,7 +36,7 @@ export default function CalendarioUsuario() {
                         <div className='w-[88%] h-full flex items-center xsm:justify-center md:justify-center '>
                             <Calendar 
                                 className='rounded-xl '
-                                onClickDay={seleccDia}
+                                onClickDay={(e) => seleccDia(e)}
                             />
                         </div>
                     :

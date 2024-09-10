@@ -6,8 +6,8 @@ import { IoCalendarNumber } from "react-icons/io5";
 import { IoInformationCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
-import { CheckFat } from "@phosphor-icons/react";
-import { Typography } from '@material-tailwind/react';
+import { CalendarCheck, CheckFat, Money, Scissors, User, Watch } from "@phosphor-icons/react";
+import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
 
@@ -25,25 +25,28 @@ export default function FormReserva() {
 
 	// STEP 0 BARBEROS
 	const barberos = useSelector(store => store.getUsuarios.usuarios)
-	const [ barbero, setBarbero ] = useState('')
+	const [ barberoID, setBarberoId ] = useState('')
+	const barbero = barberos?.find( item => item._id === barberoID)
 
 	const handleBarbero = (id) => {
-		setBarbero(id)
+		setBarberoId(id)
 		setStep(step + 1)		
 	}
 
 	const handleStepBarbero = () => {
-		setBarbero('')
+		setBarberoId('')
 		setStep(0)
 	}
 
 
 	//STEP 1 SERVICIOS
 	const servicios = useSelector(store => store.servicios.servicios)
-	const [ servicio, setServicio ] = useState(null)
-	
+	const [ servicio, setServicio ] = useState('')
+	const servicioSelecc = servicios?.find( item => item._id === servicio)
+	console.log(servicioSelecc)
+
+
 	const handleServicio = (id) => {
-		// setServicio((prev) => (prev === id ? null : id));
 		setServicio(id)
 		setTimeout(() => {
 			setStep(step + 1)
@@ -57,16 +60,29 @@ export default function FormReserva() {
 
 
 	// STEP 2 FECHA
-	const [ fecha, setFecha ] = useState(null)
+    const [ fecha, setFecha ] = useState(null)
+
+	const goToInfo = (fecha) => {
+		fecha !== null ? setStep( step + 1): null
+	}
+	const handleFecha = () => {
+		setFecha(null)
+		setStep(2)
+	}
+
+	// STEP 3 INFO RESERVA
+
+	// console.log(fecha)
 		
 
 
 	useEffect(
 		() => {
+			goToInfo(fecha)
 			dispatch(getTodos({parametro:'barberos', nombres: ''}))
 			dispatch(getServicios())
 		},
-		[dispatch]
+		[dispatch,fecha]
 	)
 
 
@@ -91,16 +107,17 @@ export default function FormReserva() {
 					</button>
 
 					<button
-						onClick={() => setStep(2)}
+						onClick={handleFecha}
 						disabled={servicio === null ? true : false}
 					>
-						<IoCalendarNumber className='w-9 h-9' />
+						{ fecha ? <CheckFat size={24} weight="fill" color='green' /> : <IoCalendarNumber className='w-9 h-9' />}
 					</button>
 
 					<button
 						onClick={() => setStep(3)}
-						disabled={fecha === '' ? true : false}
+						disabled={fecha === null ? true : false}
 					>
+						{/* { step === 3 ? <CheckFat size={24} weight="fill" color='green' /> : <IoInformationCircle className='w-9 h-9' /> } */}
 						<IoInformationCircle className='w-9 h-9' />
 					</button>
 				</div>
@@ -156,11 +173,54 @@ export default function FormReserva() {
 
 				{ step === 2 &&(
 					<div className='w-full h-[47vh] xsm:h-[90vh] md:h-[71vh]'>
-						<CalendarioUsuario />
+						<CalendarioUsuario fehca={fecha} setFecha={setFecha} />
 					</div>
 				)}
 				
+				{ step === 3 &&(
+					<div className='w-full flex flex-col justify-around items-center  border'>
+						<Typography 
+							variant='lead'
+							className='text-white capitalize'
+						>
+							detalles de la reserva
+						</Typography>
 
+						<div className='w-full border'>
+							<User size={24} weight="regular" color='white' />
+							<Typography>{barbero?.nombres}</Typography>
+						</div>
+
+						<div className='w-full border'>
+							<Scissors size={24} weight="regular" color='white' />
+							<Typography>{servicioSelecc?.servicio}</Typography>
+						</div>
+
+						<div className='w-full border'>
+							<CalendarCheck size={24} weight="regular" color='white' />
+							<Typography>{fecha}</Typography>
+						</div>
+
+						<div className='w-full border'>
+							<Watch size={24} weight="regular" color='white' />
+							<Typography>{fecha}</Typography>
+						</div>
+
+						<div className='w-full border'>
+							<Money size={24} weight="regular" color='white' />
+							<Typography>{servicioSelecc?.valor}</Typography>
+
+						</div>
+
+						<Button
+							size='sm'
+							variant='text'
+							className='border text-white'
+						>
+							confirmar reserva
+						</Button>
+					</div>
+				)}
 
 			</div>
 		</div>
