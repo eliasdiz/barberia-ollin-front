@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from '../layouts/Main.jsx';
 import Home from '../Pages/Home.jsx'
-import Reservas from "../Pages/Reservas.jsx";
 import Admin from "../Pages/Admin.jsx";
 import AdminLayout from '../layouts/AdminLayout.jsx'
 import InicioSesion from '../components/InicioSesion/InicioSesion.jsx'
@@ -13,18 +12,19 @@ import FormRegistro from "../components/FormRegistro/FormRegistro.jsx";
 import EditarUsuario from "../components/EditarUsuario/EditarUsuario.jsx";
 import ValidacionEmail from "../components/ValidacionEmail/ValidacionEmail.jsx";
 import FormReserva from "../components/FormReserva/FormReserva.jsx";
-
+import Reservas from "../components/Reservas/Reservas.jsx";
 
 const router = createBrowserRouter([
     {
         path: '/', element: <Layout />,
         children: [
             { path: '/', element: <Home /> },
-            { path: '/reservas', element: <FormReserva /> },
+            { path: '/crear-reservas', element: <FormReserva /> },
             { path: '/inicio-sesion', element: <InicioSesion />},
             { path: '/prueba', element: <Pruebas />},
             { path: '/registro', element: <FormRegistro />},
-            { path: '/validacion-email', element: <ValidacionEmail />}
+            { path: '/validacion-email', element: <ValidacionEmail />},
+            { path: '/reservas', element: <Reservas />}
         ],
     },
     {
