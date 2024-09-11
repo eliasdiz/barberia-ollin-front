@@ -87,7 +87,7 @@ export default function FormReserva() {
 	const verificarCliente = (cliente) => {
 		cliente.length === 0 ? navigate('/validacion-email') : null
 	}
-	console.log(cliente)
+	// console.log(cliente)
 
 	const handleReservar = () => {
 		let data = {
