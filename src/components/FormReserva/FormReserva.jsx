@@ -12,6 +12,10 @@ import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
 import numeral from 'numeral';
 import { format } from '@formkit/tempo';
+import axios from 'axios';
+import { urlLocal } from '../../urlHost.js';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -22,8 +26,11 @@ const { getTodos } = actionsUsuarios
 
 export default function FormReserva() {
 
-	const [ step, setStep ] = useState(0)
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+
+	const cliente = useSelector(store => store.reservas.cliente)
+	const [ step, setStep ] = useState(0)
 
 	// STEP 0 BARBEROS
 	const barberos = useSelector(store => store.getUsuarios.usuarios)
@@ -77,14 +84,49 @@ export default function FormReserva() {
 	// STEP 3 INFO RESERVA
 	const fechaObjeto = new Date(fecha)
 	
+	const verificarCliente = (cliente) => {
+		cliente.length === 0 ? navigate('/validacion-email') : null
+	}
+	console.log(cliente)
+
+	const handleReservar = () => {
+		let data = {
+			cliente_id: cliente?._id,
+			barbero_id: barberoID,
+			servicio_id: servicio,
+			fecha: fechaObjeto,
+		}
+		console.log(data)
+		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
+		toast.promise(
+			promesa,
+			{
+				loading: 'creando reserva',
+				success: (res) => {
+					setTimeout(() => {
+						navigate('/reservas')
+					}, 1500);
+					return <>{res.data.message}</>
+				},
+				error: (error) => {
+					return <>{error.response.data.message}</>
+				}
+			},
+			{
+				success: {duration: 1200},
+                style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'},
+			}
+		)
+	}
 
 	useEffect(
 		() => {
+			// verificarCliente(cliente)
 			goToInfo(fecha)
 			dispatch(getTodos({parametro:'barberos', nombres: ''}))
 			dispatch(getServicios())
 		},
-		[dispatch,fecha]
+		[dispatch,fecha,cliente]
 	)
 
 
@@ -110,7 +152,7 @@ export default function FormReserva() {
 
 					<button
 						onClick={handleFecha}
-						disabled={servicio === null ? true : false}
+						disabled={servicio === '' ? true : false}
 					>
 						{ fecha ? <CheckFat size={24} weight="fill" color='green' /> : <IoCalendarNumber className='w-9 h-9' />}
 					</button>
@@ -119,7 +161,6 @@ export default function FormReserva() {
 						onClick={() => setStep(3)}
 						disabled={fecha === null ? true : false}
 					>
-						{/* { step === 3 ? <CheckFat size={24} weight="fill" color='green' /> : <IoInformationCircle className='w-9 h-9' /> } */}
 						<IoInformationCircle className='w-9 h-9' />
 					</button>
 				</div>
@@ -191,11 +232,11 @@ export default function FormReserva() {
 						<div className='w-full h-full flex justify-around'>
 
 							<div className='h-full w-[20%] flex flex-col items-center justify-evenly'>
-								<User size={30} weight="regular" color='white' />
-								<Scissors size={30} weight="regular" color='white' />
-								<CalendarCheck size={30} weight="regular" color='white' />
-								<Watch size={30} weight="regular" color='white' />
-								<Money size={30} weight="regular" color='white' />
+								<User size={32} weight="regular" color='white' />
+								<Scissors size={32} weight="regular" color='white' />
+								<CalendarCheck size={32} weight="regular" color='white' />
+								<Watch size={32} weight="regular" color='white' />
+								<Money size={32} weight="regular" color='white' />
 							</div>
 
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
@@ -203,7 +244,7 @@ export default function FormReserva() {
 								<Typography>{servicioSelecc?.servicio}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
-								<Typography variant='paragraph'>$ {numeral(servicioSelecc?.valor).format()}</Typography>
+								<Typography>$ {numeral(servicioSelecc?.valor).format()}</Typography>
 							</div>
 						</div>
 
@@ -211,6 +252,7 @@ export default function FormReserva() {
 							size='sm'
 							variant='text'
 							className='border text-white'
+							onClick={handleReservar}
 						>
 							confirmar reserva
 						</Button>
