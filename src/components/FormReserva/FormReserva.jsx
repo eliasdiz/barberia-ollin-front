@@ -78,6 +78,13 @@ export default function FormReserva() {
 	const fechaObjeto = new Date(fecha)
 	
 
+	const handleReservar = () => {
+		let data = {
+			barbero: barberoID
+		}
+		console.log(data)
+	}
+
 	useEffect(
 		() => {
 			goToInfo(fecha)
@@ -119,7 +126,6 @@ export default function FormReserva() {
 						onClick={() => setStep(3)}
 						disabled={fecha === null ? true : false}
 					>
-						{/* { step === 3 ? <CheckFat size={24} weight="fill" color='green' /> : <IoInformationCircle className='w-9 h-9' /> } */}
 						<IoInformationCircle className='w-9 h-9' />
 					</button>
 				</div>
@@ -203,7 +209,7 @@ export default function FormReserva() {
 								<Typography>{servicioSelecc?.servicio}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
-								<Typography variant='paragraph'>$ {numeral(servicioSelecc?.valor).format()}</Typography>
+								<Typography>$ {numeral(servicioSelecc?.valor).format()}</Typography>
 							</div>
 						</div>
 
@@ -211,6 +217,7 @@ export default function FormReserva() {
 							size='sm'
 							variant='text'
 							className='border text-white'
+							onClick={handleReservar}
 						>
 							confirmar reserva
 						</Button>
