@@ -3,12 +3,75 @@ import { Typography, Button } from '@material-tailwind/react'
 import { CalendarCheck, Money, Scissors, User, Watch } from "@phosphor-icons/react";
 import numeral from 'numeral';
 import { format } from '@formkit/tempo'
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { urlLocal } from '../../urlHost.js';
+import actionsReservas from '../../Store/Reservas/actions.js'
+import { useDispatch } from 'react-redux';
 
 
+const { getReservasCLiente} = actionsReservas
 
 
 export default function CardInfoReserva({reserva}) {
 
+    const dispatch = useDispatch()
+
+    const handleEliminar = () => {
+        console.log(reserva._id)
+        reserva._id !== '' &&
+        toast((t) =>(
+            <div className='flex flex-col gap-3 items-center'>
+                <div>
+                    <Typography variant='lead'>eliminar {reserva?.servicio_id.servicio}</Typography>
+                    <Typography variant='lead'>{format(reserva.fecha,'dddd hh:mm a')}</Typography>
+                </div>
+
+                <div className='flex gap-5'>
+                    <Button
+                        size='sm'
+                        variant='text'
+                        className='text-red-600 border border-red-700'
+                        onClick={() => toast.dismiss(t.id)}
+                    >
+                        no
+                    </Button>
+
+                    <Button
+                        size='sm'
+                        variant='text'
+                        className='border border-green-700 text-green-700'
+                        onClick={() =>{
+                            toast.dismiss(t.id)
+                            let promesa = axios.delete(`${urlLocal}reservas/${reserva._id}`)
+                            toast.promise(
+                                promesa,
+                                {
+                                    loading: 'eliminado reserva',
+                                    success: (res) => {
+                                        dispatch(getReservasCLiente({id: reserva.cliente_id}))
+                                        return <>{res.data.message}</>
+                                    },
+                                    error: (error) => {
+                                        console.log(error.response.data)
+                                        return <>{error.response.data.message}</>
+                                    }
+                                },{
+                                    success: {duration: 1000},
+                                    error: {duration: 1000},
+                                    style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}            }
+                            )
+                        }}
+                    >
+                        si
+                    </Button>
+                </div>
+            </div>
+        ),{
+            style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}
+        })
+    }    
+    
 
     return (
         <div className='h-full flex justify-center items-center'>
@@ -44,7 +107,7 @@ export default function CardInfoReserva({reserva}) {
                     size='sm'
                     variant='text'
                     className='border border-red-700 text-red-700'
-                    // onClick={handleEliminar}
+                    onClick={handleEliminar}
                 >
                     eliminar
                 </Button>
