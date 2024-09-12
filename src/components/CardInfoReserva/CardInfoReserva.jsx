@@ -13,7 +13,7 @@ export default function CardInfoReserva({reserva}) {
     return (
         <div className='h-full flex justify-center items-center'>
             <div 
-                className='border rounded-xl w-[75%]  h-[90%] flex flex-col justify-around items-center p-2'
+                className='border rounded-xl w-[75%] xsm:w-[50%] md:w-[40%]  h-[90%] md:h-full xsm:h-full flex flex-col justify-around items-center p-2'
             >
                 <Typography 
                     variant='lead'
@@ -44,7 +44,7 @@ export default function CardInfoReserva({reserva}) {
                     size='sm'
                     variant='text'
                     className='border border-red-700 text-red-700'
-                    // onClick={handleReservar}
+                    // onClick={handleEliminar}
                 >
                     eliminar
                 </Button>
