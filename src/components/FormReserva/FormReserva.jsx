@@ -96,7 +96,7 @@ export default function FormReserva() {
 			servicio_id: servicio,
 			fecha: fechaObjeto,
 		}
-		console.log(data)
+		// console.log(data)
 		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
 		toast.promise(
 			promesa,
