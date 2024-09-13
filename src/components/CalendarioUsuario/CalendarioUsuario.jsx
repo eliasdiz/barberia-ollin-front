@@ -5,6 +5,7 @@ import 'react-calendar/dist/Calendar.css';
 import { addHour, format, sameDay, sameHour} from '@formkit/tempo'
 import axios from 'axios';
 import { urlLocal} from '../../urlHost.js'
+import { useSelector } from 'react-redux';
 
 
 export default function CalendarioUsuario({fecha, setFecha}) {
@@ -12,8 +13,9 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     const [ dia, setDia ] = useState('')
     const horas = ['8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
     const [ reservas, setReservasBarbero ] = useState([])
+    const barberoId = useSelector(store => store.captureId.id) 
     
-    console.log(reservas)
+    // console.log(barberoId)
     
     const horasReservadas = (hora) => {
         const diaObj = new Date(dia);
@@ -38,10 +40,18 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     }
 
 
+    const diasPasadosDomingos = ({date,view}) => {
+        let hoy = new Date()
+        let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy.setHours(0,0,0,0)
+        let domingos = date.getDay() === 0
+
+        return diasPasados || domingos
+    }
+
 
     useEffect(
         () => {
-            axios.get(`${urlLocal}reservas/barbero/66b18e0a7c028af02e1a7365`)
+            axios.get(`${urlLocal}reservas/barbero/${barberoId}`)
                 .then( res => setReservasBarbero(res.data.reservas))
                 .catch( error => console.log(error))
         },
@@ -57,6 +67,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                             <Calendar 
                                 className='rounded-xl '
                                 onClickDay={(e) => seleccDia(e)}
+                                tileDisabled={diasPasadosDomingos} 
                             />
                         </div>
                     :

@@ -16,10 +16,11 @@ import axios from 'axios';
 import { urlLocal } from '../../urlHost.js';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import actionsCapturaId from '../../Store/Idcapture/actions.js'
 
 
 
-
+const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 const { getTodos } = actionsUsuarios
 
@@ -40,6 +41,7 @@ export default function FormReserva() {
 
 	const handleBarbero = (id) => {
 		setBarberoId(id)
+		dispatch(idCapture({id: id}))
 		setStep(step + 1)		
 	}
 
