@@ -1,17 +1,30 @@
 import { Button } from '@material-tailwind/react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
-import { addHour, format} from '@formkit/tempo'
-
+import { addHour, format, sameDay, sameHour} from '@formkit/tempo'
+import axios from 'axios';
+import { urlLocal} from '../../urlHost.js'
+import { useSelector } from 'react-redux';
 
 
 export default function CalendarioUsuario({fecha, setFecha}) {
 
     const [ dia, setDia ] = useState('')
-    // const [ fecha, setFecha ] = useState(null)
-    const horasAm = ['8:00','9:00','10:00','11:00','12:00','13:00']
-    const horasPm = ['14:00','15:00','16:00','17:00','18:00','19:00']
+    const horas = ['8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
+    const [ reservas, setReservasBarbero ] = useState([])
+    const barberoId = useSelector(store => store.captureId.id) 
+    
+    // console.log(barberoId)
+    
+    const horasReservadas = (hora) => {
+        const diaObj = new Date(dia);
+        const fechaConHora = addHour(diaObj,parseInt(hora));
+        let reservasFiltradas =  reservas.filter(reserva => 
+            sameDay(reserva.fecha, diaObj) && sameHour(reserva.fecha,fechaConHora)
+        )
+        return reservasFiltradas.length > 0
+    }
 
 
     const seleccDia = (e) => {
@@ -24,10 +37,26 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         let hora = parseInt(item)
         let fecha = addHour(dia,hora).toISOString()
         setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
-        // setFecha(fecha)
     }
 
-    // console.log(fecha)
+
+    const diasPasadosDomingos = ({date,view}) => {
+        let hoy = new Date()
+        let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy.setHours(0,0,0,0)
+        let domingos = date.getDay() === 0
+
+        return diasPasados || domingos
+    }
+
+
+    useEffect(
+        () => {
+            axios.get(`${urlLocal}reservas/barbero/${barberoId}`)
+                .then( res => setReservasBarbero(res.data.reservas))
+                .catch( error => console.log(error))
+        },
+        []
+    )
 
     return (
         <>
@@ -38,11 +67,12 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                             <Calendar 
                                 className='rounded-xl '
                                 onClickDay={(e) => seleccDia(e)}
+                                tileDisabled={diasPasadosDomingos} 
                             />
                         </div>
                     :
-                        <div className='w-full h-full md:h-[70vh] flex flex-col items-center p-1'>
-                            <div className='w-[100%] flex justify-center '>
+                        <div className='w-full h-full md:h-[70vh] flex flex-col items-center'>
+                            <div className='w-[100%] flex justify-center p-1 '>
                                 <Button
                                     className='border text-white'
                                     size='sm'
@@ -53,39 +83,21 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                 </Button>
                             </div>
 
-                            <div className='w-full h-full flex'>
-                                <div className='w-[50%] flex flex-col justify-around items-center'>
+                            <div className='w-full h-[85%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
                                     {
-                                        horasAm.map((item,i) => (
+                                        horas.map((item,i) => (
                                             <Button
-                                                className='w-[90%] md:w-[50%] text-white border bg-green-800'
+                                                className={ horasReservadas(item) ? 'w-[40%] text-white border bg-gray-500' : 'w-[40%] text-white border bg-green-800'}
                                                 variant='text'
                                                 key={i}
                                                 size='sm'
                                                 onClick={() => handleFecha(item)}
+                                                disabled={horasReservadas(item)}
                                             >
                                                 {item}
                                             </Button>
                                         ) )
                                     }
-                                </div>
-
-                                <div className='w-[50%] flex flex-col justify-around items-center'>
-                                {
-                                        horasPm.map((item,i) => (
-                                            <Button
-                                                className='w-[90%] md:w-[50%] text-white border bg-green-800'
-
-                                                variant='text'
-                                                key={i}
-                                                size='sm'
-                                                onClick={() => handleFecha(item)}
-                                            >
-                                                {item}
-                                            </Button>
-                                        ) )
-                                    }
-                                </div>
                             </div>
                         </div>
                 }

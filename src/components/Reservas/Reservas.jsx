@@ -6,8 +6,10 @@ import { Carousel } from 'keep-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import actionsReservas from '../../Store/Reservas/actions'
+import actionsServicios from '../../Store/Servicios/actions'
 
 
+const { getServicios } = actionsServicios 
 const { getReservasCLiente} = actionsReservas
 
 export default function Reservas() {
@@ -19,11 +21,19 @@ export default function Reservas() {
     const cliente = useSelector(store => store.reservas.cliente)
     const clienteId = cliente?._id
 
+    const validacionCliente = (cliente) =>{
+        if(cliente.length === 0){
+            return navigate('/validacion-email')
+        }
+    }
+
     useEffect(
         () => {
+            validacionCliente(cliente)
+            dispatch(getServicios())
             dispatch(getReservasCLiente({id: clienteId}))
         },
-        []
+        [cliente]
     )
 
 
