@@ -1,14 +1,14 @@
 import { Button, Input, Typography } from '@material-tailwind/react'
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { urlLocal } from '../../urlHost'
 import toast, { Toaster } from 'react-hot-toast'
 import actionsReservas from '../../Store/Reservas/actions.js'
 import { useDispatch } from 'react-redux'
+import actionsServicios from '../../Store/Servicios/actions.js'
 
-
-
+const { getServicios } = actionsServicios
 const { getCliente } = actionsReservas
 
 
@@ -48,6 +48,12 @@ export default function ValidacionEmail() {
         )
     }
 
+    useEffect(
+        () => {
+            dispatch(getServicios())
+        },
+        []
+    )
 
     return (
         <>
