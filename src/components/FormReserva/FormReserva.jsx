@@ -121,7 +121,7 @@ export default function FormReserva() {
 
 	useEffect(
 		() => {
-			// verificarCliente(cliente)
+			verificarCliente(cliente)
 			goToInfo(fecha)
 			dispatch(getTodos({parametro:'barberos', nombres: ''}))
 			dispatch(getServicios())

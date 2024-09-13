@@ -17,8 +17,30 @@ export default function CardInfoReserva({reserva}) {
 
     const dispatch = useDispatch()
 
+    const eliminarReserva = (id) => {
+        let promesa = axios.delete(`${urlLocal}reservas/${id}`)
+        toast.promise(
+            promesa,
+            {
+                loading: 'eliminado reserva',
+                success: (res) => {
+                    dispatch(getReservasCLiente({id: reserva.cliente_id}))
+                    return <>{res.data.message}</>
+                },
+                error: (error) => {
+                    console.log(error.response.data)
+                    return <>{error.response.data.message}</>
+                }
+            },{
+                succes:{duration:1000},
+                error: {duration: 1000},
+                style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'},
+            }
+        )
+    }
+
     const handleEliminar = () => {
-        console.log(reserva._id)
+        // console.log(reserva._id)
         reserva._id !== '' &&
         toast((t) =>(
             <div className='flex flex-col gap-3 items-center'>
@@ -43,24 +65,7 @@ export default function CardInfoReserva({reserva}) {
                         className='border border-green-700 text-green-700'
                         onClick={() =>{
                             toast.dismiss(t.id)
-                            let promesa = axios.delete(`${urlLocal}reservas/${reserva._id}`)
-                            toast.promise(
-                                promesa,
-                                {
-                                    loading: 'eliminado reserva',
-                                    success: (res) => {
-                                        dispatch(getReservasCLiente({id: reserva.cliente_id}))
-                                        return <>{res.data.message}</>
-                                    },
-                                    error: (error) => {
-                                        console.log(error.response.data)
-                                        return <>{error.response.data.message}</>
-                                    }
-                                },{
-                                    success: {duration: 1000},
-                                    error: {duration: 1000},
-                                    style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}            }
-                            )
+                            eliminarReserva(reserva._id)
                         }}
                     >
                         si
