@@ -3,19 +3,20 @@ import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { addHour, format, sameDay, sameHour} from '@formkit/tempo'
-import axios from 'axios';
-import { urlLocal} from '../../urlHost.js'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import actionsReservas from '../../Store/Reservas/actions.js'
+
+
+const { getReservasBarbero} = actionsReservas
 
 
 export default function CalendarioUsuario({fecha, setFecha}) {
 
+    const dispatch = useDispatch()
     const [ dia, setDia ] = useState('')
     const horas = ['8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
-    const [ reservas, setReservasBarbero ] = useState([])
+    const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id) 
-    
-    // console.log(barberoId)
     
     const horasReservadas = (hora) => {
         const diaObj = new Date(dia);
@@ -26,13 +27,11 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         return reservasFiltradas.length > 0
     }
 
-
     const seleccDia = (e) => {
         let dia = e.toISOString()
         setDia(dia)
     }
     
-
     const handleFecha = (item) => {
         let hora = parseInt(item)
         let fecha = addHour(dia,hora).toISOString()
@@ -44,18 +43,14 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         let hoy = new Date()
         let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy.setHours(0,0,0,0)
         let domingos = date.getDay() === 0
-
         return diasPasados || domingos
     }
 
-
     useEffect(
         () => {
-            axios.get(`${urlLocal}reservas/barbero/${barberoId}`)
-                .then( res => setReservasBarbero(res.data.reservas))
-                .catch( error => console.log(error))
+            dispatch(getReservasBarbero({id: barberoId}))
         },
-        []
+        [dispatch]
     )
 
     return (

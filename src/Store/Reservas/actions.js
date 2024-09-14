@@ -24,6 +24,19 @@ const getReservasCLiente = createAsyncThunk(
     }
 )
 
-const actions = { getCliente, getReservasCLiente}
+const getReservasBarbero = createAsyncThunk(
+    'getReservasBarbero',
+    async(params) =>{
+        try {
+            let { id } = params
+            let res = await axios.get(`${urlLocal}reservas/barbero/${id}`)
+            return { reservasBarbero: res.data.reservas}
+        } catch (error) {
+            return { reservasBarbero: []}
+        }
+    }
+)
+
+const actions = { getCliente, getReservasCLiente, getReservasBarbero}
 
 export default actions
