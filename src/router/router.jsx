@@ -15,6 +15,8 @@ import FormReserva from "../components/FormReserva/FormReserva.jsx";
 import Reservas from "../components/Reservas/Reservas.jsx";
 import ReservasBarbero from "../components/ReservasBarbero/ReservasBarbero.jsx";
 import FormReservaBarbero from "../components/FormReservaBarbero/FormReservaBarbero.jsx";
+import CalendarioBarbero from '../components/CalendarioBarbero/CalendarioBarbero.jsx'
+
 
 const router = createBrowserRouter([
     {
@@ -42,7 +44,8 @@ const router = createBrowserRouter([
         children: [
             { path: '/barbero', element: <Barbero />},
             { path: '/barbero/reservas', element: <ReservasBarbero />},
-            { path: '/barbero/crear-reserva', element: <FormReservaBarbero />}
+            { path: '/barbero/crear-reserva', element: <FormReservaBarbero />},
+            { path: '/barbero/agenda', element: <CalendarioBarbero />}
         ]
     }
 ]);

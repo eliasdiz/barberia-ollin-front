@@ -40,10 +40,13 @@ export default function CalendarioUsuario({fecha, setFecha}) {
 
 
     const diasPasadosDomingos = ({date,view}) => {
-        let hoy = new Date()
-        let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy.setHours(0,0,0,0)
-        let domingos = date.getDay() === 0
-        return diasPasados || domingos
+        if(view === 'month'){
+            let hoy = new Date().setHours(0,0,0,0)
+            let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy
+            let domingos = date.getDay() === 0
+            return diasPasados || domingos
+        }
+        return false
     }
 
     useEffect(
@@ -57,28 +60,31 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         <>
             <div className='w-full h-full'>
                 {
-                    !dia ? 
-                        <div className='w-[88%] h-full flex items-center xsm:justify-center md:justify-center '>
-                            <Calendar 
-                                className='rounded-xl '
-                                onClickDay={(e) => seleccDia(e)}
-                                tileDisabled={diasPasadosDomingos} 
-                            />
-                        </div>
-                    :
-                        <div className='w-full h-full md:h-[70vh] flex flex-col items-center'>
-                            <div className='w-[100%] flex justify-center p-1 '>
-                                <Button
-                                    className='border text-white'
-                                    size='sm'
-                                    variant='text'
-                                    onClick={() => setDia('')}
-                                >
-                                    cambiar dia
-                                </Button>
+                    !dia ?
+                        <>
+                            <div className='w-[88%] h-full flex items-center xsm:justify-center md:justify-center '>
+                                <Calendar 
+                                    className='rounded-xl '
+                                    onClickDay={(e) => seleccDia(e)}
+                                    tileDisabled={diasPasadosDomingos} 
+                                />
                             </div>
+                        </>
+                    :
+                        <>
+                            <div className='w-full h-full md:h-[70vh] flex flex-col items-center'>
+                                <div className='w-[100%] flex justify-center p-1 '>
+                                    <Button
+                                        className='border text-white'
+                                        size='sm'
+                                        variant='text'
+                                        onClick={() => setDia('')}
+                                    >
+                                        cambiar dia
+                                    </Button>
+                                </div>
 
-                            <div className='w-full h-[85%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
+                                <div className='w-full h-[85%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
                                     {
                                         horas.map((item,i) => (
                                             <Button
@@ -93,8 +99,9 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                             </Button>
                                         ) )
                                     }
+                                </div>
                             </div>
-                        </div>
+                        </>
                 }
             </div>
         </>
