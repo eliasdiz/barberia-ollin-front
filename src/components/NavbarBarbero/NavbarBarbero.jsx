@@ -39,6 +39,11 @@ export default function NavbarBarbero() {
         setOpenNav(false)
     }
 
+    const handleReserva = () => {
+        navigate('/barbero/reservas')
+        setOpenNav(false)
+    }
+
     const handleCerrarSesion = () => {
         let promesa = axios.post(`${urlLocal}usuarios/cerrar-sesion`,null,headers)
         toast.promise(
@@ -63,8 +68,6 @@ export default function NavbarBarbero() {
             }
         )
     }
-    
-
     
 
     const NavList = () => {
@@ -92,7 +95,7 @@ export default function NavbarBarbero() {
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleAgenda}>
+                <ListItem onClick={handleReserva}>
                     <Typography
                         variant="h5"
                         color="blue-gray"

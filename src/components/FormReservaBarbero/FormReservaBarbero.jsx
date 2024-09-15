@@ -1,11 +1,9 @@
-import { Carousel, CheckBox, Label } from 'keep-react';
+import { CheckBox, Label } from 'keep-react';
 import React, { useEffect, useState } from 'react'
-import { GiBeard } from "react-icons/gi";
 import { ImScissors } from "react-icons/im";
 import { IoCalendarNumber } from "react-icons/io5";
 import { IoInformationCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { CalendarCheck, CheckFat, Money, Scissors, User, Watch } from "@phosphor-icons/react";
 import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
@@ -19,55 +17,37 @@ import { useNavigate } from 'react-router-dom';
 import actionsCapturaId from '../../Store/Idcapture/actions.js'
 
 
-
 const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
-const { getTodos } = actionsUsuarios
 
 
-export default function FormReserva() {
+export default function FormReservaBarbero() {
 
-	const dispatch = useDispatch()
+    const dispatch = useDispatch()
 	const navigate = useNavigate()
 
-	const cliente = useSelector(store => store.reservas.cliente)
-	const barberoCliente = useSelector(store => store.getUsuarios.usuario)
-	const [ step, setStep ] = useState(0)
-
+	
+	const [ step, setStep ] = useState(1)
+    
 	// STEP 0 BARBEROS
-	const barberos = useSelector(store => store.getUsuarios.usuarios)
-	const [ barberoID, setBarberoId ] = useState('')
-	const barbero = barberos?.find( item => item._id === barberoID)
-	// console.log(barbero)
-
-	const handleBarbero = (id) => {
-		setBarberoId(id)
-		dispatch(idCapture({id: id}))
-		setStep(step + 1)		
-	}
-
-	const handleStepBarbero = () => {
-		setBarberoId('')
-		setStep(0)
-	}
+	const barberoCliente = useSelector(store => store.getUsuarios.usuario)
 
 
 	//STEP 1 SERVICIOS
 	const servicios = useSelector(store => store.servicios.servicios)
 	const [ servicio, setServicio ] = useState('')
 	const servicioSelecc = servicios?.find( item => item._id === servicio)
-	// console.log(servicioSelecc)
-
 
 	const handleServicio = (id) => {
 		setServicio(id)
+        dispatch(idCapture({id: barberoCliente._id}))
 		setTimeout(() => {
 			setStep(step + 1)
 		}, 1200);
 	}
 
 	const handleStepServicio = () => {
-		setServicio(null)
+		setServicio('')
 		setStep(1)
 	}
 
@@ -87,17 +67,11 @@ export default function FormReserva() {
 	// STEP 3 INFO RESERVA
 	const fechaObjeto = new Date(fecha)
 	
-	const verificarCliente = (cliente) =>{
-        if(cliente.length === 0 && !barberoCliente){
-            return navigate('/validacion-email')
-        }
-    }
-	// console.log(cliente)
 
 	const handleReservar = () => {
 		let data = {
-			cliente_id: cliente?._id,
-			barbero_id: barberoID,
+			cliente_id: barberoCliente?._id,
+			barbero_id: barberoCliente?._id,
 			servicio_id: servicio,
 			fecha: fechaObjeto,
 		}
@@ -109,7 +83,7 @@ export default function FormReserva() {
 				loading: 'creando reserva',
 				success: (res) => {
 					setTimeout(() => {
-						navigate('/reservas')
+						navigate('/barbero/reservas')
 					}, 1500);
 					return <>{res.data.message}</>
 				},
@@ -126,31 +100,22 @@ export default function FormReserva() {
 
 	useEffect(
 		() => {
-			verificarCliente(cliente)
 			goToInfo(fecha)
-			dispatch(getTodos({parametro:'barberos', nombres: ''}))
 			dispatch(getServicios())
 		},
-		[dispatch,fecha,cliente]
+		[dispatch,fecha]
 	)
 
 
-	return (
-		<div className='w-full flex justify-center  '>
+    return (
+        <div className='w-full flex justify-center  '>
 
 			<div className='flex w-full md:w-[60%] p-1 gap-1 mt-2'>
 
 				<div className='w-[3rem] h-[47vh] xsm:h-[90vh] md:h-[71vh] flex flex-col justify-between items-center p-3 border border-blue-gray-500 rounded-md'>
-					<button 
-						onClick={handleStepBarbero}
-					>
-						{ barbero ? <CheckFat size={24} weight="fill" color='green' /> : <GiBeard className='w-9 h-9' /> }
-						
-					</button>
 
 					<button
 						onClick={handleStepServicio}
-						disabled={!barbero ? true : false}
 					>
 						{ servicioSelecc ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
 					</button>
@@ -170,50 +135,25 @@ export default function FormReserva() {
 					</button>
 				</div>
 
-					
-				{ step === 0 &&(
-					<div className='w-full flex items-center'>
-						<Carousel loop className='w-full h-full p-2'>
-							{
-								barberos?.map((item,i) => (
-									<div 
-										key={i} 
-										id={item._id} 
-										className='flex flex-col gap-6 justify-center items-center p-3 '
-										onClick={() => handleBarbero(item._id)}
-									>
-										<img 
-											src="https://docs.material-tailwind.com/img/face-2.jpg" 
-											alt="avatar" 
-											className='rounded-full object-center h-[89%]'
-										/>
-										<Typography variant='lead' className='text-white capitalize'>{item.nombres}</Typography>
-									</div>
-								))
-
-							}
-						</Carousel>
-					</div>
-				)}
 
 				{ step === 1 &&(
 					<div className="w-full flex flex-wrap items-center justify-center p-2  gap-3 xxsm:flex-col xxsm:justify-around xxsm:items-center">
 						{servicios?.map((item, i) => (
 							<div
-							className="xxsm:w-[60%] w-[40%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
-							key={i}
-							onClick={() => handleServicio(item._id)}
+                                className="xxsm:w-[60%] w-[40%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
+                                key={i}
+                                onClick={() => handleServicio(item._id)}
 							>
-							<Label htmlFor={`checkbox-${item._id}`}>
-								<Typography className="font-semibold text-blue-gray-300 uppercase">
-								{item.servicio}
-								</Typography>
-							</Label>
-							<CheckBox
-								id={`checkbox-${item._id}`}
-								checked={servicio === item._id}
-								onChange={() => handleServicio(item._id)}
-							/>
+                                <Label htmlFor={`checkbox-${item._id}`}>
+                                    <Typography className="font-semibold text-blue-gray-300 uppercase">
+                                    {item.servicio}
+                                    </Typography>
+                                </Label>
+                                <CheckBox
+                                    id={`checkbox-${item._id}`}
+                                    checked={servicio === item._id}
+                                    onChange={() => handleServicio(item._id)}
+                                />
 							</div>
 						))}
 					</div>	
@@ -245,7 +185,7 @@ export default function FormReserva() {
 							</div>
 
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
-								<Typography>{barbero?.nombres}</Typography>
+								<Typography>{barberoCliente?.nombres}</Typography>
 								<Typography>{servicioSelecc?.servicio}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
@@ -266,8 +206,5 @@ export default function FormReserva() {
 
 			</div>
 		</div>
-	)
+    )
 }
-	
-
-	

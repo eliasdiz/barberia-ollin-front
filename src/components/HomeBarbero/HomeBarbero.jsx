@@ -2,7 +2,9 @@ import { Typography } from '@material-tailwind/react'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import actionsUsuarios from '../../Store/Usuarios/actions'
+import actionsServicios from '../../Store/Servicios/actions'
 
+const { getServicios} = actionsServicios
 const { getUsuario} = actionsUsuarios
 
 export default function HomeBarbero() {
@@ -10,9 +12,11 @@ export default function HomeBarbero() {
     const dispatch = useDispatch()
     const usuario = useSelector(store => store.getUsuarios.usuario)
 
+
     useEffect(
         () => {
             dispatch(getUsuario())
+            dispatch(getServicios())
         },
         [dispatch]
     )
