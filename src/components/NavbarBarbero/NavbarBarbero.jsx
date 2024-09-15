@@ -7,12 +7,15 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import actionsReservas from '../../Store/Reservas/actions.js'
 
 
+const { getReservasBarbero} = actionsReservas
 const { getUsuario } = actionsUsuarios
+
 
 export default function NavbarBarbero() {
 
@@ -22,7 +25,7 @@ export default function NavbarBarbero() {
 
     const token = localStorage.getItem('token')
     const headers = { headers: { Authorization: `Bearer ${token}`}}
-
+    const barbero = useSelector(store => store.getUsuarios.usuario)
 
     const handleInicio = () => {
         navigate('/barbero')
@@ -35,7 +38,13 @@ export default function NavbarBarbero() {
     }
 
     const handleAgenda = () => {
-        navigate('/barbero')
+        navigate('/barbero/agenda')
+        setOpenNav(false)
+        dispatch(getReservasBarbero({id: barbero._id}))
+    }
+
+    const handleReserva = () => {
+        navigate('/barbero/reservas')
         setOpenNav(false)
     }
 
@@ -65,8 +74,6 @@ export default function NavbarBarbero() {
     }
     
 
-    
-
     const NavList = () => {
         return (
             <List className="mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
@@ -92,7 +99,7 @@ export default function NavbarBarbero() {
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleAgenda}>
+                <ListItem onClick={handleReserva}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
