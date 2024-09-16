@@ -10,10 +10,8 @@ import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch, useSelector } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { RiCalendarScheduleFill } from "react-icons/ri";
-import actionsReservas from '../../Store/Reservas/actions.js'
 
 
-const { getReservasBarbero} = actionsReservas
 const { getUsuario } = actionsUsuarios
 
 
@@ -40,7 +38,6 @@ export default function NavbarBarbero() {
     const handleAgenda = () => {
         navigate('/barbero/agenda')
         setOpenNav(false)
-        dispatch(getReservasBarbero({id: barbero._id}))
     }
 
     const handleReserva = () => {

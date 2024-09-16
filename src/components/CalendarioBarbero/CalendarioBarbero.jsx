@@ -5,8 +5,14 @@ import Calendar from 'react-calendar'
 import { Button, Typography } from '@material-tailwind/react'
 import actionsUsuario from '../../Store/Usuarios/actions.js'
 import {addHour, format, sameDay, sameHour} from '@formkit/tempo'
+import actionsCapturaId from '../../Store/Idcapture/actions.js'
+import InfoReservaBarbero from '../InfoReservaBarbero/InfoReservaBarbero.jsx'
+import { useNavigate } from 'react-router-dom'
+import actionsReservas from '../../Store/Reservas/actions.js'
 
 
+const { getReservasBarbero} = actionsReservas
+const { idCapture} = actionsCapturaId
 const { getUsuario } = actionsUsuario
 const { getServicios} = actiosnServicios
 
@@ -15,11 +21,13 @@ const { getServicios} = actiosnServicios
 export default function CalendarioBarbero() {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [ dia, setDia ] = useState(null)
+    const barbero = useSelector(store => store.getUsuarios.usuario)
     const reservas = useSelector(store => store.reservas.reservasBarbero)
-    const horas = reservas?.map(item => format(item.fecha,'HH:mm '))
     const reservasDelDia = reservas.filter(reserva => sameDay(reserva.fecha, dia));
     
+    // console.log(reservasDelDia)
 
 
     const diasPasadosDomingos = ({date,view}) => {
@@ -41,18 +49,20 @@ export default function CalendarioBarbero() {
         return reservasFiltradas.length > 0
     }
     
-    
+    const handleInfoReserva = (id) => {
+        dispatch(idCapture({id: id}))
+    }
 
 
     useEffect(
         () => {
+            dispatch(getReservasBarbero({id: barbero._id}))
             dispatch(getUsuario())
             dispatch(getServicios())
         },
         [dispatch]
     )
 
-    // console.log(reservas)
 
 
     return (
@@ -70,8 +80,14 @@ export default function CalendarioBarbero() {
                         </>
                     :
                         <div className='flex justify-center'>
-                            <div className='w-full md:w-[50%] h-[53vh] md:h-[70vh] flex flex-col items-center gap-3 mt-3 border rounded-xl'>
-                                <div className='w-[100%] flex justify-center p-1 mt-2'>
+                            <div className='w-full md:w-[50%] h-[53vh] md:h-[70vh] flex flex-col items-center gap-2 mt-3 border rounded-xl'>
+                                <div className='w-[100%] flex flex-col items-center justify-center p-1 mt-2'>
+                                    <Typography
+                                        variant=''
+                                        className='text-white capitalize'
+                                    >
+                                        {format(dia,'dddd D MMMM')}
+                                    </Typography>
                                     <Button
                                         className='border text-white'
                                         size='sm'
@@ -85,17 +101,14 @@ export default function CalendarioBarbero() {
                                 <div className='w-full h-[80%] flex flex-col flex-wrap items-center justify-center gap-3'>
                                     {
                                         reservasDelDia.length !== 0 ?
-                                            reservas?.map((item,i) => (
+                                            reservasDelDia?.map((item,i) => (
                                                 horasReservadas(format(item.fecha,'HH:mm')) &&
-                                                <Button
-                                                    className='w-[30%] text-white border bg-blue-800'
-                                                    variant='text'
-                                                    key={i}
-                                                    size='sm'
-                                                    
-                                                >
-                                                    {format(item.fecha,'HH:mm')}
-                                                </Button>
+                                                <InfoReservaBarbero 
+                                                    llave={i}
+                                                    clickCapture={() => handleInfoReserva(item._id)}
+                                                    hora={format(item.fecha,'HH:mm')}
+                                                />
+                                            
                                             ))
                                         :
                                             <Typography
