@@ -29,7 +29,6 @@ export default function CalendarioBarbero() {
     
     // console.log(reservasDelDia)
 
-
     const diasPasadosDomingos = ({date,view}) => {
         if(view === 'month'){
             let hoy = new Date().setHours(0,0,0,0)
@@ -40,6 +39,10 @@ export default function CalendarioBarbero() {
         return false
     }
 
+    const handleSelecDia = (e) => {
+        setDia(e)
+        dispatch(getReservasBarbero({id: barbero._id}))
+    }
 
     const horasReservadas = (hora) => {
         const fechaConHora = addHour(dia,parseInt(hora));
@@ -74,7 +77,7 @@ export default function CalendarioBarbero() {
                                 <Calendar 
                                     className='rounded-xl'
                                     tileDisabled={diasPasadosDomingos}
-                                    onClickDay={(e) => setDia(e)}
+                                    onClickDay={handleSelecDia}
                                 />
                             </div>
                         </>

@@ -2,17 +2,14 @@ import { Dialog, Spinner } from '@material-tailwind/react'
 import { Typography } from 'keep-react'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 
 
 export default function AlertaServidor() {
 
-    const navigate = useNavigate()
     const [ open, setOpen ] = useState(true)
     const servicios = useSelector(store => store.servicios.servicios)
-    // const usuario = useSelector(store => store.reservas.cliente)
-
-
+    
+    // console.log(reservas)
 
     
     useEffect(

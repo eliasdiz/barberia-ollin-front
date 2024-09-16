@@ -1,13 +1,21 @@
 import { Button, Dialog, Typography } from '@material-tailwind/react'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Scissors, User, PhoneOutgoing, XSquare, ArrowFatLineRight } from "@phosphor-icons/react";
+import { useDispatch, useSelector } from 'react-redux'
+import { Scissors, User, PhoneOutgoing, XSquare } from "@phosphor-icons/react";
 import { format } from '@formkit/tempo'
 import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import actionsReservas from '../../Store/Reservas/actions.js'
+import { urlLocal } from '../../urlHost.js';
+import axios from 'axios';
 
+
+
+const { getReservasBarbero, getReservasCLiente} = actionsReservas
 
 export default function InfoReservaBarbero(props) {
 
+    const dispatch = useDispatch()
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(true)
 
@@ -15,6 +23,69 @@ export default function InfoReservaBarbero(props) {
     const idReserva = useSelector(store => store.captureId.id)
     const reserva = reservas?.find(item => item._id === idReserva )
 
+    const eliminarReserva = (id) => {
+        let promesa = axios.delete(`${urlLocal}reservas/${id}`)
+        toast.promise(
+            promesa,
+            {
+                loading: 'eliminado reserva',
+                success: (res) => {
+
+                    dispatch(getReservasBarbero({id: reserva.barbero_id}))
+                    setTimeout(() => {
+                        setOpen(false)
+                    }, 2000);
+                    return <>{res.data.message}</>
+                },
+                error: (error) => {
+                    console.log(error.response.data)
+                    return <>{error.response.data.message}</>
+                }
+            },{
+                succes:{duration:500},
+                error: {duration: 500},
+                style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'},
+            }
+        )
+    }
+
+    const handleEliminar = () => {
+        reserva._id !== '' &&
+        toast((t) =>(
+            <div className='flex flex-col gap-3 items-center'>
+                <div>
+                    <Typography variant='lead'>eliminar {reserva?.servicio_id.servicio}</Typography>
+                    <Typography variant='lead'>{format(reserva.fecha,'dddd hh:mm a')}</Typography>
+                </div>
+
+                <div className='flex gap-5'>
+                    <Button
+                        size='sm'
+                        variant='text'
+                        className='text-red-600 border border-red-700'
+                        onClick={() => toast.dismiss(t.id)}
+                    >
+                        no
+                    </Button>
+
+                    <Button
+                        size='sm'
+                        variant='text'
+                        className='border border-green-700 text-green-700'
+                        onClick={() =>{
+                            toast.dismiss(t.id)
+                            eliminarReserva(reserva._id)
+                        }}
+                    >
+                        si
+                    </Button>
+                </div>
+            </div>
+        ),{
+            duration:3000,
+            style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}
+        })
+    }
     // console.log(reserva)
 
     return (
@@ -80,6 +151,7 @@ export default function InfoReservaBarbero(props) {
                                 size='sm'
                                 variant='text'
                                 className='border border-red-500 text-red-500 '
+                                onClick={handleEliminar}
                             >
                                 eliminar reserva
                             </Button>
@@ -93,6 +165,7 @@ export default function InfoReservaBarbero(props) {
                             </Button>
                         </div>
 
+                    <Toaster position='top-center' />
                     </Dialog>
             }
         </>
