@@ -19,7 +19,7 @@ export default function Reservas() {
 
     const reservas = useSelector(store => store.reservas.reservasClientes)
     const cliente = useSelector(store => store.reservas.cliente)
-    const clienteId = cliente?._id
+
 
     const validacionCliente = (cliente) =>{
         if(cliente.length === 0 ){
@@ -31,9 +31,9 @@ export default function Reservas() {
         () => {
             validacionCliente(cliente)
             dispatch(getServicios())
-            dispatch(getReservasCLiente({id: clienteId}))
+            dispatch(getReservasCLiente({id: cliente?._id}))
         },
-        [cliente]
+        [dispatch,cliente]
     )
 
 
