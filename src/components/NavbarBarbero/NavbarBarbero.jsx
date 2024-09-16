@@ -10,8 +10,10 @@ import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch, useSelector } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import actionsReservas from '../../Store/Reservas/actions.js'
 
 
+const { getReservasBarbero} = actionsReservas
 const { getUsuario } = actionsUsuarios
 
 
