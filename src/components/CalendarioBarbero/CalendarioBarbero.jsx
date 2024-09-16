@@ -27,6 +27,7 @@ export default function CalendarioBarbero() {
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const reservasDelDia = reservas.filter(reserva => sameDay(reserva.fecha, dia));
     
+    // console.log(reservasDelDia)
 
     const diasPasadosDomingos = ({date,view}) => {
         if(view === 'month'){
@@ -58,6 +59,7 @@ export default function CalendarioBarbero() {
 
     useEffect(
         () => {
+            dispatch(getReservasBarbero({id: barbero._id}))
             dispatch(getUsuario())
             dispatch(getServicios())
         },
