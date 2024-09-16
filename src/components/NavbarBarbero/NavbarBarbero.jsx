@@ -40,7 +40,6 @@ export default function NavbarBarbero() {
     const handleAgenda = () => {
         navigate('/barbero/agenda')
         setOpenNav(false)
-        dispatch(getReservasBarbero({id: barbero._id}))
     }
 
     const handleReserva = () => {
