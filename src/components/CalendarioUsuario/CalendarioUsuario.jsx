@@ -1,4 +1,4 @@
-import { Button } from '@material-tailwind/react';
+import { Button, Typography } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
@@ -14,32 +14,43 @@ export default function CalendarioUsuario({fecha, setFecha}) {
 
     const dispatch = useDispatch()
     const [ dia, setDia ] = useState('')
-    const horas = ['8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
+    const horas = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
     const reservas = useSelector(store => store.reservas.reservasBarbero)
-    const barberoId = useSelector(store => store.captureId.id) 
+    const barberoId = useSelector(store => store.captureId.id)
+    
+
+    const horasPasadas = (hora) => {
+        let hoy = new Date()
+        let diaSelece = new Date(dia)
+        let horaActual = format(hoy,'HH:mm')
+        return sameDay(diaSelece,hoy) && horaActual >= hora
+    }
     
     const horasReservadas = (hora) => {
-        const diaObj = new Date(dia);
-        const fechaConHora = addHour(diaObj,parseInt(hora));
+        const diaObj = new Date(dia)
+        const fechaConHora = addHour(diaObj,parseInt(hora))
         let reservasFiltradas =  reservas.filter(reserva => 
             sameDay(reserva.fecha, diaObj) && sameHour(reserva.fecha,fechaConHora)
         )
         return reservasFiltradas.length > 0
     }
 
+    
+
     const seleccDia = (e) => {
-        let dia = e.toISOString()
+        // console.log(e)
+        let dia = new Date(e)
         setDia(dia)
     }
     
     const handleFecha = (item) => {
         let hora = parseInt(item)
-        let fecha = addHour(dia,hora).toISOString()
+        let fecha = addHour(dia,hora)
         setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
     }
 
 
-    const diasPasadosDomingos = ({date,view}) => {
+    const diasPasadosDomingos = ({date,view}) => {       
         if(view === 'month'){
             let hoy = new Date().setHours(0,0,0,0)
             let diasPasados = view === 'month' && date.setHours(0,0,0,0) < hoy
@@ -56,13 +67,14 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         [dispatch]
     )
 
+
     return (
         <>
             <div className='w-full h-full'>
                 {
                     !dia ?
                         <>
-                            <div className='w-[88%] h-full flex items-center xsm:justify-center md:justify-center '>
+                            <div className='h-full flex items-center '>
                                 <Calendar 
                                     className='rounded-xl '
                                     onClickDay={(e) => seleccDia(e)}
@@ -73,7 +85,13 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                     :
                         <>
                             <div className='w-full h-full md:h-[70vh] flex flex-col items-center'>
-                                <div className='w-[100%] flex justify-center p-1 '>
+                                <div className='w-[100%] flex flex-col items-center justify-center'>
+                                    <Typography
+                                            variant=''
+                                            className='text-white capitalize'
+                                        >
+                                            {format(dia,'dddd D MMMM')}
+                                    </Typography>
                                     <Button
                                         className='border text-white'
                                         size='sm'
@@ -84,7 +102,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                     </Button>
                                 </div>
 
-                                <div className='w-full h-[85%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
+                                <div className='w-full h-[83%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
                                     {
                                         horas.map((item,i) => (
                                             <Button
@@ -93,7 +111,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                                 key={i}
                                                 size='sm'
                                                 onClick={() => handleFecha(item)}
-                                                disabled={horasReservadas(item)}
+                                                disabled={horasReservadas(item) || horasPasadas(item)}
                                             >
                                                 {item}
                                             </Button>

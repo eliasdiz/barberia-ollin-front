@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 
-const { getReservasBarbero, getReservasCLiente} = actionsReservas
+const { getReservasBarbero} = actionsReservas
 
 export default function InfoReservaBarbero(props) {
 
@@ -86,6 +86,10 @@ export default function InfoReservaBarbero(props) {
             style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}
         })
     }
+
+    const handleIniciarReserva = (e) => {
+        
+    }
     // console.log(reserva)
 
     return (
@@ -132,16 +136,16 @@ export default function InfoReservaBarbero(props) {
                             <div className='h-full w-[20%] flex flex-col items-center justify-evenly gap-3'>
                                 <User size={32} weight="regular" color='white' />
                                 <Scissors size={32} weight="regular" color='white' />
-                                <Link to={`tel:${reserva?.cliente_id.telefono}`}>
+                                <Link to={`tel:${reserva?.cliente_id?.telefono}`}>
                                     <PhoneOutgoing size={32} weight="regular" color='white'  />
                                 </Link>
                             </div>
 
                             <div className='h-full w-[60%] flex flex-col justify-evenly gap-3 text-white capitalize'>
-                                <Typography variant='lead'>{reserva?.cliente_id.nombres} {reserva?.cliente_id.apellidos}</Typography>
-                                <Typography variant='lead'>{reserva?.servicio_id.servicio}</Typography>
-                                <Link to={`tel:${reserva?.cliente_id.telefono}`}>
-                                    <Typography variant='lead'>{reserva?.cliente_id.telefono}</Typography>
+                                <Typography variant='lead'>{reserva?.cliente_id?.nombres} {reserva?.cliente_id?.apellidos}</Typography>
+                                <Typography variant='lead'>{reserva?.servicio_id?.servicio}</Typography>
+                                <Link to={`tel:${reserva?.cliente_id?.telefono}`}>
+                                    <Typography variant='lead'>{reserva?.cliente_id?.telefono}</Typography>
                                 </Link>
                             </div>
                         </div>
@@ -159,7 +163,8 @@ export default function InfoReservaBarbero(props) {
                             <Button
                                 size='sm'
                                 variant='text'
-                                className='border border-green-500 text-green-500 '
+                                className='border border-green-500 text-green-500'
+                                onClick={handleIniciarReserva}
                             >
                                 iniciar servicio
                             </Button>
