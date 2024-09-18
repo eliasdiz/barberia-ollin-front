@@ -140,7 +140,7 @@ export default function FormReserva() {
 
 			<div className='flex w-full md:w-[60%] p-1 gap-1 mt-2'>
 
-				<div className='w-[3rem] h-[47vh] xsm:h-[90vh] md:h-[71vh] flex flex-col justify-between items-center p-3 border border-blue-gray-500 rounded-md'>
+				<div className='w-[3rem] h-[50vh] xsm:h-[90vh] md:h-[71vh] flex flex-col justify-between items-center p-3 border border-blue-gray-500 rounded-md'>
 					<button 
 						onClick={handleStepBarbero}
 					>
