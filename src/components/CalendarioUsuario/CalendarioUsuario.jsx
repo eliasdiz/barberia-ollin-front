@@ -14,7 +14,8 @@ export default function CalendarioUsuario({fecha, setFecha}) {
 
     const dispatch = useDispatch()
     const [ dia, setDia ] = useState('')
-    const horas = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00']
+    const horasAm = ['08:00','09:00','10:00','11:00','12:00','13:00']
+    const horasPm = ['14:00','15:00','16:00','17:00','18:00','19:00']
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id)
     
@@ -74,12 +75,14 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                 {
                     !dia ?
                         <>
-                            <div className='h-full flex items-center '>
-                                <Calendar 
-                                    className='rounded-xl '
-                                    onClickDay={(e) => seleccDia(e)}
-                                    tileDisabled={diasPasadosDomingos} 
-                                />
+                            <div className='h-full w-full flex items-center xsm:justify-center'>
+                                <div className='xxsm:w-[90%]'>
+                                    <Calendar 
+                                        className='rounded-xl '
+                                        onClickDay={(e) => seleccDia(e)}
+                                        tileDisabled={diasPasadosDomingos} 
+                                    />
+                                </div>
                             </div>
                         </>
                     :
@@ -102,21 +105,40 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                     </Button>
                                 </div>
 
-                                <div className='w-full h-[83%] flex flex-col flex-wrap items-center justify-evenly gap-2 p-1'>
-                                    {
-                                        horas.map((item,i) => (
-                                            <Button
-                                                className={ horasReservadas(item) ? 'w-[40%] text-white border bg-gray-500' : 'w-[40%] text-white border bg-green-800'}
-                                                variant='text'
-                                                key={i}
-                                                size='sm'
-                                                onClick={() => handleFecha(item)}
-                                                disabled={horasReservadas(item) || horasPasadas(item)}
-                                            >
-                                                {item}
-                                            </Button>
-                                        ) )
-                                    }
+                                <div className='h-full w-full flex'>
+                                    <div className='w-[50%] flex flex-col items-center justify-around p-1'>
+                                        {
+                                            horasAm.map((item,i) => (
+                                                <Button
+                                                    className={ horasReservadas(item) ? 'w-[70%] text-white border bg-gray-500' : 'w-[70%] text-white border bg-green-800'}
+                                                    variant='text'
+                                                    key={i}
+                                                    size='sm'
+                                                    onClick={() => handleFecha(item)}
+                                                    disabled={horasReservadas(item) || horasPasadas(item)}
+                                                >
+                                                    {item}
+                                                </Button>
+                                            ) )
+                                        }
+                                    </div>
+
+                                    <div className='w-[50%] flex flex-col items-center justify-around p-1'>
+                                        {
+                                            horasPm.map((item,i) => (
+                                                <Button
+                                                    className={ horasReservadas(item) ? 'w-[70%] text-white border bg-gray-500' : 'w-[70%] text-white border bg-green-800'}
+                                                    variant='text'
+                                                    key={i}
+                                                    size='sm'
+                                                    onClick={() => handleFecha(item)}
+                                                    disabled={horasReservadas(item) || horasPasadas(item)}
+                                                >
+                                                    {item}
+                                                </Button>
+                                            ) )
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </>

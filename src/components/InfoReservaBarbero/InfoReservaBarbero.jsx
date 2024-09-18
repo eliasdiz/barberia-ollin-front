@@ -1,7 +1,7 @@
 import { Button, Dialog, Typography } from '@material-tailwind/react'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Scissors, User, PhoneOutgoing, XSquare } from "@phosphor-icons/react";
+import { Scissors, User, PhoneOutgoing, XSquare, Info } from "@phosphor-icons/react";
 import { format } from '@formkit/tempo'
 import { Link } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
@@ -17,11 +17,19 @@ export default function InfoReservaBarbero(props) {
 
     const dispatch = useDispatch()
     const [ open, setOpen ] = useState(false)
-    const handleOpen = () => setOpen(true)
-
+    
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const idReserva = useSelector(store => store.captureId.id)
     const reserva = reservas?.find(item => item._id === idReserva )
+
+    const handleOpen = () => {
+        reserva.activa ? 
+                setOpen(true) 
+            : 
+                toast('serivicio iniciado',
+                    {icon: <Info size={35} />, duration: 1200 ,style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}}
+                )  
+    } 
 
     const eliminarReserva = (id) => {
         let promesa = axios.delete(`${urlLocal}reservas/${id}`)
@@ -42,8 +50,6 @@ export default function InfoReservaBarbero(props) {
                     return <>{error.response.data.message}</>
                 }
             },{
-                succes:{duration:500},
-                error: {duration: 500},
                 style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'},
             }
         )
@@ -88,8 +94,27 @@ export default function InfoReservaBarbero(props) {
     }
 
     const handleIniciarReserva = () => {
-        console.log(reserva._id)
-                
+        let actualEstado = axios.put(`${urlLocal}reservas/${reserva._id}`)
+        reserva._id !== '' &&
+        toast.promise(
+            actualEstado,
+            {
+                loading: 'iniciando servicio',
+                success: (res) => {
+                    dispatch(getReservasBarbero({id: reserva.barbero_id}))
+                    setTimeout(() => {
+                        setOpen(false)
+                    }, 1500)
+                    return <>{res.data.message}</>
+                },
+                error: (error) => {
+                    return <>{error.response.data.message}</>
+                }
+            },{
+                success: {duration: 1200},
+                style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}
+            }
+        )
     }
 
     return (
@@ -97,7 +122,6 @@ export default function InfoReservaBarbero(props) {
             <Button
                 className='w-[30%] text-white border bg-blue-800'
                 variant='text'
-                key={props.llave}
                 size='sm'
                 onClick={handleOpen}
                 onClickCapture={props.clickCapture}

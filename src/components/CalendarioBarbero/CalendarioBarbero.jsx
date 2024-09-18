@@ -86,7 +86,6 @@ export default function CalendarioBarbero() {
                             <div className='w-full md:w-[50%] h-[53vh] md:h-[70vh] flex flex-col items-center gap-2 mt-3 border rounded-xl'>
                                 <div className='w-[100%] flex flex-col items-center justify-center p-1 mt-2'>
                                     <Typography
-                                        variant=''
                                         className='text-white capitalize'
                                     >
                                         {format(dia,'dddd D MMMM')}
@@ -107,7 +106,7 @@ export default function CalendarioBarbero() {
                                             reservasDelDia?.map((item,i) => (
                                                 horasReservadas(format(item.fecha,'HH:mm')) &&
                                                 <InfoReservaBarbero 
-                                                    llave={i}
+                                                    key={i}
                                                     clickCapture={() => handleInfoReserva(item._id)}
                                                     hora={format(item.fecha,'HH:mm')}
                                                 />
