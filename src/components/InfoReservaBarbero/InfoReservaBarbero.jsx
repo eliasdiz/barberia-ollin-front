@@ -11,11 +11,7 @@ import axios from 'axios';
 
 
 
-<<<<<<< HEAD
 const { getReservasBarbero} = actionsReservas
-=======
-const { getReservasBarbero, getReservasCLiente} = actionsReservas
->>>>>>> d8fe6536b9b73f99c1a13fd4750209dd320ea39e
 
 export default function InfoReservaBarbero(props) {
 
