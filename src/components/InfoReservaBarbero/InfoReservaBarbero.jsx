@@ -87,10 +87,10 @@ export default function InfoReservaBarbero(props) {
         })
     }
 
-    const handleIniciarReserva = (e) => {
-        
+    const handleIniciarReserva = () => {
+        console.log(reserva._id)
+                
     }
-    // console.log(reserva)
 
     return (
         <>
