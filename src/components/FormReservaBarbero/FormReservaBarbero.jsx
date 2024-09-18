@@ -112,7 +112,7 @@ export default function FormReservaBarbero() {
 
 			<div className='flex w-full md:w-[60%] p-1 gap-1 mt-2'>
 
-				<div className='w-[3rem] h-[50vh] xsm:h-[90vh] md:h-[71vh] flex flex-col justify-between items-center p-3 border border-blue-gray-500 rounded-md'>
+				<div className='w-[3rem] h-[60vh] xsm:h-[90vh] md:h-[71vh] flex flex-col justify-between items-center p-3 border border-blue-gray-500 rounded-md'>
 
 					<button
 						onClick={handleStepServicio}
@@ -160,7 +160,7 @@ export default function FormReservaBarbero() {
 				)}
 
 				{ step === 2 &&(
-					<div className='w-full  h-[50vh] xsm:h-[90vh] md:h-[71vh] overflow-x-hidden'>
+					<div className='w-full  h-[60vh] xsm:h-[90vh] md:h-[71vh] overflow-x-hidden'>
 						<CalendarioUsuario fehca={fecha} setFecha={setFecha} />
 					</div>
 				)}

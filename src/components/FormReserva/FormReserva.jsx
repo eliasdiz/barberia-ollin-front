@@ -220,7 +220,7 @@ export default function FormReserva() {
 				)}
 
 				{ step === 2 &&(
-					<div className='w-full h-[47vh] xsm:h-[90vh] md:h-[71vh]'>
+					<div className='w-full h-[50vh] xsm:h-[90vh] md:h-[71vh]'>
 						<CalendarioUsuario fehca={fecha} setFecha={setFecha} />
 					</div>
 				)}
