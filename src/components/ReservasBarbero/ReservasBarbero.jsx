@@ -16,9 +16,11 @@ export default function ReservasBarbero() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const reservas = useSelector(store => store.reservas.reservasClientes)
     const barbero = useSelector(store => store.getUsuarios.usuario)
-
+    
+    // console.log(reservas)
 
     useEffect(
         () => {

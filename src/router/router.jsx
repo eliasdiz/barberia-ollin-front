@@ -16,6 +16,7 @@ import Reservas from "../components/Reservas/Reservas.jsx";
 import ReservasBarbero from "../components/ReservasBarbero/ReservasBarbero.jsx";
 import FormReservaBarbero from "../components/FormReservaBarbero/FormReservaBarbero.jsx";
 import CalendarioBarbero from '../components/CalendarioBarbero/CalendarioBarbero.jsx'
+import IngresosBarberos from "../components/IngresosBarberos/IngresosBarberos.jsx";
 
 
 const router = createBrowserRouter([
@@ -45,7 +46,8 @@ const router = createBrowserRouter([
             { path: '/barbero', element: <Barbero />},
             { path: '/barbero/reservas', element: <ReservasBarbero />},
             { path: '/barbero/crear-reserva', element: <FormReservaBarbero />},
-            { path: '/barbero/agenda', element: <CalendarioBarbero />}
+            { path: '/barbero/agenda', element: <CalendarioBarbero />},
+            { path: '/barbero/ingresos', element: <IngresosBarberos />}
         ]
     }
 ]);

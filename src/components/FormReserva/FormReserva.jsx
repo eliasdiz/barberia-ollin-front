@@ -17,9 +17,10 @@ import { urlLocal } from '../../urlHost.js';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import actionsCapturaId from '../../Store/Idcapture/actions.js'
+import actionsReservas from '../../Store/Reservas/actions.js'
 
 
-
+const { getReservasCLiente} = actionsReservas
 const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 const { getTodos } = actionsUsuarios
@@ -108,6 +109,7 @@ export default function FormReserva() {
 			{
 				loading: 'creando reserva',
 				success: (res) => {
+					dispatch(getReservasCLiente({id: cliente._id}))
 					setTimeout(() => {
 						navigate('/reservas')
 					}, 1500);
