@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar,Collapse,Typography,Button,IconButton,List,ListItem} from "@material-tailwind/react";
 import { Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +7,12 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
+import { CurrencyDollar } from '@phosphor-icons/react'
+
 
 
 
@@ -19,10 +22,11 @@ const { getUsuario } = actionsUsuarios
 
 export default function NavbarBarbero() {
 
-    const [openNav, setOpenNav] = React.useState(false);
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    
+    const [openNav, setOpenNav] = useState(false);
+    const [ autenticado, setAutenticado ] = useState(false);
     const token = localStorage.getItem('token')
     const headers = { headers: { Authorization: `Bearer ${token}`}}
 
@@ -43,6 +47,11 @@ export default function NavbarBarbero() {
 
     const handleReserva = () => {
         navigate('/barbero/reservas')
+        setOpenNav(false)
+    }
+
+    const handleIngresos = () => {
+        navigate('/barbero/ingresos')
         setOpenNav(false)
     }
 
@@ -69,6 +78,21 @@ export default function NavbarBarbero() {
                 style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black'}
             }
         )
+    }
+
+    const verificarToken = (token) => {
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            if (decodedToken.exp < currentTime) {
+                localStorage.removeItem('token')
+                setAutenticado(false);
+            } else {
+                setAutenticado(true);
+            }
+        } else {
+            setAutenticado(false);
+        }
     }
     
 
@@ -108,12 +132,24 @@ export default function NavbarBarbero() {
                     </Typography>
                 </ListItem>
 
+                <ListItem onClick={handleIngresos}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-2 font-medium capitalize"
+                    >
+                        <CurrencyDollar size={26} weight="fill" />
+                        ingresos
+                    </Typography>
+                </ListItem>
+
             </List>
         );
         }
 
 
     useEffect(() => {
+        verificarToken(token)
         window.addEventListener(
         "resize",
         () => window.innerWidth >= 960 && setOpenNav(false),
@@ -136,7 +172,7 @@ export default function NavbarBarbero() {
                 </div>
 
                 {
-                    !token  ?
+                    !autenticado  ?
                     <div 
                         className="hidden gap-2 lg:flex"
                     >
@@ -181,7 +217,7 @@ export default function NavbarBarbero() {
             <Collapse open={openNav}>
                 <NavList />
                     {
-                        !token  ?
+                        !autenticado  ?
                         <div 
                             className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
                         >

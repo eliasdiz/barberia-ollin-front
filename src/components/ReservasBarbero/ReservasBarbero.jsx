@@ -7,7 +7,10 @@ import actionsServicios from '../../Store/Servicios/actions.js'
 import actionsReservas from '../../Store/Reservas/actions.js'
 import { useNavigate } from 'react-router-dom'
 import { Carousel } from 'keep-react'
+import actionsUsuarios from '../../Store/Usuarios/actions.js'
 
+
+const { getUsuario} = actionsUsuarios
 const { getReservasCLiente } = actionsReservas
 const { getServicios } = actionsServicios
 
@@ -16,12 +19,19 @@ export default function ReservasBarbero() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const reservas = useSelector(store => store.reservas.reservasClientes)
     const barbero = useSelector(store => store.getUsuarios.usuario)
-
+    
+    const verificarUsuario = () =>{
+        return barbero.length === 0 && navigate('/barbero') 
+    }
+    // console.log(barbero)
 
     useEffect(
         () => {
+            verificarUsuario()
+            dispatch(getUsuario())
             dispatch(getServicios())
             dispatch(getReservasCLiente({id: barbero._id}))
         },
@@ -40,7 +50,6 @@ export default function ReservasBarbero() {
                             <CardInfoReserva key={i} reserva={item} />
                         ))
                     }
-
                     <div className='h-full flex justify-center items-center'>
                         <div className='w-[75%] xsm:w-[50%] md:w-[40%] h-[90%] xsm:h-full md:h-full flex flex-col justify-center items-center border-2 border-dashed rounded-xl '>
                             <Plus onClick={() => navigate('/barbero/crear-reserva')} size={62} color="#02ca6d" weight="fill" />

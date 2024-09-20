@@ -15,25 +15,32 @@ import { RiCalendarScheduleFill } from "react-icons/ri";
 const { getUsuario } = actionsUsuarios;
 
 export default function NavBarUsuarios() {
-    const [openNav, setOpenNav] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
+    const [openNav, setOpenNav] = useState(false);
+    const [ autenticado, setAutenticado ] = useState(false);
+
+    const verificarToken = (token) => {
         if (token) {
             const decodedToken = jwtDecode(token);
             const currentTime = Date.now() / 1000;
             if (decodedToken.exp < currentTime) {
                 localStorage.removeItem('token');
-                setIsAuthenticated(false);
+                setAutenticado(false);
             } else {
-                setIsAuthenticated(true);
+                setAutenticado(true);
             }
         } else {
-            setIsAuthenticated(false);
+            setAutenticado(false);
         }
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        verificarToken(token)
     }, []);
 
     const handleInicio = () => {
@@ -133,7 +140,7 @@ export default function NavBarUsuarios() {
                 </div>
 
                 {
-                    !isAuthenticated  ?
+                    !autenticado  ?
                     <div 
                         className="hidden gap-2 lg:flex"
                     >
@@ -178,7 +185,7 @@ export default function NavBarUsuarios() {
             <Collapse open={openNav}>
                 <NavList />
                 {
-                    !isAuthenticated  ?
+                    !autenticado  ?
                     <div 
                         className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
                     >
