@@ -24,6 +24,8 @@ export default function NavBarUsuarios() {
     const [ autenticado, setAutenticado ] = useState(false);
     const token = localStorage.getItem('token');
     
+
+
     const verificarToken = (token) => {
         if (token) {
             const decodedToken = jwtDecode(token);
@@ -42,6 +44,7 @@ export default function NavBarUsuarios() {
     useEffect(() => {
         verificarToken(token)
     }, [autenticado,token]);
+
 
     const handleInicio = () => {
         navigate('/');
