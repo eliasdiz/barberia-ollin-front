@@ -22,16 +22,15 @@ export default function ReservasBarbero() {
 
     const reservas = useSelector(store => store.reservas.reservasClientes)
     const barbero = useSelector(store => store.getUsuarios.usuario)
-    
-    const verificarUsuario = () =>{
-        return barbero.length === 0 && navigate('/barbero') 
+
+    const verificarBarbero = () =>{
+        barbero.length === 0 && navigate('/barbero') 
     }
-    // console.log(barbero)
+
 
     useEffect(
         () => {
-            verificarUsuario()
-            dispatch(getUsuario())
+            verificarBarbero()
             dispatch(getServicios())
             dispatch(getReservasCLiente({id: barbero._id}))
         },
