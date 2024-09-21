@@ -10,15 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
     "@formkit/tempo": "^0.1.2",
     "@heroicons/react": "^2.1.5",
     "@material-tailwind/react": "^2.1.9",
-    "@mui/material": "^6.0.0",
     "@phosphor-icons/react": "^2.1.7",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.2",
+    "dayjs": "^1.11.13",
     "jwt-decode": "^4.0.0",
     "keep-react": "^1.1.0",
     "moment": "^2.30.1",

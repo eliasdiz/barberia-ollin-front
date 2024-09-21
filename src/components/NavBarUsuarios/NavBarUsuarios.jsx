@@ -22,7 +22,8 @@ export default function NavBarUsuarios() {
 
     const [openNav, setOpenNav] = useState(false);
     const [ autenticado, setAutenticado ] = useState(false);
-
+    const token = localStorage.getItem('token');
+    
     const verificarToken = (token) => {
         if (token) {
             const decodedToken = jwtDecode(token);
@@ -39,9 +40,8 @@ export default function NavBarUsuarios() {
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
         verificarToken(token)
-    }, []);
+    }, [autenticado,token]);
 
     const handleInicio = () => {
         navigate('/');
@@ -140,7 +140,7 @@ export default function NavBarUsuarios() {
                 </div>
 
                 {
-                    !autenticado  ?
+                    !autenticado || !token  ?
                     <div 
                         className="hidden gap-2 lg:flex"
                     >
@@ -185,7 +185,7 @@ export default function NavBarUsuarios() {
             <Collapse open={openNav}>
                 <NavList />
                 {
-                    !autenticado  ?
+                    !autenticado || !token  ?
                     <div 
                         className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
                     >

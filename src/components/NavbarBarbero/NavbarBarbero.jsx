@@ -154,7 +154,7 @@ export default function NavbarBarbero() {
         "resize",
         () => window.innerWidth >= 960 && setOpenNav(false),
         );
-    }, []);
+    }, [autenticado,token]);
     
     return (
         <Navbar className="mx-auto max-w-screen-xl px-4 py-2 shadow-md md:w-[60%] " color="blue-gray">
@@ -172,7 +172,7 @@ export default function NavbarBarbero() {
                 </div>
 
                 {
-                    !autenticado  ?
+                    !autenticado || !token  ?
                     <div 
                         className="hidden gap-2 lg:flex"
                     >
@@ -217,7 +217,7 @@ export default function NavbarBarbero() {
             <Collapse open={openNav}>
                 <NavList />
                     {
-                        !autenticado  ?
+                        !autenticado || !token ?
                         <div 
                             className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
                         >

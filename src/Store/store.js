@@ -3,6 +3,7 @@ import captureId from './Idcapture/reducer.js'
 import getUsuarios from './Usuarios/reducer.js'
 import servicios from './Servicios/reducer.js'
 import reservas from './Reservas/reducer.js'
+import ingresos from './Ingresos/reducer.js'
 
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         captureId: captureId,
         getUsuarios: getUsuarios,
         servicios: servicios,
-        reservas: reservas
+        reservas: reservas,
+        ingresos: ingresos
     }
 })
