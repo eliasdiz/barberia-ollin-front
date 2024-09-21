@@ -4,8 +4,6 @@ import { format } from '@formkit/tempo'
 import actionsServicios from '../../Store/Servicios/actions.js'
 import { useDispatch, useSelector } from 'react-redux'
 import numeral from 'numeral'
-import axios from 'axios'
-import { urlLocal } from '../../urlHost'
 import actionsIngresos from '../../Store/Ingresos/actions.js'
 
 
@@ -42,7 +40,7 @@ export default function IngresosBarberos() {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-2">
                 <div className=" w-full flex flex-col gap-2 items-center">
                     <div className="w-full flex flex-col gap-2 capitalize">
-                        <div className='w-[60%] flex flex-col gap-4 items-start'>
+                        <div className='w-[60%] md:w-[20%] flex flex-col gap-4 items-start'>
                             <Input
                                 label="fecha inicio"
                                 type="date"
