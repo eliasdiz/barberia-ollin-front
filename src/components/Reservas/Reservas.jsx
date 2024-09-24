@@ -20,6 +20,8 @@ export default function Reservas() {
     const reservas = useSelector(store => store.reservas.reservasClientes)
     const cliente = useSelector(store => store.reservas.cliente)
 
+    // console.log(cliente)
+
     const validacionCliente = (cliente) =>{
         if(cliente.length === 0 ){
             return navigate('/validacion-email')
@@ -28,8 +30,8 @@ export default function Reservas() {
 
     useEffect(
         () => {
-            validacionCliente(cliente)
             dispatch(getServicios())
+            validacionCliente(cliente)
             dispatch(getReservasCLiente({id: cliente._id}))
         },
         [dispatch,cliente]

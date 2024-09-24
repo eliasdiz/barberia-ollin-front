@@ -47,15 +47,15 @@ export default function CardCitas() {
                 <div className='max-h-[50vh] overflow-y-auto'>
                     {
                         reservasHoy.length !== 0 ? 
-                            reservasHoy?.map(({fecha,cliente_id,servicio_id},i) => (
+                            reservasHoy?.map(({fecha,cliente_id,servicio},i) => (
                                 <div key={i} className="space-y-4">
                                     <div className="flex items-center space-x-4  p-4 bg-gray-700 rounded-lg mb-3">
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'HH:mm')} - {cliente_id.nombres} {cliente_id.apellidos}
+                                                {format(fecha,'HH:mm')} - {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
-                                            <Typography className="text-sm text-gray-300">{servicio_id.servicio}</Typography>
+                                            <Typography className="text-sm text-gray-300 capitalize">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>
                                         <FaCut className="text-yellow-500 flex-shrink-0" />
                                     </div>
@@ -85,15 +85,15 @@ export default function CardCitas() {
                 <div className='max-h-[50vh] overflow-y-auto'>
                     {
                         reservasMañana.length !== 0 ? 
-                            reservasMañana?.map(({fecha,cliente_id,servicio_id},i) => (
+                            reservasMañana?.map(({fecha,cliente_id,servicio},i) => (
                                 <div key={i} className="space-y-4">
                                     <div className="flex items-center space-x-4  p-4 bg-gray-700 rounded-lg mb-3">
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'HH:mm')} - {cliente_id.nombres} {cliente_id.apellidos}
+                                                {format(fecha,'HH:mm')} - {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
-                                            <Typography className="text-sm text-gray-300">{servicio_id.servicio}</Typography>
+                                            <Typography className="text-sm text-gray-300">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>
                                         <FaCut className="text-yellow-500 flex-shrink-0" />
                                     </div>

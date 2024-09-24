@@ -102,10 +102,10 @@ export default function CardInfoReserva({reserva}) {
 
                     <div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
                         <Typography>{reserva?.barbero_id.nombres}</Typography>
-                        <Typography>{reserva?.servicio_id.servicio}</Typography>
+                        <Typography>{reserva.servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                         <Typography>{format(reserva?.fecha,'dddd D MMMM ')}</Typography>
                         <Typography>{format(reserva?.fecha,'HH:mm')} / {format(reserva?.fecha,'h:mm a')}</Typography>
-                        <Typography>$ {numeral(reserva?.servicio_id.valor).format()}</Typography>
+                        <Typography>$ {numeral(reserva?.valor).format()}</Typography>
                     </div>
                 </div>
                 <Button

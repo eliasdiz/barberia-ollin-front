@@ -16,8 +16,12 @@ const getReservasCLiente = createAsyncThunk(
     async(params) => {
         try {
             let { id } = params
-            let res = await axios.get(`${urlLocal}reservas/clientes/${id}`)
-            return  { reservasCliente: res.data.reservas}
+            if(id){
+                let res = await axios.get(`${urlLocal}reservas/clientes/${id}`)
+                return  { reservasCliente: res.data.reservas}
+            }else{
+                return { reservasCliente: []}
+            }
         } catch (error) {
             return { reservasCliente: []}
         }
@@ -29,8 +33,12 @@ const getReservasBarbero = createAsyncThunk(
     async(params) =>{
         try {
             let { id } = params
-            let res = await axios.get(`${urlLocal}reservas/barbero/${id}`)
-            return { reservasBarbero: res.data.reservas}
+            if(id){
+                let res = await axios.get(`${urlLocal}reservas/barbero/${id}`)
+                return { reservasBarbero: res.data.reservas}
+            }else{
+                return { reservasBarbero: []}
+            }
         } catch (error) {
             return { reservasBarbero: []}
         }
