@@ -1,10 +1,11 @@
-import { Button, Typography, Carousel } from '@material-tailwind/react';
+import { Button, Typography,  } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import { addHour, date, format, sameDay, sameHour, sameMinute} from '@formkit/tempo'
 import { useDispatch, useSelector } from 'react-redux';
 import actionsReservas from '../../Store/Reservas/actions.js'
+import { Carousel } from 'keep-react';
 
 
 const { getReservasBarbero} = actionsReservas
@@ -110,15 +111,8 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                 </div>
 
                                 <div className='h-full w-full flex'>
-                                    <Carousel
-                                        className='mt-2'
-                                        autoplay
-                                        loop
-                                        autoplayDelay={3000}
-                                        nextArrow={false}
-                                        prevArrow={false}
-                                    >
-                                        <div className='w-full flex  flex-wrap items-center justify-evenly gap-1 p-1'>
+                                    <Carousel loop className='w-full h-full p-2' >
+                                        <div className='w-full flex  flex-wrap items-center justify-evenly'>
                                             {
                                                 horasAm.map((item,i) => (
                                                     <Button
@@ -135,7 +129,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                             }
                                         </div>
 
-                                        <div className='w-full flex  flex-wrap items-center justify-evenly gap-1 p-1'>
+                                        <div className='w-full flex  flex-wrap items-center justify-evenly '>
                                             {
                                                 horasPm.map((item,i) => (
                                                     <Button
