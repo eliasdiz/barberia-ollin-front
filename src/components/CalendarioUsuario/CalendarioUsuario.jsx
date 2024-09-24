@@ -1,8 +1,8 @@
-import { Button, Typography } from '@material-tailwind/react';
+import { Button, Typography, Carousel } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
-import { addHour, format, sameDay, sameHour} from '@formkit/tempo'
+import { addHour, date, format, sameDay, sameHour, sameMinute} from '@formkit/tempo'
 import { useDispatch, useSelector } from 'react-redux';
 import actionsReservas from '../../Store/Reservas/actions.js'
 
@@ -14,8 +14,8 @@ export default function CalendarioUsuario({fecha, setFecha}) {
 
     const dispatch = useDispatch()
     const [ dia, setDia ] = useState('')
-    const horasAm = ['08:00','09:00','10:00','11:00','12:00','13:00']
-    const horasPm = ['14:00','15:00','16:00','17:00','18:00','19:00']
+    const horasAm = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30']
+    const horasPm = ['14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30']
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id)
     
@@ -29,9 +29,12 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     
     const horasReservadas = (hora) => {
         const diaObj = new Date(dia)
-        const fechaConHora = addHour(diaObj,parseInt(hora))
+        let [ hour, minutos ] = hora.split(':').map(Number)
+        diaObj.setHours(hour)
+        diaObj.setMinutes(minutos)
+
         let reservasFiltradas =  reservas.filter(reserva => 
-            sameDay(reserva.fecha, diaObj) && sameHour(reserva.fecha,fechaConHora)
+            sameDay(reserva.fecha, diaObj) && sameHour(reserva.fecha,diaObj) && sameMinute(reserva.fecha,diaObj)
         )
         return reservasFiltradas.length > 0
     }
@@ -39,17 +42,18 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     
 
     const seleccDia = (e) => {
-        // console.log(e)
         let dia = new Date(e)
         setDia(dia)
     }
     
     const handleFecha = (item) => {
-        let hora = parseInt(item)
-        let fecha = addHour(dia,hora)
+        let [ hora, minutos ] = item.split(':').map(Number)
+        let fecha = new Date(dia)
+        fecha.setHours(hora)
+        fecha.setMinutes(minutos)
         setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
     }
-
+    
 
     const diasPasadosDomingos = ({date,view}) => {       
         if(view === 'month'){
@@ -106,39 +110,48 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                                 </div>
 
                                 <div className='h-full w-full flex'>
-                                    <div className='w-[50%] flex flex-col items-center justify-around p-1'>
-                                        {
-                                            horasAm.map((item,i) => (
-                                                <Button
-                                                    className={ horasReservadas(item) ? 'w-[70%] text-white border bg-gray-500' : 'w-[70%] text-white border bg-green-800'}
-                                                    variant='text'
-                                                    key={i}
-                                                    size='sm'
-                                                    onClick={() => handleFecha(item)}
-                                                    disabled={horasReservadas(item) || horasPasadas(item)}
-                                                >
-                                                    {item}
-                                                </Button>
-                                            ) )
-                                        }
-                                    </div>
+                                    <Carousel
+                                        className='mt-2'
+                                        autoplay
+                                        loop
+                                        autoplayDelay={3000}
+                                        nextArrow={false}
+                                        prevArrow={false}
+                                    >
+                                        <div className='w-full flex  flex-wrap items-center justify-evenly gap-1 p-1'>
+                                            {
+                                                horasAm.map((item,i) => (
+                                                    <Button
+                                                        className={ horasReservadas(item) ? 'w-[40%] text-white border bg-gray-500' : 'w-[40%] text-white border bg-green-800'}
+                                                        variant='text'
+                                                        key={i}
+                                                        size='sm'
+                                                        onClick={() => handleFecha(item)}
+                                                        disabled={horasReservadas(item) || horasPasadas(item)}
+                                                    >
+                                                        {item}
+                                                    </Button>
+                                                ) )
+                                            }
+                                        </div>
 
-                                    <div className='w-[50%] flex flex-col items-center justify-around p-1'>
-                                        {
-                                            horasPm.map((item,i) => (
-                                                <Button
-                                                    className={ horasReservadas(item) ? 'w-[70%] text-white border bg-gray-500' : 'w-[70%] text-white border bg-green-800'}
-                                                    variant='text'
-                                                    key={i}
-                                                    size='sm'
-                                                    onClick={() => handleFecha(item)}
-                                                    disabled={horasReservadas(item) || horasPasadas(item)}
-                                                >
-                                                    {item}
-                                                </Button>
-                                            ) )
-                                        }
-                                    </div>
+                                        <div className='w-full flex  flex-wrap items-center justify-evenly gap-1 p-1'>
+                                            {
+                                                horasPm.map((item,i) => (
+                                                    <Button
+                                                        className={ horasReservadas(item) ? 'w-[40%] text-white border bg-gray-500' : 'w-[40%] text-white border bg-green-800'}
+                                                        variant='text'
+                                                        key={i}
+                                                        size='sm'
+                                                        onClick={() => handleFecha(item)}
+                                                        disabled={horasReservadas(item) || horasPasadas(item)}
+                                                    >
+                                                        {item}
+                                                    </Button>
+                                                ) )
+                                            }
+                                        </div>
+                                    </Carousel>
                                 </div>
                             </div>
                         </>
