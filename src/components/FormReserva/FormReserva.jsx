@@ -6,7 +6,7 @@ import { IoCalendarNumber } from "react-icons/io5";
 import { IoInformationCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
-import { CalendarCheck, CheckFat, Money, Scissors, User, Watch } from "@phosphor-icons/react";
+import { CalendarCheck, CheckFat, Money, Scissors, User, Watch, ArrowRight  } from "@phosphor-icons/react";
 import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
@@ -20,7 +20,8 @@ import actionsCapturaId from '../../Store/Idcapture/actions.js'
 import actionsReservas from '../../Store/Reservas/actions.js'
 
 
-const { getReservasCLiente} = actionsReservas
+
+const { getReservasCLiente, getCliente} = actionsReservas
 const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 const { getTodos } = actionsUsuarios
@@ -32,7 +33,6 @@ export default function FormReserva() {
 	const navigate = useNavigate()
 
 	const cliente = useSelector(store => store.reservas.cliente)
-	const barberoCliente = useSelector(store => store.getUsuarios.usuario)
 	const [ step, setStep ] = useState(0)
 
 	// STEP 0 BARBEROS
@@ -55,20 +55,26 @@ export default function FormReserva() {
 
 	//STEP 1 SERVICIOS
 	const servicios = useSelector(store => store.servicios.servicios)
-	const [ servicio, setServicio ] = useState('')
-	const servicioSelecc = servicios?.find( item => item._id === servicio)
-	// console.log(servicioSelecc)
-
-
+	const [ servicio, setServicio ] = useState([])	
+	
 	const handleServicio = (id) => {
-		setServicio(id)
-		setTimeout(() => {
+		let servSelec = servicios?.find(item => item._id === id)
+
+		servicio.some(item => item._id === id) ? 
+			setServicio(servicio.filter(item => item._id !== id)) 
+		: 
+			setServicio([...servicio,servSelec])
+	}
+
+	
+	const handleSiguiente = () =>{
+		servicio.length === 0 ?
+			toast.error('debes serleccionar un servivio',{style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}})
+		:
 			setStep(step + 1)
-		}, 1200);
 	}
 
 	const handleStepServicio = () => {
-		setServicio(null)
 		setStep(1)
 	}
 
@@ -87,51 +93,64 @@ export default function FormReserva() {
 
 	// STEP 3 INFO RESERVA
 	const fechaObjeto = new Date(fecha)
-	
+	const mostrarServicio = servicio?.map(({servicio}) => servicio)
+	const mostrarValor = servicio?.map(({valor}) => valor).reduce((a,b) => a+b,0)
+	// console.log(mostrarServicio)
+	// console.log(mostrarValor)
+
 	const verificarCliente = (cliente) =>{
-        if(cliente.length === 0 && !barberoCliente){
+        if(cliente.length === 0 ){
             return navigate('/validacion-email')
         }
     }
-	// console.log(cliente)
+	
 
 	const handleReservar = () => {
-		let data = {
-			cliente_id: cliente?._id,
-			barbero_id: barberoID,
-			servicio_id: servicio,
-			fecha: fechaObjeto,
-		}
-		console.log(data)
-		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
-		toast.promise(
-			promesa,
-			{
-				loading: 'creando reserva',
-				success: (res) => {
-					dispatch(getReservasCLiente({id: cliente._id}))
-					setTimeout(() => {
-						navigate('/reservas')
-					}, 1500);
-					return <>{res.data.message}</>
-				},
-				error: (error) => {
-					return <>{error.response.data.message}</>
-				}
-			},
-			{
-				success: {duration: 1200},
-                style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'},
+			let data = {
+				cliente_id: cliente?._id,
+				barbero_id: barberoID,
+				servicio: servicio,
+				fecha: fechaObjeto,
+				valor: mostrarValor
 			}
-		)
+			// console.log(data)
+			let promesa = axios.post(`${urlLocal}reservas/crear`,data)
+			// cliente.length !== 0 ?
+				toast.promise(
+					promesa,
+					{
+						loading: 'creando reserva',
+						success: (res) => {
+							dispatch(getReservasCLiente({id: cliente._id}))
+							dispatch(getCliente({cliente: cliente}))
+							setTimeout(() => {
+								navigate('/reservas')
+							}, 1200);
+							return <>{res.data.message}</>
+						},
+						error: (error) => {
+							return <>{error.response.data.message}</>
+						}
+					},
+					{
+						success: {duration: 1200},
+						style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'},
+					}
+				)
+				// :
+				// toast.error('debes validarte como cliente',{duration:1500})
+				// setTimeout(() => {
+				// 	navigate('/validacion-email')
+				// }, 2000);
+				
 	}
 
 	useEffect(
 		() => {
+			dispatch(getServicios())
 			verificarCliente(cliente)
 			goToInfo(fecha)
 			dispatch(getTodos({parametro:'barberos', nombres: ''}))
-			dispatch(getServicios())
 		},
 		[dispatch,fecha,cliente]
 	)
@@ -154,7 +173,7 @@ export default function FormReserva() {
 						onClick={handleStepServicio}
 						disabled={!barbero ? true : false}
 					>
-						{ servicioSelecc ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
+						{ servicio.length !== 0 ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
 					</button>
 
 					<button
@@ -199,25 +218,37 @@ export default function FormReserva() {
 				)}
 
 				{ step === 1 &&(
-					<div className="w-full flex flex-wrap items-center justify-center p-2  gap-3 xxsm:flex-col xxsm:justify-around xxsm:items-center">
-						{servicios?.map((item, i) => (
-							<div
-							className="xxsm:w-[60%] w-[40%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
-							key={i}
-							onClick={() => handleServicio(item._id)}
-							>
-							<Label htmlFor={`checkbox-${item._id}`}>
-								<Typography className="font-semibold text-blue-gray-300 uppercase">
-								{item.servicio}
-								</Typography>
-							</Label>
-							<CheckBox
-								id={`checkbox-${item._id}`}
-								checked={servicio === item._id}
-								onChange={() => handleServicio(item._id)}
-							/>
-							</div>
-						))}
+					<div className="w-full max-h-[50vh] md:max-h-[71vh] flex flex-col items-center justify-center gap-3">
+						<div className='w-full h-full flex items-center justify-evenly flex-wrap overflow-y-auto gap-3 p-1'>
+							{
+								servicios?.map((item, i) => (
+								<div
+								className="xxsm:w-[45%] w-[40%] md:w-[25%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
+								key={i}
+								// onClick={() => handleServicio(item._id)}
+								>
+								<Label htmlFor={`checkbox-${item._id}`}>
+									<Typography variant='small' className="font-semibold text-blue-gray-300 uppercase">
+									{item.servicio}
+									</Typography>
+								</Label>
+								<CheckBox
+									id={`checkbox-${item._id}`}
+									onChange={() => handleServicio(item._id)}
+									checked={servicio.some(serv => serv._id === item._id)}
+								/>
+								</div>
+							))}
+						</div>
+						
+						<Typography 
+							className='flex items-center gap-2 uppercase text-white cursor-pointer'
+							onClick={handleSiguiente}
+						>
+							siguiente
+						<ArrowRight size={25} weight='bold' color='white'/>
+						</Typography>
+
 					</div>	
 				)}
 
@@ -248,10 +279,10 @@ export default function FormReserva() {
 
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
 								<Typography>{barbero?.nombres}</Typography>
-								<Typography>{servicioSelecc?.servicio}</Typography>
+								<Typography>{mostrarServicio.join(' + ')}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
-								<Typography>$ {numeral(servicioSelecc?.valor).format()}</Typography>
+								<Typography>$ {numeral(mostrarValor).format()}</Typography>
 							</div>
 						</div>
 

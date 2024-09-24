@@ -22,6 +22,9 @@ export default function InfoReservaBarbero(props) {
     const idReserva = useSelector(store => store.captureId.id)
     const reserva = reservas?.find(item => item._id === idReserva )
 
+    // console.log(reservas)
+    // console.log(reserva)
+
     const handleOpen = () => {
         reserva.activa ? 
                 setOpen(true) 
@@ -60,7 +63,7 @@ export default function InfoReservaBarbero(props) {
         toast((t) =>(
             <div className='flex flex-col gap-3 items-center'>
                 <div>
-                    <Typography variant='lead'>eliminar {reserva?.servicio_id.servicio}</Typography>
+                    <Typography variant='lead'>eliminar {reserva?.servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                     <Typography variant='lead'>{format(reserva.fecha,'dddd hh:mm a')}</Typography>
                 </div>
 
@@ -108,6 +111,7 @@ export default function InfoReservaBarbero(props) {
                     return <>{res.data.message}</>
                 },
                 error: (error) => {
+                    console.log(error)
                     return <>{error.response.data.message}</>
                 }
             },{
@@ -167,7 +171,7 @@ export default function InfoReservaBarbero(props) {
 
                             <div className='h-full w-[60%] flex flex-col justify-evenly gap-3 text-white capitalize'>
                                 <Typography variant='lead'>{reserva?.cliente_id?.nombres} {reserva?.cliente_id?.apellidos}</Typography>
-                                <Typography variant='lead'>{reserva?.servicio_id?.servicio}</Typography>
+                                <Typography variant='lead'>{reserva?.servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                 <Link to={`tel:${reserva?.cliente_id?.telefono}`}>
                                     <Typography variant='lead'>{reserva?.cliente_id?.telefono}</Typography>
                                 </Link>

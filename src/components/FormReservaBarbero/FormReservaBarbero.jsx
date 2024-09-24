@@ -32,6 +32,11 @@ export default function FormReservaBarbero() {
 	// STEP 0 BARBEROS
 	const barberoCliente = useSelector(store => store.getUsuarios.usuario)
 
+	const verificarBarbero = (barbero) => {
+		if(barbero.length === 0){
+			return navigate('/barbero')
+		}
+	}
 
 	//STEP 1 SERVICIOS
 	const servicios = useSelector(store => store.servicios.servicios)
@@ -102,8 +107,9 @@ export default function FormReservaBarbero() {
 		() => {
 			goToInfo(fecha)
 			dispatch(getServicios())
+			verificarBarbero(barberoCliente)
 		},
-		[dispatch,fecha]
+		[dispatch,fecha,barberoCliente]
 	)
 
 

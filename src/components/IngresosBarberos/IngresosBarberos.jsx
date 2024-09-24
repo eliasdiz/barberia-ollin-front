@@ -20,6 +20,8 @@ export default function IngresosBarberos() {
     const ingresos = useSelector(store => store.ingresos.ingresosBarbero)
     const total = ingresos?.map(({valor}) => valor / 2)?.reduce((a,b) => a+b,0)
 
+    // console.log(ingresos)
+
     const borrarFechas = () => {
         setFechaInicial('')
         setFechaFinal('')
@@ -109,7 +111,7 @@ export default function IngresosBarberos() {
                                     </td>
                                     <td className="p-4">
                                     <Typography variant="small" color="white" className="font-normal capitalize">
-                                        {servicio}
+                                        {servicio?.map( item => item.servicio).join(' + ')}
                                     </Typography>
                                     </td>
                                     <td className="p-4">

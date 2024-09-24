@@ -14,12 +14,16 @@ const { getReservasBarbero} = actionsReservas
 export default function CalendarioUsuario({fecha, setFecha}) {
 
     const dispatch = useDispatch()
+
     const [ dia, setDia ] = useState('')
     const horasAm = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30']
     const horasPm = ['14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30']
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id)
     
+
+    // console.log(reservas)
+    // console.log(barberoId)
 
     const horasPasadas = (hora) => {
         let hoy = new Date()
@@ -80,8 +84,8 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                 {
                     !dia ?
                         <>
-                            <div className='h-full w-full flex items-center xsm:justify-center'>
-                                <div className='xxsm:w-[90%]'>
+                            <div className='h-full w-full flex items-center xsm:justify-center md:justify-center '>
+                                <div className='xxsm:w-[90%] '>
                                     <Calendar 
                                         className='rounded-xl '
                                         onClickDay={(e) => seleccDia(e)}
@@ -95,7 +99,6 @@ export default function CalendarioUsuario({fecha, setFecha}) {
                             <div className='w-full h-full md:h-[70vh] flex flex-col items-center'>
                                 <div className='w-[100%] flex flex-col items-center justify-center'>
                                     <Typography
-                                            variant=''
                                             className='text-white capitalize'
                                         >
                                             {format(dia,'dddd D MMMM')}
