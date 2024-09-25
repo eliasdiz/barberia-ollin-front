@@ -17,6 +17,9 @@ export default function CardInfoReserva({reserva}) {
 
     const dispatch = useDispatch()
 
+    const mostrarServicios = reserva?.servicio?.map(({servicio}) => servicio).join(' + ')
+
+
     const eliminarReserva = (id) => {
         let promesa = axios.delete(`${urlLocal}reservas/${id}`)
         toast.promise(
@@ -39,13 +42,13 @@ export default function CardInfoReserva({reserva}) {
         )
     }
 
+
     const handleEliminar = () => {
-        // console.log(reserva._id)
         reserva._id !== '' &&
         toast((t) =>(
             <div className='flex flex-col gap-3 items-center'>
                 <div>
-                    <Typography variant='lead'>eliminar {reserva?.servicio_id.servicio}</Typography>
+                    <Typography variant='lead'>eliminar {mostrarServicios}</Typography>
                     <Typography variant='lead'>{format(reserva.fecha,'dddd hh:mm a')}</Typography>
                 </div>
 
@@ -101,8 +104,8 @@ export default function CardInfoReserva({reserva}) {
                     </div>
 
                     <div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
-                        <Typography>{reserva?.barbero_id.nombres}</Typography>
-                        <Typography>{reserva.servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
+                        <Typography>{reserva?.barbero_id.nombres} {reserva?.barbero_id.apellidos}</Typography>
+                        <Typography>{mostrarServicios}</Typography>
                         <Typography>{format(reserva?.fecha,'dddd D MMMM ')}</Typography>
                         <Typography>{format(reserva?.fecha,'HH:mm')} / {format(reserva?.fecha,'h:mm a')}</Typography>
                         <Typography>$ {numeral(reserva?.valor).format()}</Typography>

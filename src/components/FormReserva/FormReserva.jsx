@@ -39,7 +39,8 @@ export default function FormReserva() {
 	const barberos = useSelector(store => store.getUsuarios.usuarios)
 	const [ barberoID, setBarberoId ] = useState('')
 	const barbero = barberos?.find( item => item._id === barberoID)
-	// console.log(barbero)
+
+	// console.log(barberoID)
 
 	const handleBarbero = (id) => {
 		setBarberoId(id)
@@ -115,7 +116,6 @@ export default function FormReserva() {
 			}
 			// console.log(data)
 			let promesa = axios.post(`${urlLocal}reservas/crear`,data)
-			// cliente.length !== 0 ?
 				toast.promise(
 					promesa,
 					{
@@ -136,13 +136,7 @@ export default function FormReserva() {
 						success: {duration: 1200},
 						style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'},
 					}
-				)
-				// :
-				// toast.error('debes validarte como cliente',{duration:1500})
-				// setTimeout(() => {
-				// 	navigate('/validacion-email')
-				// }, 2000);
-				
+				)				
 	}
 
 	useEffect(
@@ -278,7 +272,7 @@ export default function FormReserva() {
 							</div>
 
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
-								<Typography>{barbero?.nombres}</Typography>
+								<Typography>{barbero?.nombres} {barbero?.apellidos}</Typography>
 								<Typography>{mostrarServicio.join(' + ')}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>

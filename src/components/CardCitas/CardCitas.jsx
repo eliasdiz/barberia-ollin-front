@@ -21,7 +21,7 @@ export default function CardCitas() {
     const reservasHoy = reservas?.filter(({fecha}) => sameDay(fecha,hoy))
     const reservasMañana = reservas?.filter(({fecha}) => sameDay(fecha,mañana))
     
-    console.log(barbero)
+    // console.log(barbero)
 
     useEffect(
         () => {
@@ -53,7 +53,7 @@ export default function CardCitas() {
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'HH:mm')} - {cliente_id?.nombres} {cliente_id?.apellidos}
+                                                {format(fecha,'hh:mm a')}- {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
                                             <Typography className="text-sm text-gray-300 capitalize">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>
@@ -91,9 +91,9 @@ export default function CardCitas() {
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'HH:mm')} - {cliente_id?.nombres} {cliente_id?.apellidos}
+                                                {format(fecha,'hh:mm a')} - {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
-                                            <Typography className="text-sm text-gray-300">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
+                                            <Typography className="text-sm text-gray-300 capitalize">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>
                                         <FaCut className="text-yellow-500 flex-shrink-0" />
                                     </div>

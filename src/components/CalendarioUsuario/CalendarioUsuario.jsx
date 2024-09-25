@@ -21,9 +21,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id)
     
-
     // console.log(reservas)
-    // console.log(barberoId)
 
     const horasPasadas = (hora) => {
         let hoy = new Date()

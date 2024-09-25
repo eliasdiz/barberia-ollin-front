@@ -21,7 +21,9 @@ export default function InfoReservaBarbero(props) {
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const idReserva = useSelector(store => store.captureId.id)
     const reserva = reservas?.find(item => item._id === idReserva )
+    const barbero = useSelector(store => store.getUsuarios.usuario)
 
+    // console.log(barbero)
     // console.log(reservas)
     // console.log(reserva)
 
@@ -42,7 +44,7 @@ export default function InfoReservaBarbero(props) {
                 loading: 'eliminado reserva',
                 success: (res) => {
 
-                    dispatch(getReservasBarbero({id: reserva.barbero_id}))
+                    dispatch(getReservasBarbero({id: barbero._id}))
                     setTimeout(() => {
                         setOpen(false)
                     }, 2000);
@@ -104,7 +106,7 @@ export default function InfoReservaBarbero(props) {
             {
                 loading: 'iniciando servicio',
                 success: (res) => {
-                    dispatch(getReservasBarbero({id: reserva.barbero_id}))
+                    dispatch(getReservasBarbero({id: barbero._id}))
                     setTimeout(() => {
                         setOpen(false)
                     }, 1500)

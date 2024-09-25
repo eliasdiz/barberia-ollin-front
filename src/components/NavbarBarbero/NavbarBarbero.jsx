@@ -65,7 +65,7 @@ export default function NavbarBarbero() {
                     localStorage.removeItem('token')
                     setOpenNav(false)
                     setTimeout(() => {
-                        dispatch(getUsuario())
+                        // dispatch(getUsuario())
                         navigate('/')
                     }, 2500);
                     return <>{res.data.message}</>
