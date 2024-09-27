@@ -23,9 +23,6 @@ export default function InfoReservaBarbero(props) {
     const reserva = reservas?.find(item => item._id === idReserva )
     const barbero = useSelector(store => store.getUsuarios.usuario)
 
-    // console.log(barbero)
-    // console.log(reservas)
-    // console.log(reserva)
 
     const handleOpen = () => {
         reserva.activa ? 

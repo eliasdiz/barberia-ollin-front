@@ -23,7 +23,6 @@ export default function CalendarioUsuario({setFecha}) {
     const barberoId = useSelector(store => store.captureId.id)
     const adicional = useSelector(store => store.reservas.adicional)
     
-    console.log(adicional)
 
     const diasPasadosDomingos = ({date,view}) => {       
         if(view === 'month'){
