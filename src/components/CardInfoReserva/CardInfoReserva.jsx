@@ -93,9 +93,9 @@ export default function CardInfoReserva({reserva}) {
                     detalles de la reserva
                 </Typography>
 
-                <div className='w-full h-full flex justify-around'>
+                <div className='w-full h-full flex justify-center gap-3 '>
 
-                    <div className='h-full w-[20%] flex flex-col items-center justify-evenly'>
+                    <div className='h-full w-[20%] flex flex-col items-center justify-around'>
                         <User size={32} weight="regular" color='white' />
                         <Scissors size={32} weight="regular" color='white' />
                         <CalendarCheck size={32} weight="regular" color='white' />
@@ -103,11 +103,11 @@ export default function CardInfoReserva({reserva}) {
                         <Money size={32} weight="regular" color='white' />
                     </div>
 
-                    <div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
+                    <div className='h-full w-[80%] flex flex-col justify-around text-white capitalize'>
                         <Typography>{reserva?.barbero_id.nombres} {reserva?.barbero_id.apellidos}</Typography>
                         <Typography>{mostrarServicios}</Typography>
-                        <Typography>{format(reserva?.fecha,'dddd D MMMM ')}</Typography>
-                        <Typography>{format(reserva?.fecha,'HH:mm')} / {format(reserva?.fecha,'h:mm a')}</Typography>
+                        <Typography>{format(reserva?.fecha.horaInicio,'dddd D MMMM ')}</Typography>
+                        <Typography>{format(reserva?.fecha.horaInicio,'HH:mm')} / {format(reserva?.fecha.horaInicio,'h:mm a')}</Typography>
                         <Typography>$ {numeral(reserva?.valor).format()}</Typography>
                     </div>
                 </div>

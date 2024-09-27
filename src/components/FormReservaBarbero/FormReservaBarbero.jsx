@@ -9,14 +9,16 @@ import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
 import numeral from 'numeral';
-import { format } from '@formkit/tempo';
+import { addMinute, format } from '@formkit/tempo';
 import axios from 'axios';
 import { urlLocal } from '../../urlHost.js';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import actionsCapturaId from '../../Store/Idcapture/actions.js'
+import actionsReservas from '../../Store/Reservas/actions.js'
 
 
+const { getServAdicional} = actionsReservas
 const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 
@@ -52,13 +54,20 @@ export default function FormReservaBarbero() {
 			setServicio([...servicio,servSelec])
 	}
 
-	
+	const servAdicional = () => {
+		let servAdicional = servicio?.some(({adicional}) => adicional )
+		let servNormal = servicio?.some(({adicional}) => !adicional )
+		return servicio.length >= 2 && servAdicional && servNormal
+	}
+
+
 	const handleSiguiente = () =>{
 		dispatch(idCapture({id: barbero._id}))
 		servicio.length === 0 ?
 			toast.error('debes serleccionar un servivio',{style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}})
 		:
 			setStep(step + 1)
+			dispatch(getServAdicional({adicional: servAdicional()}))
 	}
 
 	const handleStepServicio = () => {
@@ -68,6 +77,8 @@ export default function FormReservaBarbero() {
 
 	// STEP 2 FECHA
     const [ fecha, setFecha ] = useState(null)
+	const fechaFinal = servAdicional() ? addMinute(fecha,30) : fecha 
+	
 	
 	const handleFecha = () => {
 		setFecha(null)
@@ -79,7 +90,6 @@ export default function FormReservaBarbero() {
 	}
 
 	// STEP 3 INFO RESERVA
-	const fechaObjeto = new Date(fecha)
 	const mostrarValor = servicio?.map(({valor}) => valor).reduce((a,b) => a+b,0)
 	const mostrarServicios = servicio?.map(({servicio}) => servicio).join(' + ')
 	
@@ -89,10 +99,13 @@ export default function FormReservaBarbero() {
 			cliente_id: barbero?._id,
 			barbero_id: barbero?._id,
 			servicio: servicio,
-			fecha: fechaObjeto,
+			fecha: {
+				horaInicio: fecha,
+				horaFinal: fechaFinal
+			},
 			valor: mostrarValor
 		}
-		// console.log(data)
+		console.log(data)
 		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
 		toast.promise(
 			promesa,
@@ -217,8 +230,8 @@ export default function FormReservaBarbero() {
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
 								<Typography>{barbero?.nombres} {barbero?.apellidos}</Typography>
 								<Typography>{mostrarServicios}</Typography>
-								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
-								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
+								<Typography>{format(fecha,'dddd D MMMM ')}</Typography>
+								<Typography>{format(fecha,'HH:mm')} / {format(fecha,'h:mm a')}</Typography>
 								<Typography>$ {numeral(mostrarValor).format()}</Typography>
 							</div>
 						</div>
