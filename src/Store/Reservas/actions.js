@@ -45,6 +45,13 @@ const getReservasBarbero = createAsyncThunk(
     }
 )
 
-const actions = { getCliente, getReservasCLiente, getReservasBarbero}
+const getServAdicional = createAction(
+    'getServAdicional',
+    (adicional) => {
+        return { payload: adicional}
+    }
+)
+
+const actions = { getCliente, getReservasCLiente, getReservasBarbero, getServAdicional}
 
 export default actions
