@@ -4,7 +4,7 @@ import actiosnServicios from '../../Store/Servicios/actions.js'
 import Calendar from 'react-calendar'
 import { Button, Typography } from '@material-tailwind/react'
 import actionsUsuario from '../../Store/Usuarios/actions.js'
-import {addHour, format, sameDay, sameHour} from '@formkit/tempo'
+import {addHour, format, isEqual, sameDay, sameHour, addMinute} from '@formkit/tempo'
 import actionsCapturaId from '../../Store/Idcapture/actions.js'
 import InfoReservaBarbero from '../InfoReservaBarbero/InfoReservaBarbero.jsx'
 import { useNavigate } from 'react-router-dom'
@@ -25,7 +25,7 @@ export default function CalendarioBarbero() {
     const [ dia, setDia ] = useState(null)
     const barbero = useSelector(store => store.getUsuarios.usuario)
     const reservas = useSelector(store => store.reservas.reservasBarbero)
-    const reservasDelDia = reservas.filter(reserva => sameDay(reserva.fecha, dia));
+    const reservasDelDia = reservas.filter(reserva => sameDay(reserva.fecha.horaInicio, dia));
     
     // console.log(reservasDelDia)
 
@@ -47,7 +47,7 @@ export default function CalendarioBarbero() {
     const horasReservadas = (hora) => {
         const fechaConHora = addHour(dia,parseInt(hora));
         let reservasFiltradas =  reservas.filter(reserva => 
-            sameDay(reserva.fecha, dia) && sameHour(reserva.fecha,fechaConHora)
+            sameDay(reserva.fecha.horaInicio, dia) && sameHour(reserva.fecha.horaInicio,fechaConHora)
         )
         return reservasFiltradas.length > 0
     }
@@ -103,12 +103,17 @@ export default function CalendarioBarbero() {
                                 <div className='w-full h-[80%] flex flex-col flex-wrap items-center justify-center gap-3'>
                                     {
                                         reservasDelDia.length !== 0 ?
-                                            reservasDelDia?.map((item,i) => (
-                                                horasReservadas(format(item.fecha,'HH:mm')) &&
+                                            reservasDelDia?.map(({fecha,_id},i) => (
+                                                horasReservadas(format(fecha.horaInicio,'HH:mm')) &&
                                                 <InfoReservaBarbero 
                                                     key={i}
-                                                    clickCapture={() => handleInfoReserva(item._id)}
-                                                    hora={format(item.fecha,'HH:mm')}
+                                                    clickCapture={() => handleInfoReserva(_id)}
+                                                    hora={
+                                                        isEqual(fecha.horaInicio,fecha.horaFinal) ?
+                                                        `${format(fecha.horaInicio,'HH:mm')} - ${format(addMinute(fecha.horaInicio,30),'HH:mm')} `
+                                                        :
+                                                        `${format(fecha.horaInicio,'HH:mm')} - ${format(addMinute(fecha.horaFinal,30),'HH:mm')} `
+                                                    }
                                                 />
                                             
                                             ))

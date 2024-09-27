@@ -18,8 +18,8 @@ export default function CardCitas() {
     const mañana = addDay(hoy, 1)
     const barbero = useSelector(store => store.getUsuarios.usuario)
     const reservas = useSelector(store => store.reservas.reservasBarbero)
-    const reservasHoy = reservas?.filter(({fecha}) => sameDay(fecha,hoy))
-    const reservasMañana = reservas?.filter(({fecha}) => sameDay(fecha,mañana))
+    const reservasHoy = reservas?.filter(({fecha}) => sameDay(fecha.horaInicio,hoy))
+    const reservasMañana = reservas?.filter(({fecha}) => sameDay(fecha.horaInicio,mañana))
     
     // console.log(barbero)
 
@@ -53,7 +53,7 @@ export default function CardCitas() {
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'hh:mm a')}- {cliente_id?.nombres} {cliente_id?.apellidos}
+                                                {format(fecha.horaInicio,'hh:mm a')}- {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
                                             <Typography className="text-sm text-gray-300 capitalize">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>
@@ -91,7 +91,7 @@ export default function CardCitas() {
                                         <FaClock className="text-blue-400 flex-shrink-0" />
                                         <div className="flex-grow">
                                             <Typography className="font-semibold text-white capitalize">
-                                                {format(fecha,'hh:mm a')} - {cliente_id?.nombres} {cliente_id?.apellidos}
+                                                {format(fecha.horaInicio,'hh:mm a')} - {cliente_id?.nombres} {cliente_id?.apellidos}
                                             </Typography>
                                             <Typography className="text-sm text-gray-300 capitalize">{servicio?.map(({servicio}) => servicio).join(' + ')}</Typography>
                                         </div>

@@ -43,7 +43,7 @@ export default function Reservas() {
             {
                 reservas.length !== 0 ?
                 <Carousel
-                    className='h-[55vh] mt-1'
+                    className='h-[65vh] mt-1'
                 >
                     {
                         reservas?.map((item,i) => (

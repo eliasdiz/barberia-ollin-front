@@ -88,7 +88,7 @@ export default function FormReserva() {
 
 	// STEP 2 FECHA
     const [ fecha, setFecha ] = useState(null)
-	const fechaFinal = servAdicional ? addMinute(fecha,30) : fecha 
+	const fechaFinal = servAdicional() ? addMinute(fecha,30) : fecha 
 	
 	// console.log(fecha)
 	// console.log(fechaFinal)
