@@ -11,7 +11,7 @@ import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
 import numeral from 'numeral';
-import { format } from '@formkit/tempo';
+import { addMinute, format } from '@formkit/tempo';
 import axios from 'axios';
 import { urlLocal } from '../../urlHost.js';
 import toast from 'react-hot-toast';
@@ -21,7 +21,7 @@ import actionsReservas from '../../Store/Reservas/actions.js'
 
 
 
-const { getReservasCLiente, getCliente} = actionsReservas
+const { getReservasCLiente, getCliente, getServAdicional} = actionsReservas
 const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 const { getTodos } = actionsUsuarios
@@ -66,13 +66,19 @@ export default function FormReserva() {
 		: 
 			setServicio([...servicio,servSelec])
 	}
-
 	
+	const servAdicional = () =>{
+        let servAdiconal = servicio?.some(({adicional}) => adicional)
+        let servNormal = servicio?.some(({adicional}) => !adicional)
+        return servicio.length >= 2 && servAdiconal && servNormal
+	}
+
 	const handleSiguiente = () =>{
 		servicio.length === 0 ?
-			toast.error('debes serleccionar un servivio',{style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}})
+		toast.error('debes serleccionar un servivio',{style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}})
 		:
-			setStep(step + 1)
+		setStep(step + 1)
+		dispatch(getServAdicional({adicional: servAdicional()}))
 	}
 
 	const handleStepServicio = () => {
@@ -82,10 +88,13 @@ export default function FormReserva() {
 
 	// STEP 2 FECHA
     const [ fecha, setFecha ] = useState(null)
+	const fechaFinal = servAdicional ? addMinute(fecha,30) : fecha 
 	
+	// console.log(fecha)
+	// console.log(fechaFinal)
 	
 	const goToInfo = (fecha) => {
-		fecha !== null ? setStep( step + 1): null
+		fecha !== null && setStep( step + 1)
 	}
 	const handleFecha = () => {
 		setFecha(null)
@@ -93,11 +102,9 @@ export default function FormReserva() {
 	}
 
 	// STEP 3 INFO RESERVA
-	const fechaObjeto = new Date(fecha)
 	const mostrarServicio = servicio?.map(({servicio}) => servicio)
 	const mostrarValor = servicio?.map(({valor}) => valor).reduce((a,b) => a+b,0)
-	// console.log(mostrarServicio)
-	// console.log(mostrarValor)
+
 
 	const verificarCliente = (cliente) =>{
         if(cliente.length === 0 ){
@@ -111,7 +118,10 @@ export default function FormReserva() {
 				cliente_id: cliente?._id,
 				barbero_id: barberoID,
 				servicio: servicio,
-				fecha: fechaObjeto,
+				fecha: {
+					horaInicio: fecha,
+					horaFinal: fechaFinal
+				},
 				valor: mostrarValor
 			}
 			// console.log(data)
@@ -274,8 +284,8 @@ export default function FormReserva() {
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
 								<Typography>{barbero?.nombres} {barbero?.apellidos}</Typography>
 								<Typography>{mostrarServicio.join(' + ')}</Typography>
-								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
-								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
+								<Typography>{format(fecha,'dddd D MMMM ')}</Typography>
+								<Typography>{format(fecha,'HH:mm')} / {format(fecha,'h:mm a')}</Typography>
 								<Typography>$ {numeral(mostrarValor).format()}</Typography>
 							</div>
 						</div>
