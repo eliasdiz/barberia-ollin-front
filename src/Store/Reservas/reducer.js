@@ -1,12 +1,13 @@
 import { createReducer } from "@reduxjs/toolkit";
 import actions from "./actions";
 
-const { getCliente, getReservasCLiente, getReservasBarbero } = actions
+const { getCliente, getReservasCLiente, getReservasBarbero, getServAdicional } = actions
 
 const initialState = {
     cliente: [],
     reservasClientes: [],
-    reservasBarbero: []
+    reservasBarbero: [],
+    adicional: false
 }
 
 const reducer = createReducer(
@@ -38,6 +39,16 @@ const reducer = createReducer(
                 let newState = {
                     ...state,
                     reservasBarbero: action.payload.reservasBarbero
+                }
+                return newState
+            }
+        )
+        .addCase(
+            getServAdicional,
+            (state,action) => {
+                let newState = {
+                    ...state,
+                    adicional: action.payload.adicional
                 }
                 return newState
             }

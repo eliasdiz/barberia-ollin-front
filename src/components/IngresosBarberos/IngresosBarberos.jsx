@@ -111,7 +111,12 @@ export default function IngresosBarberos() {
                                     </td>
                                     <td className="p-4">
                                     <Typography variant="small" color="white" className="font-normal capitalize">
-                                        {servicio?.map( item => item.servicio).join(' + ')}
+                                        {
+                                            servicio?.map( item => item.servicio).join(' + ').length <= 16 ?
+                                            servicio?.map( item => item.servicio).join(' + ')
+                                            :
+                                            `${servicio?.map( item => item.servicio).join(' + ').slice(0,16)}...`
+                                        }
                                     </Typography>
                                     </td>
                                     <td className="p-4">

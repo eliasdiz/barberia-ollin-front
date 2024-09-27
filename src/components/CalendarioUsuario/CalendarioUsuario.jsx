@@ -2,16 +2,17 @@ import { Button, Typography,  } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
-import { addHour, date, format, sameDay, sameHour, sameMinute} from '@formkit/tempo'
+import { addMinute, format, isEqual, sameDay, sameHour, sameMinute} from '@formkit/tempo'
 import { useDispatch, useSelector } from 'react-redux';
 import actionsReservas from '../../Store/Reservas/actions.js'
 import { Carousel } from 'keep-react';
+import toast from 'react-hot-toast';
 
 
 const { getReservasBarbero} = actionsReservas
 
 
-export default function CalendarioUsuario({fecha, setFecha}) {
+export default function CalendarioUsuario({setFecha}) {
 
     const dispatch = useDispatch()
 
@@ -20,44 +21,7 @@ export default function CalendarioUsuario({fecha, setFecha}) {
     const horasPm = ['14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30']
     const reservas = useSelector(store => store.reservas.reservasBarbero)
     const barberoId = useSelector(store => store.captureId.id)
-    
-
-    // console.log(reservas)
-    // console.log(barberoId)
-
-    const horasPasadas = (hora) => {
-        let hoy = new Date()
-        let diaSelece = new Date(dia)
-        let horaActual = format(hoy,'HH:mm')
-        return sameDay(diaSelece,hoy) && horaActual >= hora
-    }
-    
-    const horasReservadas = (hora) => {
-        const diaObj = new Date(dia)
-        let [ hour, minutos ] = hora.split(':').map(Number)
-        diaObj.setHours(hour)
-        diaObj.setMinutes(minutos)
-
-        let reservasFiltradas =  reservas.filter(reserva => 
-            sameDay(reserva.fecha, diaObj) && sameHour(reserva.fecha,diaObj) && sameMinute(reserva.fecha,diaObj)
-        )
-        return reservasFiltradas.length > 0
-    }
-
-    
-
-    const seleccDia = (e) => {
-        let dia = new Date(e)
-        setDia(dia)
-    }
-    
-    const handleFecha = (item) => {
-        let [ hora, minutos ] = item.split(':').map(Number)
-        let fecha = new Date(dia)
-        fecha.setHours(hora)
-        fecha.setMinutes(minutos)
-        setFecha(format(fecha,"dddd, MMMM D, YYYY HH:mm"))
-    }
+    const adicional = useSelector(store => store.reservas.adicional)
     
 
     const diasPasadosDomingos = ({date,view}) => {       
@@ -69,6 +33,50 @@ export default function CalendarioUsuario({fecha, setFecha}) {
         }
         return false
     }
+
+    const seleccDia = (e) => {
+        let dia = new Date(e)
+        setDia(dia)
+    }
+
+    const horasPasadas = (hora) => {
+        let hoy = new Date()
+        let diaSelece = new Date(dia)
+        let horaActual = format(hoy,'HH:mm')
+        return sameDay(diaSelece,hoy) && horaActual >= hora
+    }
+    
+    const horasReservadas = (hora) => {
+        let [ hour, minutos ] = hora.split(':').map(Number)
+        let diaFormateado = new Date(dia)
+        diaFormateado.setHours(hour)
+        diaFormateado.setMinutes(minutos)
+        
+        let filtroReservas = reservas?.filter(({fecha}) => {
+                let matchHoraInicio = sameHour(fecha.horaInicio,diaFormateado) && sameMinute(fecha.horaInicio,diaFormateado)
+                let matchHoraFinal = sameHour(fecha.horaFinal,diaFormateado) && sameMinute(fecha.horaFinal,diaFormateado)
+                return sameDay(fecha.horaInicio,diaFormateado) && ( matchHoraInicio || matchHoraFinal) 
+        })
+        // console.log(filtroReservas)
+        return filtroReservas.length > 0
+    }
+    
+    const handleFecha = (item) => {
+        let [ hora, minutos ] = item.split(':').map(Number)
+        let fecha = new Date(dia)
+        fecha.setHours(hora)
+        fecha.setMinutes(minutos)
+        let horaSgte = addMinute(new Date(fecha),30)
+		let horaOcupada = reservas.some(({fecha}) => isEqual(fecha.horaInicio,horaSgte)) 
+
+        adicional && horaOcupada ? 
+            toast.error('debes escoger otra hora',
+                    {style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}}
+                )
+            :
+            setFecha(fecha)
+    }
+    
 
     useEffect(
         () => {

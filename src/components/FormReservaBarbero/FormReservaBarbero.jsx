@@ -4,7 +4,7 @@ import { ImScissors } from "react-icons/im";
 import { IoCalendarNumber } from "react-icons/io5";
 import { IoInformationCircle } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { CalendarCheck, CheckFat, Money, Scissors, User, Watch } from "@phosphor-icons/react";
+import { CalendarCheck, CheckFat, Money, Scissors, User, Watch, ArrowRight } from "@phosphor-icons/react";
 import { Button, Typography } from '@material-tailwind/react';
 import actionsServicios from '../../Store/Servicios/actions.js'
 import CalendarioUsuario from '../CalendarioUsuario/CalendarioUsuario.jsx';
@@ -21,6 +21,7 @@ const { idCapture } = actionsCapturaId
 const { getServicios } = actionsServicios
 
 
+
 export default function FormReservaBarbero() {
 
     const dispatch = useDispatch()
@@ -30,7 +31,8 @@ export default function FormReservaBarbero() {
 	const [ step, setStep ] = useState(1)
     
 	// STEP 0 BARBEROS
-	const barberoCliente = useSelector(store => store.getUsuarios.usuario)
+	const barbero = useSelector(store => store.getUsuarios.usuario)
+	// console.log(barbero)
 
 	const verificarBarbero = (barbero) => {
 		if(barbero.length === 0){
@@ -40,19 +42,26 @@ export default function FormReservaBarbero() {
 
 	//STEP 1 SERVICIOS
 	const servicios = useSelector(store => store.servicios.servicios)
-	const [ servicio, setServicio ] = useState('')
-	const servicioSelecc = servicios?.find( item => item._id === servicio)
-
+	const [ servicio, setServicio ] = useState([])	
+	
 	const handleServicio = (id) => {
-		setServicio(id)
-        dispatch(idCapture({id: barberoCliente._id}))
-		setTimeout(() => {
+		let servSelec = servicios?.find(item => item._id === id)
+		servicio.some(item => item._id === id) ? 
+			setServicio(servicio.filter(item => item._id !== id)) 
+		: 
+			setServicio([...servicio,servSelec])
+	}
+
+	
+	const handleSiguiente = () =>{
+		dispatch(idCapture({id: barbero._id}))
+		servicio.length === 0 ?
+			toast.error('debes serleccionar un servivio',{style: { background: '#94a3b8', textTransform: 'capitalize', color: 'black', textAlign: 'center'}})
+		:
 			setStep(step + 1)
-		}, 1200);
 	}
 
 	const handleStepServicio = () => {
-		setServicio('')
 		setStep(1)
 	}
 
@@ -60,25 +69,28 @@ export default function FormReservaBarbero() {
 	// STEP 2 FECHA
     const [ fecha, setFecha ] = useState(null)
 	
-	
-	const goToInfo = (fecha) => {
-		fecha !== null ? setStep( step + 1): null
-	}
 	const handleFecha = () => {
 		setFecha(null)
 		setStep(2)
 	}
+	
+	const goToInfo = (fecha) => {
+		fecha !== null ? setStep( step + 1): null
+	}
 
 	// STEP 3 INFO RESERVA
 	const fechaObjeto = new Date(fecha)
+	const mostrarValor = servicio?.map(({valor}) => valor).reduce((a,b) => a+b,0)
+	const mostrarServicios = servicio?.map(({servicio}) => servicio).join(' + ')
 	
 
 	const handleReservar = () => {
 		let data = {
-			cliente_id: barberoCliente?._id,
-			barbero_id: barberoCliente?._id,
-			servicio_id: servicio,
+			cliente_id: barbero?._id,
+			barbero_id: barbero?._id,
+			servicio: servicio,
 			fecha: fechaObjeto,
+			valor: mostrarValor
 		}
 		// console.log(data)
 		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
@@ -107,9 +119,9 @@ export default function FormReservaBarbero() {
 		() => {
 			goToInfo(fecha)
 			dispatch(getServicios())
-			verificarBarbero(barberoCliente)
+			verificarBarbero(barbero)
 		},
-		[dispatch,fecha,barberoCliente]
+		[dispatch,fecha,barbero]
 	)
 
 
@@ -123,12 +135,12 @@ export default function FormReservaBarbero() {
 					<button
 						onClick={handleStepServicio}
 					>
-						{ servicioSelecc ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
+						{ servicio.length !== 0 ? <CheckFat size={24} weight="fill" color='green' /> : <ImScissors className='w-8 h-8' /> } 
 					</button>
 
 					<button
 						onClick={handleFecha}
-						disabled={servicio === '' ? true : false}
+						disabled={servicio.length === 0 ? true : false}
 					>
 						{ fecha ? <CheckFat size={24} weight="fill" color='green' /> : <IoCalendarNumber className='w-9 h-9' />}
 					</button>
@@ -143,27 +155,39 @@ export default function FormReservaBarbero() {
 
 
 				{ step === 1 &&(
-					<div className="w-full flex flex-wrap items-center justify-center p-2  gap-3 xxsm:flex-col xxsm:justify-around xxsm:items-center">
-						{servicios?.map((item, i) => (
-							<div
-                                className="xxsm:w-[60%] w-[40%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
-                                key={i}
-                                onClick={() => handleServicio(item._id)}
-							>
-                                <Label htmlFor={`checkbox-${item._id}`}>
-                                    <Typography className="font-semibold text-blue-gray-300 uppercase">
-                                    {item.servicio}
-                                    </Typography>
-                                </Label>
-                                <CheckBox
-                                    id={`checkbox-${item._id}`}
-                                    checked={servicio === item._id}
-                                    onChange={() => handleServicio(item._id)}
-                                />
-							</div>
-						))}
-					</div>	
+					<div className="w-full max-h-[50vh] md:max-h-[71vh] flex flex-col items-center justify-center gap-3">
+						<div className='w-full h-full flex items-center justify-evenly flex-wrap overflow-y-auto gap-3 p-1'>
+							{
+								servicios?.map((item, i) => (
+								<div
+								className="xxsm:w-[45%] w-[40%] md:w-[25%] flex justify-between items-center border border-blue-gray-300 rounded-md p-2"
+								key={i}
+								>
+								<Label htmlFor={`checkbox-${item._id}`}>
+									<Typography variant='small' className="font-semibold text-blue-gray-300 uppercase">
+									{item.servicio}
+									</Typography>
+								</Label>
+								<CheckBox
+									id={`checkbox-${item._id}`}
+									onChange={() => handleServicio(item._id)}
+									checked={servicio.some(serv => serv._id === item._id)}
+								/>
+								</div>
+							))}
+						</div>
+						
+						<Typography 
+							className='flex items-center gap-2 uppercase text-white cursor-pointer'
+							onClick={handleSiguiente}
+						>
+							siguiente
+						<ArrowRight size={25} weight='bold' color='white'/>
+						</Typography>
+
+					</div>
 				)}
+	
 
 				{ step === 2 &&(
 					<div className='w-full  h-[60vh] xsm:h-[90vh] md:h-[71vh] overflow-x-hidden'>
@@ -191,11 +215,11 @@ export default function FormReservaBarbero() {
 							</div>
 
 							<div className='h-full w-[60%] flex flex-col justify-evenly text-white capitalize'>
-								<Typography>{barberoCliente?.nombres}</Typography>
-								<Typography>{servicioSelecc?.servicio}</Typography>
+								<Typography>{barbero?.nombres} {barbero?.apellidos}</Typography>
+								<Typography>{mostrarServicios}</Typography>
 								<Typography>{format(fechaObjeto,'dddd D MMMM ')}</Typography>
 								<Typography>{format(fechaObjeto,'HH:mm')} / {format(fechaObjeto,'h:mm a')}</Typography>
-								<Typography>$ {numeral(servicioSelecc?.valor).format()}</Typography>
+								<Typography>$ {numeral(mostrarValor).format()}</Typography>
 							</div>
 						</div>
 
