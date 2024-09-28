@@ -1,20 +1,28 @@
 import { Dialog, Spinner } from '@material-tailwind/react'
 import { Typography } from 'keep-react'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import actionsServicios from '../../Store/Servicios/actions.js'
 
+
+const {getServicios} = actionsServicios
 
 export default function AlertaServidor() {
 
+    const dispatch = useDispatch()
     const [ open, setOpen ] = useState(true)
     const servicios = useSelector(store => store.servicios.servicios)
-    
-    // console.log(reservas)
+    const hora = new Date().getMinutes()
+
+    const servidor = (servicios) => {
+        servicios.length !== 0 ? setOpen(false) : setOpen(true)
+    }
 
     
     useEffect(
         () => {
-            servicios.length !== 0 ? setOpen(false) : setOpen(true)
+            hora === 0 && dispatch(getServicios()) 
+            servidor(servicios)
         },
         [servicios]
     )

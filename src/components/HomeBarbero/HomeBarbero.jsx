@@ -1,4 +1,4 @@
-import { Typography } from '@material-tailwind/react'
+import { Avatar, Typography } from '@material-tailwind/react'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import actionsUsuarios from '../../Store/Usuarios/actions'
@@ -24,22 +24,25 @@ export default function HomeBarbero() {
 
     return (
         <div className='flex flex-col items-center min-h-[69vh] mt-2 p-1'>
-            <div className='w-full h-full md:w-[60%] flex flex-col gap-1'>
-                <Typography 
-                    className='text-white text-center capitalize' 
-                    variant='h5'
-                >
-                    bienvenido
-                </Typography>
-                <Typography 
-                    className='text-white text-center capitalize' 
-                    variant='h5'
-                >
-                    {usuario.nombres} {usuario.apellidos}
-                </Typography>
 
+            <div className='w-full flex items-center justify-end gap-4 p-2'>
+                <Typography 
+                    className='text-white text-center capitalize' 
+                    variant='lead'
+                >
+                    hola {usuario.nombres}!!!
+                </Typography>
+                <Avatar
+                    size='sm'
+                    variant='rounded'
+                    src='https://docs.material-tailwind.com/img/face-2.jpg'
+                />
+            </div>
+
+            <div className='w-full'>
                 <CardCitas />
-            </div>            
+            </div>      
+            
         </div>
     )
 }
