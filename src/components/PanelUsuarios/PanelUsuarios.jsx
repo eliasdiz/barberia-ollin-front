@@ -165,10 +165,10 @@ export default function PanelUsuarios() {
                     </div>
 
                 </div>
-                <div className='w-full overflow-y-auto max-h-[75vh] '>
+                <div className='w-full overflow-y-auto  max-h-[75vh] '>
                     {
                         usuarios.length !== 0 ?
-                        <table className="w-full min-w-max table-auto text-left bg-gray-600">
+                        <table className="w-full min-w-max table-auto text-left bg-gray-600 overflow-x-auto">
                             <thead>
                                 <tr className='sticky top-0'>
                                     {
