@@ -24,7 +24,7 @@ export default function InfoReservaBarbero(props) {
     const barbero = useSelector(store => store.getUsuarios.usuario)
     const [ alertaEliminar, setAlertaEliminar ] = useState(false)
 
-    console.log(alertaEliminar)
+    // console.log(alertaEliminar)
 
 
     const handleOpen = () => {
@@ -114,7 +114,7 @@ export default function InfoReservaBarbero(props) {
                     return <>{res.data.message}</>
                 },
                 error: (error) => {
-                    console.log(error)
+                    console.log(error.response.data)
                     return <>{error.response.data.message}</>
                 }
             },{

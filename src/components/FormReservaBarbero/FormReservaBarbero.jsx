@@ -105,7 +105,7 @@ export default function FormReservaBarbero() {
 			},
 			valor: mostrarValor
 		}
-		console.log(data)
+		// console.log(data)
 		let promesa = axios.post(`${urlLocal}reservas/crear`,data)
 		toast.promise(
 			promesa,
