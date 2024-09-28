@@ -17,7 +17,7 @@ export default function HomeAdmin() {
     const usuario = useSelector(store => store.getUsuarios.usuario)
 
     const adminActions = [
-        { title: 'Servicios', icon: <Scissors size={48} />, link: '/admin/services' },
+        { title: 'Servicios', icon: <Scissors size={48} />, link: '/admin/servicios' },
         { title: 'Usuarios', icon: <User size={48} />, link: '/admin/usuarios' },
         { title: 'tienda', icon: <BeerStein size={48} />, link: '/admin/products' },
         { title: 'Estadísticas', icon: <ChartLine size={48} />, link: '/admin/stats' },
@@ -33,7 +33,7 @@ export default function HomeAdmin() {
     )
 
     return (
-        <div className='w-full flex flex-col gap-2 p-1'>
+        <div className='w-full md:w-[60%] flex flex-col gap-2 p-1'>
 
             <div className='w-full flex items-center justify-end gap-4 p-2'>
                 <Typography 
@@ -49,12 +49,12 @@ export default function HomeAdmin() {
                 />
             </div>
 
-            <div className="flex flex-wrap justify-around p-3 gap-4">
+            <div className="flex flex-wrap justify-center p-3 gap-4">
                 {
                     adminActions.map(({title,icon,link}, i) => (
                         <Card 
                             key={i}
-                            className="w-[45%] bg-gray-800 hover:bg-gray-700 transition-colors duration-300"
+                            className="w-[45%] md:w-[30%] bg-gray-800 hover:bg-gray-700 transition-colors duration-300 cursor-pointer"
                             onClick={() => navigate(link)}
                         >
                             <CardBody className="flex flex-col items-center">

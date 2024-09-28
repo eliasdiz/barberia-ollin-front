@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Typography, Button } from '@material-tailwind/react'
 import { CalendarCheck, Money, Scissors, User, Watch } from "@phosphor-icons/react";
 import numeral from 'numeral';
@@ -18,6 +18,8 @@ export default function CardInfoReserva({reserva}) {
     const dispatch = useDispatch()
 
     const mostrarServicios = reserva?.servicio?.map(({servicio}) => servicio).join(' + ')
+    const [ alertaEliminar, setAlertaEliminar ] = useState(false)
+
 
 
     const eliminarReserva = (id) => {
@@ -42,43 +44,49 @@ export default function CardInfoReserva({reserva}) {
         )
     }
 
-
     const handleEliminar = () => {
-        reserva._id !== '' &&
-        toast((t) =>(
-            <div className='flex flex-col gap-3 items-center'>
-                <div>
-                    <Typography variant='lead'>eliminar {mostrarServicios}</Typography>
-                    <Typography variant='lead'>{format(reserva.fecha,'dddd hh:mm a')}</Typography>
+        setAlertaEliminar(true)
+        reserva._id !== ''  &&
+        toast((t) => (
+            <div className='bg-transparent flex flex-col gap-1'>
+                <div className='w-[15rem] h-full bg-blue-gray-700 rounded-md capitalize text-center'>
+                    <Typography color='white' variant='lead' className='p-1'>
+                        eliminar servicio ? 
+                    </Typography>
+
+                    <div className='p-2 border-t-2 border-gray-600 cursor-pointer'>
+                        <Typography 
+                            color='red' 
+                            variant='lead'
+                            onClick={() => { 
+                                toast.dismiss(t.id) 
+                                eliminarReserva(reserva._id)
+                            }}
+                        >
+                            eliminar
+                        </Typography>
+                    </div>
                 </div>
 
-                <div className='flex gap-5'>
-                    <Button
-                        size='sm'
-                        variant='text'
-                        className='text-red-600 border border-red-700'
-                        onClick={() => toast.dismiss(t.id)}
-                    >
-                        no
-                    </Button>
-
-                    <Button
-                        size='sm'
-                        variant='text'
-                        className='border border-green-700 text-green-700'
-                        onClick={() =>{
-                            toast.dismiss(t.id)
-                            eliminarReserva(reserva._id)
-                        }}
-                    >
-                        si
-                    </Button>
+                <div 
+                    className=' bg-blue-gray-700 rounded-md text-center capitalize p-1 cursor-pointer' 
+                    onClick={() => handleCancelarEliminar(t)}
+                >
+                    <Typography color='blue' variant='lead'>
+                        cancelar
+                    </Typography>
                 </div>
             </div>
         ),{
-            style: { background: '#94a3b8', textTransform: 'capitalize', fontWeight: 'bolder'}
+            duration: Infinity,
+            style:{background: 'transparent', boxShadow: 'none'}
         })
-    }    
+    }
+
+    const handleCancelarEliminar = (t) => {
+        toast.dismiss(t.id)
+        setAlertaEliminar(false)
+    }
     
 
     return (
@@ -116,6 +124,7 @@ export default function CardInfoReserva({reserva}) {
                     variant='text'
                     className='border border-red-700 text-red-700'
                     onClick={handleEliminar}
+                    disabled={alertaEliminar}
                 >
                     eliminar
                 </Button>

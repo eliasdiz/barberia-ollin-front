@@ -11,6 +11,7 @@ import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
 import { IoCalendarNumberSharp } from "react-icons/io5";
 import { RiCalendarScheduleFill } from "react-icons/ri";
+import { BeerStein, CalendarDots, House, Scissors, User } from "@phosphor-icons/react";
 
 
 const { getUsuario } = actionsUsuarios
@@ -37,8 +38,8 @@ export default function NavbarAdmin() {
         setOpenNav(false)
     }
 
-    const handleAgenda = () => {
-        navigate('/admin')
+    const handleServicios = () => {
+        navigate('/admin/servicios')
         setOpenNav(false)
     }
 
@@ -82,47 +83,58 @@ export default function NavbarAdmin() {
                     <Typography
                         variant="h5"
                         color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
+                        className="flex items-center gap-3 font-medium capitalize"
                     >
-                        <HiMiniHome className="h-5 w-5" />
+                        <House size={30} weight="bold" />
                         inicio
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleAgenda}>
+                <ListItem onClick={handleInicio}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
+                        className="flex items-center gap-3 font-medium capitalize"
                     >
-                        <IoCalendarNumberSharp className="h-5 w-5"  />
+                        <BeerStein size={30} weight="bold" />
+                        tienda
+                    </Typography>
+                </ListItem>
+
+                <ListItem onClick={handleInicio}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-3 font-medium capitalize"
+                    >
+                        <CalendarDots size={30} weight="bold" />
                         agenda
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleAgenda}>
+                <ListItem onClick={handleServicios}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
+                        className="flex items-center gap-3 font-medium capitalize"
                     >
-                        <RiCalendarScheduleFill className="h-5 w-5" />
-                        reservas
+                        <Scissors size={30} weight="fill" />
+                        servicios
                     </Typography>
                 </ListItem>
+
 
                 <ListItem onClick={handleUsuarios}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
-                        className="flex items-center gap-2 font-medium capitalize"
+                        className="flex items-center gap-3 font-medium capitalize"
                     >
-                        <BsFillPeopleFill className="h-5 w-5" />
+                        <User size={30} weight="bold" />
                         usuarios
                     </Typography>
                 </ListItem>
-
-                
+                                
             </List>
         );
         }

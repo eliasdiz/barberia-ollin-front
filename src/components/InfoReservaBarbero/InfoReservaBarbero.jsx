@@ -70,7 +70,7 @@ export default function InfoReservaBarbero(props) {
                         eliminar servicio ? 
                     </Typography>
 
-                    <div className='p-2 border-t-2 border-gray-600'>
+                    <div className='p-2 border-t-2 border-gray-600 cursor-pointer'>
                         <Typography 
                             color='red' 
                             variant='lead'
@@ -85,7 +85,7 @@ export default function InfoReservaBarbero(props) {
                 </div>
 
                 <div 
-                    className=' bg-blue-gray-700 rounded-md text-center capitalize p-1' 
+                    className=' bg-blue-gray-700 rounded-md text-center capitalize p-1 cursor-pointer' 
                     onClick={() => handleCancelarEliminar(t)}
                 >
                     <Typography color='blue' variant='lead'>
@@ -153,7 +153,8 @@ export default function InfoReservaBarbero(props) {
                         className='flex flex-col gap-5 bg-blue-gray-500 p-3'
                     >
                         <div className='flex justify-end'>
-                            <XSquare 
+                            <XSquare
+                                className='cursor-pointer'
                                 onClick={handleCerrarModal} 
                                 size={32} 
                                 color="#bb0202" 
