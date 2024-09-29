@@ -65,12 +65,12 @@ export default function InfoReservaBarbero(props) {
         reserva._id !== ''  &&
         toast((t) => (
             <div className='bg-transparent flex flex-col gap-1'>
-                <div className='w-[15rem] h-full bg-blue-gray-700 rounded-md capitalize text-center'>
+                <div className='w-[15rem] h-full bg-blue-gray-700 rounded-md capitalize text-center divide-y divide-gray-200'>
                     <Typography color='white' variant='lead' className='p-1'>
                         eliminar servicio ? 
                     </Typography>
 
-                    <div className='p-2 border-t-2 border-gray-600 cursor-pointer'>
+                    <div className='p-2 cursor-pointer'>
                         <Typography 
                             color='red' 
                             variant='lead'
