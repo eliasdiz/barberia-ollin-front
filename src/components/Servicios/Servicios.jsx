@@ -20,7 +20,6 @@ export default function Servicios() {
     const servicios = useSelector(store => store.servicios.servicios)
 
 
-
     // console.log(servicios)
 
 
