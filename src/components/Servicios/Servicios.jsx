@@ -6,6 +6,7 @@ import numeral from 'numeral'
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { PlusCircle } from '@phosphor-icons/react'
+import FormServicio from '../FormServicio/FormServicio'
 
 
 const { getServicios} = actionsServicios
@@ -36,22 +37,16 @@ export default function Servicios() {
             <div className='flex justify-evenly items-center p-1 mt-3'>
                 <Typography className='capitalize' variant='h3'> servicios</Typography>
 
-                <Button
-                    className='flex items-center gap-2 text-sm'
-                    color='blue'
-                >
-                    <PlusCircle size={25} weight='bold' />
-                    agregar
-                </Button>
+                <FormServicio />
             </div>
 
-            <div className='h-full overflow-y-auto overflow-x-hidden flex justify-center mt-2'>
-                <table className="w-full h-[60%] md:w-[60%] min-w-max table-auto text-left overflow-x-hidden px-0 capitalize">
+            <div className='h-full w-full overflow-y-auto flex justify-center mt-2'>
+                <table className="w-full h-[60%] md:w-[60%] min-w-max table-auto text-left capitalize">
                     <thead className="sticky top-0 bg-gray-800 z-10">
                         <tr>
                             {
                                 tableHead.map((head) => (
-                                    <th key={head} className="border-b border-gray-700 bg-gray-800 p-[8px]">
+                                    <th key={head} className="border-b border-gray-700 bg-gray-800 p-[8px] ">
                                     <Typography
                                         variant="small"
                                         color="white"
@@ -67,7 +62,7 @@ export default function Servicios() {
                     <tbody>
                         {
                             servicios?.map(({servicio,valor,adicional }, i) => (
-                                <tr key={i} className={i % 2 === 0 ? "bg-gray-900" : ""}>
+                                <tr key={i} className={i % 2 === 0 ? "bg-gray-900" : ''}>
 
                                     <td className="p-[8px]">
                                         <Typography variant="paragraph" color="white" className="font-normal">
@@ -87,6 +82,7 @@ export default function Servicios() {
                                             <Switch 
                                                 color='blue'
                                                 checked={adicional}
+                                                disabled
                                             />
                                         </div>
                                     </td>
@@ -98,7 +94,7 @@ export default function Servicios() {
                                     </td>
 
                                     <td className="p-[8px]">
-                                        <div className='flex items-center justify-center gap-2'>
+                                        <div className='flex gap-1'>
                                             <FaRegEdit size={20} color='orange' />
                                             <FaRegTrashAlt size={20} color='red' />
                                         </div>

@@ -21,7 +21,6 @@ export default function AlertaServidor() {
     
     useEffect(
         () => {
-            hora === 0 && dispatch(getServicios()) 
             servidor(servicios)
         },
         [servicios]
