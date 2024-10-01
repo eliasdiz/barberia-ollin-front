@@ -81,6 +81,9 @@ export default function Servicios() {
                 loading: 'eliminando servicio',
                 success: (res) => {
                     dispatch(getServicios())
+                    setTimeout(() => {
+                        toast.dismiss()
+                    }, 2500);
                     return <>{res.data.message}</>
                 },
                 error: (error) => {

@@ -19,7 +19,7 @@ export default function HomeAdmin() {
     const adminActions = [
         { title: 'Servicios', icon: <Scissors size={48} />, link: '/admin/servicios' },
         { title: 'Usuarios', icon: <User size={48} />, link: '/admin/usuarios' },
-        { title: 'tienda', icon: <BeerStein size={48} />, link: '/admin/products' },
+        { title: 'tienda', icon: <BeerStein size={48} />, link: '/admin/tienda' },
         { title: 'Estadísticas', icon: <ChartLine size={48} />, link: '/admin/stats' },
         { title: 'Reportes', icon: <FileText size={48} />, link: '/admin/reports' },
     ]

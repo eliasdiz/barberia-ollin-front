@@ -53,7 +53,9 @@ export default function FormServicio() {
                 success: (res) => {
                     dispatch(getServicios())
                     setTimeout(() => {
+                        setServicio('')
                         setValorMostrar('')
+                        toast.dismiss()
                         setOpen(false)
                     }, 2000);
                     return <>{res.data.message}</>
