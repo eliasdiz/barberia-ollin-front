@@ -2,15 +2,11 @@ import React, { useEffect } from "react";
 import { Navbar,Collapse,Typography,Button,IconButton,List,ListItem} from "@material-tailwind/react";
 import { Bars3Icon,XMarkIcon} from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { HiMiniHome } from "react-icons/hi2";
-import { BsFillPeopleFill } from "react-icons/bs";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
-import { IoCalendarNumberSharp } from "react-icons/io5";
-import { RiCalendarScheduleFill } from "react-icons/ri";
 import { BeerStein, CalendarDots, House, Scissors, User } from "@phosphor-icons/react";
 
 
@@ -30,6 +26,11 @@ export default function NavbarAdmin() {
 
     const handleInicio = () => {
         navigate('/admin')
+        setOpenNav(false)
+    }
+
+    const handleTienda = () => {
+        navigate('/admin/tienda')
         setOpenNav(false)
     }
 
@@ -90,7 +91,7 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleInicio}>
+                <ListItem onClick={handleTienda}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
