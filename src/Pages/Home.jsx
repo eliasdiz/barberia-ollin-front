@@ -23,7 +23,7 @@ function App() {
     setShowTable(!showTable);
   };
 
-  // const usuario = useSelector(store => store.getUsuarios.usuario)
+  
 
   useEffect(() => {
     dispatch(getServicios())

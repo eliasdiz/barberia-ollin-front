@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 
 
-const { getUsuario } = actionsUsuarios;
+const { getUsuario} = actionsUsuarios;
 
 export default function NavBarUsuarios() {
 
@@ -24,7 +24,6 @@ export default function NavBarUsuarios() {
     const [ autenticado, setAutenticado ] = useState(false);
     const token = localStorage.getItem('token');
     
-
 
     const verificarToken = (token) => {
         if (token) {
@@ -41,9 +40,12 @@ export default function NavBarUsuarios() {
         }
     }
 
+
     useEffect(() => {
         verificarToken(token)
-    }, [autenticado,token]);
+        }, 
+        [autenticado,token]
+    );
 
 
     const handleInicio = () => {
@@ -143,7 +145,7 @@ export default function NavBarUsuarios() {
                 </div>
 
                 {
-                    !autenticado || !token  ?
+                    !autenticado ?
                     <div 
                         className="hidden gap-2 lg:flex"
                     >
@@ -188,7 +190,7 @@ export default function NavBarUsuarios() {
             <Collapse open={openNav}>
                 <NavList />
                 {
-                    !autenticado || !token  ?
+                    !autenticado ?
                     <div 
                         className="flex w-full flex-nowrap justify-center gap-2 lg:hidden"
                     >
