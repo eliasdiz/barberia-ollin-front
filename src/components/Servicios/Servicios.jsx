@@ -3,14 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import actionsServicios from '../../Store/Servicios/actions'
 import numeral from 'numeral'
-import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import FormServicio from '../FormServicio/FormServicio'
 import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import { urlLocal } from '../../urlHost'
+import capturaId from '../../Store/Idcapture/actions'
+import FormEditarServicio from '../FormEditarServicio/FormEditarServicio'
 
 
+const { idCapture } = capturaId
 const { getServicios} = actionsServicios
 
 
@@ -91,6 +93,12 @@ export default function Servicios() {
         )
     }
 
+    const handleEditar = (id) => {
+        console.log(id)
+        dispatch(idCapture({id:id}))
+    }
+
+
     useEffect(
         () => {
             dispatch(getServicios())
@@ -163,19 +171,13 @@ export default function Servicios() {
 
                                     <td className="p-[8px]">
                                         <div className='flex items-center gap-1'>
-                                            <FaRegEdit size={20} color='orange' />
+                                            <FormEditarServicio clickCapture={() => dispatch(idCapture({id: _id}))}/>
 
                                             <button
-                                                // className='border'
-                                                size='sm'
-                                                variant='text'
                                                 disabled={alerta}
+                                                onClick={() => handleEliminar(_id)}
                                             >
-                                                <FaRegTrashAlt 
-                                                    size={20} 
-                                                    color='red' 
-                                                    onClick={() => handleEliminar(_id)}
-                                                />
+                                                <FaRegTrashAlt size={20} color='red' />
                                             </button>
                                         </div>
                                     </td>
