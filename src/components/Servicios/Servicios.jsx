@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import actionsServicios from '../../Store/Servicios/actions'
 import numeral from 'numeral'
-import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import FormServicio from '../FormServicio/FormServicio'
 import toast, { Toaster } from 'react-hot-toast'
@@ -14,7 +13,7 @@ import FormEditarServicio from '../FormEditarServicio/FormEditarServicio'
 
 
 const { idCapture } = capturaId
-const { getServicios, getServicio} = actionsServicios
+const { getServicios} = actionsServicios
 
 
 export default function Servicios() {
