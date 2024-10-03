@@ -1,5 +1,5 @@
-import { Button, Dialog, Typography, DialogBody, DialogHeader, DialogFooter, CardBody, CardFooter, CardHeader, Card } from '@material-tailwind/react';
-import { BeerStein, CashRegister, CurrencyDollar, Plus, PlusCircle, Scissors, ShoppingCart, X } from '@phosphor-icons/react';
+import { Button, Dialog, Typography, DialogBody, DialogHeader, DialogFooter } from '@material-tailwind/react';
+import { BeerStein, CashRegister, PlusCircle, Scissors, ShoppingCart, X } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import numeral from 'numeral';
