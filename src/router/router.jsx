@@ -18,7 +18,7 @@ import FormReservaBarbero from "../components/FormReservaBarbero/FormReservaBarb
 import CalendarioBarbero from '../components/CalendarioBarbero/CalendarioBarbero.jsx'
 import IngresosBarberos from "../components/IngresosBarberos/IngresosBarberos.jsx";
 import Servicios from "../components/Servicios/Servicios.jsx";
-import Tienda from "../components/Tienda/Tienda.jsx";
+import Tienda from '../components/Tienda/Tienda.jsx'
 
 
 const router = createBrowserRouter([

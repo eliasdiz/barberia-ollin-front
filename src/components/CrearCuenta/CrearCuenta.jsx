@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import actionsUsuarios from '../../Store/Usuarios/actions'
-import CarritoCliente from '../CarritoCliente/CarritoCliente'
+import toast, { Toaster } from 'react-hot-toast'
 
 
 const { getTodos} = actionsUsuarios
@@ -18,10 +18,22 @@ export default function CrearCuenta() {
     // console.log(usuarios)
 
     const options = usuarios?.map(({nombres,apellidos,_id}) => ({value:`${nombres} ${apellidos}`, label:`${nombres} ${apellidos}`,id:`${_id}`}))
+    const [ cliente, setCliente ] = useState('')
 
-    // console.log(options)
+    console.log(cliente)
 
     const handleOpen = () => setOpen(true)
+
+    const handleCrear = () => {
+        if(cliente === ''){
+            toast.error('debes seleccionar un cliente')
+        }
+    }
+
+    const handleCerrar = () => {
+        setCliente('')
+        setOpen(false)
+    }
 
     useEffect(
         () => {
@@ -32,18 +44,25 @@ export default function CrearCuenta() {
 
     return (
         <>
-            <Button 
-                size='sm'
-                className="flex flex-col items-center bg-gray-800 hover:bg-gray-700"
+            <div 
+                className='min-w-[8rem] transition-all duration-300 hover:scale-105 cursor-pointer' 
                 onClick={handleOpen}
             >
-                <div className="text-blue-500 mb-2">
-                    <Plus size={48} weight='bold'/>
+
+                <div className='flex flex-col justify-center items-center gap-2 bg-gray-900 rounded-t-lg p-3'>
+                    <Plus size={60} weight='bold' className='text-blue-500'/>
+                    <div className='flex items-center justify-evenly'>
+                        <Typography className='text-blue-500'>
+                        </Typography>
+                    </div>
                 </div>
-                <Typography variant="lead" color="white" className="text-center capitalize">
-                    crear cuenta
-                </Typography>
-            </Button>
+
+                <div className='text-center capitalize bg-blue-gray-900 rounded-b-lg p-1'>
+                    <Typography color='white'>
+                        crear cuenta
+                    </Typography>
+                </div>
+            </div>
 
             <Dialog
                 open={open}
@@ -51,12 +70,13 @@ export default function CrearCuenta() {
                 className='bg-gray-800'
                 size='sm'
             >
+                <Toaster />
                 <DialogHeader className='flex justify-end'>
                     <X 
                         className='cursor-pointer'
                         size={20} 
                         color='red'
-                        onClick={() => setOpen(false)} 
+                        onClick={handleCerrar} 
                     />
                 </DialogHeader>
 
@@ -73,11 +93,17 @@ export default function CrearCuenta() {
                             placeholder='clientes'  
                             options={options} 
                             isSearchable
-                        />
-
-                        <CarritoCliente />
-                        
+                            onChange={(e) => setCliente(e.id)}
+                        />                        
                     </div>
+
+                    <Button
+                        className='flex items-center gap-3'
+                        onClick={handleCrear}
+                    >
+                        crear
+                        <Plus size={20} weight='bold' />
+                    </Button>
                 </DialogBody>
             </Dialog>
         </>

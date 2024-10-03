@@ -1,24 +1,18 @@
 import { Button, Dialog, Typography, DialogBody, DialogHeader, DialogFooter } from '@material-tailwind/react';
-import { BeerStein, CashRegister, Plus, PlusCircle, Scissors, X } from '@phosphor-icons/react';
+import { BeerStein, CashRegister, PlusCircle, Scissors, ShoppingCart, X } from '@phosphor-icons/react';
 import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import numeral from 'numeral';
 
 
-export default function CarritoCliente() {
+export default function CarritoCliente({carrito}) {
 
     const [ open, setOpen ] = useState(false)
 
     const handleOpen = () => setOpen(true)
 
-    const [cartItems, setCartItems] = useState([
-        { id: 1, name: "Corte de Cabello", price: 15000, quantity: 1 },
-        { id: 2, name: "Afeitado", price: 20000, quantity: 1 },
-        { id: 3, name: "Cerveza Artesanal", price: 25000, quantity: 1 },
-        { id: 4, name: "Tinte de Cabello", price: 35000, quantity: 1 },
-        { id: 5, name: "Corte de Cabello", price: 10000, quantity: 1 },
-        { id: 5, name: "Corte de Cabello", price: 15000, quantity: 1 },
-    ]);
+    const [cartItems, setCartItems] = useState(carrito.productos)
+    
 
     const removeItem = (id) => {
         setCartItems(cartItems.filter(item => item.id !== id));
@@ -34,14 +28,31 @@ export default function CarritoCliente() {
 
     return (
         <>
-            <Button
-                size='sm'
-                className='flex items-center gap-3'
+            <div 
+                className='min-w-[8rem] transition-all duration-300 hover:scale-105 cursor-pointer' 
                 onClick={handleOpen}
             >
-                Crear
-                <Plus size={20} weight='bold' />
-            </Button>
+
+                <div className='flex flex-col justify-center items-center gap-2 bg-gray-900 rounded-t-lg p-3'>
+                    <ShoppingCart size={60} className='text-blue-500' />
+
+                    <div className='flex items-center justify-evenly'>
+                        <Typography className='text-blue-500'>
+                            $ {numeral(carrito.total).format()}
+                        </Typography>
+                    </div>
+                </div>
+
+                <div className='text-center capitalize bg-blue-gray-900 rounded-b-lg p-1'>
+                    <Typography color='white'>
+                        {carrito.cliente_id.nombres}
+                    </Typography>
+
+                    <Typography color='white'>
+                        {carrito.cliente_id.apellidos}
+                    </Typography>
+                </div>
+            </div>
 
             <Dialog size='sm' open={open} handler={handleOpen} className='bg-gray-800'>
 
@@ -59,7 +70,9 @@ export default function CarritoCliente() {
                     <div className="flex flex-col items-center justify-center gap-3">
                         <div className="w-[40%] flex items-center justify-evenly">
                             <Scissors size={30} weight='bold' className='text-blue-500' />
-                            <Typography variant="h5" className="text-center capitalize">rosa ortiz</Typography>
+                            <Typography variant="h5" className="text-center capitalize">
+                                {carrito?.cliente_id?.nombres} {carrito?.cliente_id?.apellidos}
+                            </Typography>
                             <BeerStein size={30} color='yellow' />
                         </div>
 
