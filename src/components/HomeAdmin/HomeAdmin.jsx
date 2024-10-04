@@ -22,6 +22,7 @@ export default function HomeAdmin() {
         { title: 'tienda', icon: <BeerStein size={48} />, link: '/admin/tienda' },
         { title: 'Estadísticas', icon: <ChartLine size={48} />, link: '/admin/stats' },
         { title: 'Reportes', icon: <FileText size={48} />, link: '/admin/reports' },
+        { title: 'productos', icon: <FileText size={48} />, link: '/admin/productos' },
     ]
 
     useEffect(

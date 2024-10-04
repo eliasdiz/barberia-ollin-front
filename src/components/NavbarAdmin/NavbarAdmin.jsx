@@ -44,6 +44,11 @@ export default function NavbarAdmin() {
         setOpenNav(false)
     }
 
+    const handleProductos = () => {
+        navigate('/admin/productos')
+        setOpenNav(false)
+    }
+
     const handleUsuarios = () => {
         navigate('/admin/usuarios')
         setOpenNav(false)
@@ -124,6 +129,16 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
+                <ListItem onClick={handleProductos}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-3 font-medium capitalize"
+                    >
+                        <Scissors size={30} weight="fill" />
+                        productos
+                    </Typography>
+                </ListItem>
 
                 <ListItem onClick={handleUsuarios}>
                     <Typography
