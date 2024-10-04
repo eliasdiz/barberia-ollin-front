@@ -4,6 +4,8 @@ import getUsuarios from './Usuarios/reducer.js'
 import servicios from './Servicios/reducer.js'
 import reservas from './Reservas/reducer.js'
 import ingresos from './Ingresos/reducer.js'
+import carrito from './Carrito/reducer.js'
+import productos from './Productos/reducer.js'
 
 
 export const store = configureStore({
@@ -12,6 +14,8 @@ export const store = configureStore({
         getUsuarios: getUsuarios,
         servicios: servicios,
         reservas: reservas,
-        ingresos: ingresos
+        ingresos: ingresos,
+        carrito: carrito,
+        productos: productos
     }
 })

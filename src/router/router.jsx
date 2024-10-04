@@ -19,6 +19,7 @@ import CalendarioBarbero from '../components/CalendarioBarbero/CalendarioBarbero
 import IngresosBarberos from "../components/IngresosBarberos/IngresosBarberos.jsx";
 import Servicios from "../components/Servicios/Servicios.jsx";
 import Tienda from '../components/Tienda/Tienda.jsx'
+import Productos from "../components/Productos/Productos.jsx";
 
 
 const router = createBrowserRouter([
@@ -41,7 +42,8 @@ const router = createBrowserRouter([
             { path: '/admin/usuarios', element: <PanelUsuarios />},
             { path: '/admin/editar-usuario', element: <EditarUsuario />},
             { path: '/admin/servicios', element: <Servicios />},
-            { path: '/admin/tienda', element: <Tienda />}
+            { path: '/admin/tienda', element: <Tienda />},
+            { path: '/admin/productos', element: <Productos />}
         ]
     },
     {
