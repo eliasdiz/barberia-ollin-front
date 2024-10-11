@@ -3,6 +3,7 @@ import { BeerStein, CashRegister, PlusCircle, Scissors, ShoppingCart, X } from '
 import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import numeral from 'numeral';
+import AgregarProductosCarrito from '../AgregarProductosCarrito/AgregarProductosCarrito';
 
 
 export default function CarritoCliente({carrito}) {
@@ -38,7 +39,7 @@ export default function CarritoCliente({carrito}) {
 
                     <div className='flex items-center justify-evenly'>
                         <Typography className='text-blue-500'>
-                            $ {numeral(carrito.total).format()}
+                            $ {total}
                         </Typography>
                     </div>
                 </div>
@@ -79,13 +80,7 @@ export default function CarritoCliente({carrito}) {
                         <div className='w-full flex items-center justify-between'>
                             <Typography variant="h5" className="text-center capitalize">productos / servicios </Typography>
 
-                            <Button
-                                color='blue'
-                                className='flex items-center gap-2'
-                            >
-                                agregar
-                                <PlusCircle size={20} weight='bold' />
-                            </Button>
+                            <AgregarProductosCarrito />
                         </div>
                     </div>
 
