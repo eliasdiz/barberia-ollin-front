@@ -3,6 +3,7 @@ import { BeerStein, CashRegister, PlusCircle, Scissors, ShoppingCart, X } from '
 import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import numeral from 'numeral';
+import AgregarProductosCarrito from '../AgregarProductosCarrito/AgregarProductosCarrito';
 
 
 export default function CarritoCliente({carrito}) {
@@ -38,7 +39,7 @@ export default function CarritoCliente({carrito}) {
 
                     <div className='flex items-center justify-evenly'>
                         <Typography className='text-blue-500'>
-                            $ {numeral(carrito.total).format()}
+                            $ {total}
                         </Typography>
                     </div>
                 </div>
@@ -58,19 +59,19 @@ export default function CarritoCliente({carrito}) {
 
                 <DialogHeader className='flex justify-end p-1'>
                     <X 
-                    size={25} 
-                    color='red' 
-                    weight='bold' 
-                    className='cursor-pointer' 
-                    onClick={() => setOpen(false)}
-                />
+                        size={25} 
+                        color='red' 
+                        weight='bold' 
+                        className='cursor-pointer' 
+                        onClick={() => setOpen(false)}
+                    />
                 </DialogHeader>
 
                 <DialogBody className="flex flex-col gap-2 text-white">
                     <div className="flex flex-col items-center justify-center gap-3">
                         <div className="w-[40%] flex items-center justify-evenly">
                             <Scissors size={30} weight='bold' className='text-blue-500' />
-                            <Typography variant="h5" className="text-center capitalize">
+                            <Typography variant="lead" className="text-center capitalize">
                                 {carrito?.cliente_id?.nombres} {carrito?.cliente_id?.apellidos}
                             </Typography>
                             <BeerStein size={30} color='yellow' />
@@ -79,13 +80,7 @@ export default function CarritoCliente({carrito}) {
                         <div className='w-full flex items-center justify-between'>
                             <Typography variant="h5" className="text-center capitalize">productos / servicios </Typography>
 
-                            <Button
-                                color='blue'
-                                className='flex items-center gap-2'
-                            >
-                                agregar
-                                <PlusCircle size={20} weight='bold' />
-                            </Button>
+                            <AgregarProductosCarrito />
                         </div>
                     </div>
 
