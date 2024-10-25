@@ -59,19 +59,19 @@ export default function CarritoCliente({carrito}) {
 
                 <DialogHeader className='flex justify-end p-1'>
                     <X 
-                    size={25} 
-                    color='red' 
-                    weight='bold' 
-                    className='cursor-pointer' 
-                    onClick={() => setOpen(false)}
-                />
+                        size={25} 
+                        color='red' 
+                        weight='bold' 
+                        className='cursor-pointer' 
+                        onClick={() => setOpen(false)}
+                    />
                 </DialogHeader>
 
                 <DialogBody className="flex flex-col gap-2 text-white">
                     <div className="flex flex-col items-center justify-center gap-3">
                         <div className="w-[40%] flex items-center justify-evenly">
                             <Scissors size={30} weight='bold' className='text-blue-500' />
-                            <Typography variant="h5" className="text-center capitalize">
+                            <Typography variant="lead" className="text-center capitalize">
                                 {carrito?.cliente_id?.nombres} {carrito?.cliente_id?.apellidos}
                             </Typography>
                             <BeerStein size={30} color='yellow' />

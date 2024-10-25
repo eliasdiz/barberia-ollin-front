@@ -5,8 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import actionsUsuarios from '../../Store/Usuarios/actions'
 import toast, { Toaster } from 'react-hot-toast'
+import axios from 'axios'
+import { urlLocal } from '../../urlHost'
+import actionsCarrito from '../../Store/Carrito/actions'
 
 
+const { getCarritos } = actionsCarrito
 const { getTodos} = actionsUsuarios
 
 export default function CrearCuenta() {
@@ -20,13 +24,41 @@ export default function CrearCuenta() {
     const options = usuarios?.map(({nombres,apellidos,_id}) => ({value:`${nombres} ${apellidos}`, label:`${nombres} ${apellidos}`,id:`${_id}`}))
     const [ cliente, setCliente ] = useState('')
 
-    console.log(cliente)
+    // console.log(cliente)
 
     const handleOpen = () => setOpen(true)
 
     const handleCrear = () => {
+        const token = localStorage.getItem('token')
+        const headers = { headers: { Authorization: `Bearer ${token}`}}
+
         if(cliente === ''){
             toast.error('debes seleccionar un cliente')
+        }else {
+            let data = {
+                cliente_id: cliente
+            }
+            let promesa = axios.post(`${urlLocal}carrito/crear`,data,headers)
+            toast.promise(
+                promesa,
+                {
+                    loading: 'creando orden de compra',
+                    success: (res) => {
+                        dispatch(getCarritos())
+                        setTimeout(() => {
+                            handleCerrar()
+                        }, 2000);
+                        return <>{res.data.message}</>
+                    },
+                    error: (error) => {
+                        // console.log(error)
+                        return <>{error.response.data.message}</>
+                    }
+                },{
+                    style: { textTransform: 'capitalize'}
+                }
+            )
+            // console.log(data)
         }
     }
 
