@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { urlLocal } from "../../urlHost";
 
@@ -20,7 +20,19 @@ const getCarritos = createAsyncThunk(
     }
 )
 
+const actCarrito = createAction(
+    'actCarrito',
+    ({carrito,producto}) => {
+        const carritoActualizado = {
+            ...carrito,
+            productos: [...carrito.productos, producto]
+        }
+        return { payload: carritoActualizado}
+    }
 
-const actions = { getCarritos}
+)
+
+
+const actions = { getCarritos, actCarrito}
 
 export	default actions

@@ -1,7 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import actions from "./actions";
 
-const { getCarritos} = actions
+const { getCarritos, actCarrito} = actions
 
 const initialState = {
     carritos: []
@@ -24,3 +24,4 @@ const reducer = createReducer(
 )
 
 export default reducer
+

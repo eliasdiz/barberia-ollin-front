@@ -7,7 +7,7 @@ import axios from "axios";
 import { urlLocal } from '../../urlHost.js'
 import actionsUsuarios from '../../Store/Usuarios/actions.js'
 import { useDispatch } from "react-redux";
-import { BeerStein, CalendarDots, House, Scissors, User } from "@phosphor-icons/react";
+import { BeerStein, CalendarDots, House, Scissors, User, BuildingOffice } from "@phosphor-icons/react";
 
 
 const { getUsuario } = actionsUsuarios
@@ -51,6 +51,11 @@ export default function NavbarAdmin() {
 
     const handleUsuarios = () => {
         navigate('/admin/usuarios')
+        setOpenNav(false)
+    }
+
+    const handleAdmin = () => {
+        navigate('/admin/admin')
         setOpenNav(false)
     }
 
@@ -107,6 +112,7 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
+
                 <ListItem onClick={handleInicio}>
                     <Typography
                         variant="h5"
@@ -118,7 +124,18 @@ export default function NavbarAdmin() {
                     </Typography>
                 </ListItem>
 
-                <ListItem onClick={handleServicios}>
+                <ListItem onClick={handleAdmin}>
+                    <Typography
+                        variant="h5"
+                        color="blue-gray"
+                        className="flex items-center gap-3 font-medium capitalize"
+                    >
+                        <BuildingOffice size={30} weight="bold" />
+                        Admin
+                    </Typography>
+                </ListItem>
+                
+                {/* <ListItem onClick={handleServicios}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
@@ -127,9 +144,9 @@ export default function NavbarAdmin() {
                         <Scissors size={30} weight="fill" />
                         servicios
                     </Typography>
-                </ListItem>
+                </ListItem> */}
 
-                <ListItem onClick={handleProductos}>
+                {/* <ListItem onClick={handleProductos}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
@@ -138,9 +155,9 @@ export default function NavbarAdmin() {
                         <Scissors size={30} weight="fill" />
                         productos
                     </Typography>
-                </ListItem>
+                </ListItem> */}
 
-                <ListItem onClick={handleUsuarios}>
+                {/* <ListItem onClick={handleUsuarios}>
                     <Typography
                         variant="h5"
                         color="blue-gray"
@@ -149,7 +166,7 @@ export default function NavbarAdmin() {
                         <User size={30} weight="bold" />
                         usuarios
                     </Typography>
-                </ListItem>
+                </ListItem> */}
                                 
             </List>
         );

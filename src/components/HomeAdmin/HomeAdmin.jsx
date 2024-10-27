@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import actionsUsuarios from '../../Store/Usuarios/actions'
 import actionsServicios from '../../Store/Servicios/actions'
-import { User, ChartLine, FileText, Scissors, BeerStein } from '@phosphor-icons/react'
+import { User, ChartLine, FileText, Scissors, BeerStein, Bag } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -22,8 +22,8 @@ export default function HomeAdmin() {
         { title: 'tienda', icon: <BeerStein size={48} />, link: '/admin/tienda' },
         { title: 'Estadísticas', icon: <ChartLine size={48} />, link: '/admin/stats' },
         { title: 'Reportes', icon: <FileText size={48} />, link: '/admin/reports' },
-        { title: 'productos', icon: <FileText size={48} />, link: '/admin/productos' },
-    ]
+        { title: 'productos', icon: <Bag size={48} />, link: '/admin/productos' },
+    ].sort((a,b) => a.title.localeCompare(b.title))
 
     useEffect(
         () => {

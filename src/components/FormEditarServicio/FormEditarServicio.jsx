@@ -103,7 +103,7 @@ export default function FormEditarServicio(props) {
                                 </Typography>
                             </DialogHeader>
 
-                            <DialogBody divider className='flex justify-center'>
+                            <DialogBody divider={true} className='flex justify-center'>
                                 
                                 <div className='w-[70%] flex flex-col items-center gap-4 capitalize'>
 
