@@ -33,7 +33,7 @@ export default function CardUsuario() {
             <button
                 onClick={handleOpen}
             >
-                <FaRegEye className='w-5 h-5 text-green-400'  />
+                <FaRegEye size={20} color='orange' />
             </button>
             <Dialog open={open} handler={handleOpen} className='flex flex-col'>
                 {

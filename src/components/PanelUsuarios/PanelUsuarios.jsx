@@ -30,7 +30,7 @@ export default function PanelUsuarios() {
     // console.log(idUsuario)
 
     const categorias = [{label: "barberos",value: "barberos",},{label: "clientes",value: "clientes",}];
-    const tableHead = [ 'nombre ','telefono','acc'] 
+    const tableHead = [ '#','nombre ','telefono','acc'] 
 
     const handleParametro = () => {
         setParametro(valueParametro)
@@ -106,22 +106,22 @@ export default function PanelUsuarios() {
     
 
     return (
-        <div className='flex justify-center'>
-            <div className='w-full md:w-[60%] flex flex-col'>
-                <div className='flex flex-col items-center bg-white rounded-t-2xl'>
+        <div className='flex justify-center '>
+            <div className='w-full md:w-[60%] flex flex-col mt-3 rounded-t-2xl bg-gray-800 text-gray-100'>
+                <div className='flex flex-col items-center' >
                     <div className='p-2 '>
-                        <Typography  variant="h4" color="blue-gray" className='uppercase font-serif text-center'>
+                        <Typography  variant="h4" className='uppercase font-serif text-center'>
                             usuarios
                         </Typography>
                     </div>
 
-                    <div className='w-full flex flex-col items-center md:flex-row md:justify-center  '>
-                        <div className='flex justify-center xxsm:w-[95%] xsm:w-[50%] md:w-[40%] p-2 '>
-                            <Tabs value="all" className="w-full md:w-max" >
-                                <TabsHeader>
+                    <div className='w-full flex flex-col items-center md:flex-row md:justify-center'>
+                        <div className='flex justify-center xxsm:w-[95%] xsm:w-[50%] md:w-[50%] p-2'>
+                            <Tabs value="all" className="w-full" >
+                                <TabsHeader className='bg-gray-700'  indicatorProps={{ className: 'bg-blue-500'}}>
                                 {
                                     categorias.map((item,i) => (
-                                        <Tab 
+                                        <Tab
                                             key={i} 
                                             value={item.value} 
                                             className='capitalize'
@@ -142,17 +142,19 @@ export default function PanelUsuarios() {
                             {
                                 nombres === '' ?
                                     <Input
+                                        color='white'
                                         label="buscar"
-                                        icon={<FaMagnifyingGlass className="h-5 w-5" />}
+                                        icon={<FaMagnifyingGlass className="h-5 w-5" color='white' />}
                                         onChange={(e) => setNombres(e.target.value)}
                                         value={nombres}
                                     />
                                     :
                                     <Input
+                                        color='white'
                                         label="buscar"
                                         icon={
-                                                <GiCancel 
-                                                    className="h-5 w-5 cursor-pointer" 
+                                                <GiCancel
+                                                    className="h-5 w-5 cursor-pointer text-white" 
                                                     onClick={() => setNombres('')}
                                                 />
                                             }
@@ -165,23 +167,27 @@ export default function PanelUsuarios() {
                     </div>
 
                 </div>
-                <div className='w-full overflow-y-auto  max-h-[75vh] '>
+                <div className='w-full overflow-y-auto  max-h-[75vh] flex justify-center mt-2 bg-gray-800'>
                     {
                         usuarios.length !== 0 ?
-                        <table className="w-full min-w-max table-auto text-left bg-gray-600 overflow-x-auto">
-                            <thead>
-                                <tr className='sticky top-0'>
+                        <table 
+                            className="w-full h-[60%]  min-w-max table-auto text-left capitalize"
+                        >
+                            <thead className='sticky top-0 bg-gray-800 z-10'>
+                                <tr >
                                     {
                                         tableHead.map((item,i) => (
                                             <th
                                                 key={i}
-                                                className="border-b border-blue-gray-100 bg-blue-gray-50 p-3 text-left"
+                                                className="border-b border-gray-700 bg-gray-800 p-[8px] "
                                             >
                                                 <Typography
-                                                    variant="h6"
-                                                    color="blue-gray"
-                                                    className="font-sans leading-none opacity-70 capitalize"
-                                                >{item}</Typography>
+                                                    variant="small"
+                                                    color="white"
+                                                    className="font-normal leading-none opacity-70 uppercase"
+                                                >
+                                                    {item}
+                                                </Typography>
                                             </th>
                                         ))
                                     }
@@ -189,36 +195,37 @@ export default function PanelUsuarios() {
                             </thead>
                             <tbody>
                                 {
-                                    usuarios?.map((item,i) => (
-                                        <tr key={i}>
-                                            <td className='p-2 border-b border-blue-gray-50'>
-                                                <Typography
-                                                    variant="h6"
-                                                    color="white"
-                                                    className="font-medium capitalize"
-                                                >
-                                                    {item.nombres} {item.apellidos}
+                                    usuarios?.map(({nombres,apellidos,telefono,_id},i) => (
+                                        <tr 
+                                            key={i}
+                                            className={i % 2 === 0 ? "bg-gray-900" : ''}
+                                        >
+                                            <td className="p-[8px]">
+                                                <Typography variant="paragraph" color="white" className="font-normal">
+                                                    {i + 1}
                                                 </Typography>
                                             </td>
 
-                                            <td className='p-2 border-b border-blue-gray-50 text-left'>
-                                                <Typography
-                                                    variant="h6"
-                                                    color="white"
-                                                    className="font-medium capitalize"
-                                                >
-                                                    {item.telefono}
+                                            <td className="p-[8px]">
+                                                <Typography variant="paragraph" color="white" className="font-normal">
+                                                    {nombres} {apellidos}
                                                 </Typography>
                                             </td>
 
-                                            <td className='p-2 border-b border-blue-gray-50 '>
+                                            <td className="p-[8px]">
+                                                <Typography variant="paragraph" color="white" className="font-normal">
+                                                    {telefono}
+                                                </Typography>
+                                            </td>
+
+                                            <td className='p-[8px]'>
                                                 <div className='flex justify-center gap-2'>
-                                                    <span onClick={() => handleEditar(item._id)}>
+                                                    <span onClick={() => handleEditar(_id)}>
                                                         <CardUsuario/>
                                                     </span>
 
-                                                    <span onClick={() => handleEliminar(item._id)}>
-                                                        <FaRegTrashAlt className='w-5 h-5 text-red-400 cursor-pointer' />
+                                                    <span onClick={() => handleEliminar(_id)}>
+                                                        <FaRegTrashAlt size={20} color='red' />
                                                     </span>
                                                 </div>
                                             </td>

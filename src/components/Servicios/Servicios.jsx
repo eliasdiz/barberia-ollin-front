@@ -120,12 +120,17 @@ export default function Servicios() {
             </div>
 
             <div className='h-full w-full overflow-y-auto flex justify-center mt-2'>
-                <table className="w-full h-[60%] md:w-[60%] min-w-max table-auto text-left capitalize">
+                <table 
+                    className="w-full h-[60%] md:w-[60%] min-w-max table-auto text-left capitalize"
+                >
                     <thead className="sticky top-0 bg-gray-800 z-10">
                         <tr>
                             {
                                 tableHead.map((head) => (
-                                    <th key={head} className="border-b border-gray-700 bg-gray-800 p-[8px] ">
+                                    <th 
+                                        key={head} 
+                                        className="border-b border-gray-700 bg-gray-800 p-[8px] "
+                                    >
                                     <Typography
                                         variant="small"
                                         color="white"
@@ -141,8 +146,10 @@ export default function Servicios() {
                     <tbody>
                         {
                             servicios?.map(({servicio,valor,adicional,_id}, i) => (
-                                <tr key={i} className={i % 2 === 0 ? "bg-gray-900" : ''}>
-
+                                <tr 
+                                    key={i} 
+                                    className={i % 2 === 0 ? "bg-gray-900" : ''}
+                                >
                                     <td className="p-[8px]">
                                         <Typography variant="paragraph" color="white" className="font-normal">
                                             {i + 1}

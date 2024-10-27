@@ -83,10 +83,6 @@ export default function CrearCuenta() {
 
                 <div className='flex flex-col justify-center items-center gap-2 bg-gray-900 rounded-t-lg p-3'>
                     <Plus size={60} weight='bold' className='text-blue-500'/>
-                    <div className='flex items-center justify-evenly'>
-                        <Typography className='text-blue-500'>
-                        </Typography>
-                    </div>
                 </div>
 
                 <div className='text-center capitalize bg-blue-gray-900 rounded-b-lg p-1'>

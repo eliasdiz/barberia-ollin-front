@@ -4,15 +4,23 @@ import React, { useState } from 'react';
 import { XMarkIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import numeral from 'numeral';
 import AgregarProductosCarrito from '../AgregarProductosCarrito/AgregarProductosCarrito';
+import capturarId from '../../Store/Idcapture/actions'
+import { useDispatch } from 'react-redux';
 
+const { idCapture} = capturarId
 
 export default function CarritoCliente({carrito}) {
 
+    const dispatch = useDispatch()
     const [ open, setOpen ] = useState(false)
-
-    const handleOpen = () => setOpen(true)
-
     const [cartItems, setCartItems] = useState(carrito.productos)
+
+    const handleOpen = () => {
+        setOpen(true)
+        dispatch(idCapture({id: carrito._id}))
+        console.log(carrito._id)
+    }
+
     
 
     const removeItem = (id) => {
@@ -145,7 +153,6 @@ export default function CarritoCliente({carrito}) {
                 </DialogBody>
 
                 <DialogFooter 
-                    divider
                     className='flex items-center justify-between text-white'
                 >
                     <Typography variant="h5">

@@ -1,13 +1,14 @@
-import { Button, Card, CardBody, Dialog, DialogBody, DialogFooter, DialogHeader, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Typography } from '@material-tailwind/react'
-import { Plus, PlusCircle, X } from '@phosphor-icons/react'
+import { Button, Card, CardBody, Dialog, DialogBody, DialogHeader, Tab, TabPanel, Tabs, TabsBody, TabsHeader, Typography } from '@material-tailwind/react'
+import { PlusCircle, X } from '@phosphor-icons/react'
 import React, { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import productosActions from '../../Store/Productos/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import numeral from 'numeral'
+import actionsCarritos from '../../Store/Carrito/actions'
 
 
-
+const { actCarrito, getCarritos} = actionsCarritos
 const { getProductos} = productosActions
 
 
@@ -16,25 +17,44 @@ export default function AgregarProductosCarrito() {
     const dispatch = useDispatch()
     const [ open, setOpen ] = useState(false)
     const productos = useSelector(store => store.productos.productos)
+    const carritos = useSelector(store => store.carrito.carritos)
+    const idCarrito = useSelector(store => store.captureId.id)
+    const carrito = carritos?.find(({_id}) => _id === idCarrito)
     const [ activeTabs, setActiveTaps ] = useState('productos')
     const [ productSelec, setProductSelec ] = useState('')
     const [ itemProducto, setItemProducto ] = useState(null)
     
+    // console.log(idCarrito)
+    console.log(carritos)
+    // console.log(itemProducto)
+
+
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-    
+
     const handleItemProducto = (id) => {
         setProductSelec(id)
         let producto = productos?.find(({_id}) => _id === id)
         setItemProducto(producto)
-        // console.log(producto)
     }
 
     // console.log(productos)
 
     
     const handleAgregarProducto = () => {
-
+        if(carrito && itemProducto){
+            let producto = {
+                producto_id: itemProducto._id,
+                cantidad: 1,
+                precio: itemProducto.precio
+            }
+            try {
+                dispatch(actCarrito({carrito: carrito, producto: producto}))
+                handleClose()
+            } catch (error) {
+                console.log(error)
+            }
+        }
     }
 
     useEffect(

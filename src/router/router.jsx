@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from '../layouts/Main.jsx';
 import Home from '../Pages/Home.jsx'
-import Admin from "../Pages/Admin.jsx";
+import HomeAdmin from "../Pages/Admin.jsx";
 import AdminLayout from '../layouts/AdminLayout.jsx'
 import InicioSesion from '../components/InicioSesion/InicioSesion.jsx'
 import Pruebas from "../components/Pruebas/Pruebas.jsx";
@@ -20,6 +20,7 @@ import IngresosBarberos from "../components/IngresosBarberos/IngresosBarberos.js
 import Servicios from "../components/Servicios/Servicios.jsx";
 import Tienda from '../components/Tienda/Tienda.jsx'
 import Productos from "../components/Productos/Productos.jsx";
+import Admin from "../components/Admin/Admin.jsx";
 
 
 const router = createBrowserRouter([
@@ -38,12 +39,13 @@ const router = createBrowserRouter([
     {
         path: '/admin', element: <AdminLayout />,
         children: [
-            { path: '/admin', element: <Admin />},
+            { path: '/admin', element: <HomeAdmin />},
             { path: '/admin/usuarios', element: <PanelUsuarios />},
             { path: '/admin/editar-usuario', element: <EditarUsuario />},
             { path: '/admin/servicios', element: <Servicios />},
             { path: '/admin/tienda', element: <Tienda />},
-            { path: '/admin/productos', element: <Productos />}
+            { path: '/admin/productos', element: <Productos />},
+            { path: '/admin/admin', element: <Admin /> }
         ]
     },
     {
